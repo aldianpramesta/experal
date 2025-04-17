@@ -1,0 +1,244 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 15px 0;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo a {
+    color: white;
+    font-size: 1.5em;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.navbar .nav-links li {
+    margin-left: 20px;
+}
+
+.navbar .nav-links li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-links li a:hover {
+    color: #ddd;
+}
+
+/* Dropdown */
+.navbar .nav-links .dropdown {
+    position: relative;
+}
+
+.navbar .nav-links .dropdown-toggle {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .nav-links .dropdown-toggle .arrow {
+    margin-left: 5px;
+    border: solid white;
+    border-width: 0 1px 1px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+}
+
+.navbar .nav-links .dropdown:hover .dropdown-toggle .arrow {
+    transform: rotate(-135deg);
+}
+
+.navbar .nav-links .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #333;
+    border: 1px solid #555;
+    border-top: none;
+    z-index: 1000;
+}
+
+.navbar .nav-links .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.navbar .nav-links .dropdown-menu a {
+    padding: 10px 15px;
+    display: block;
+    text-align: right;
+}
+
+.navbar .nav-links .dropdown-menu a:hover {
+    background-color: #555;
+}
+
+/* Search Container */
+.navbar .search-container {
+    display: flex;
+    align-items: center;
+}
+
+#search-bar {
+    padding: 8px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    font-size: 1em;
+}
+
+.navbar .search-container button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.navbar .search-container button:hover {
+    background-color: #4cae4c;
+}
+
+/* Hero Section */
+.hero {
+    background-color: #f9f9f9;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.hero .container {
+    max-width: 800px;
+}
+
+.hero h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.hero p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Content Section */
+.content {
+    padding: 40px 0;
+}
+
+.content .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.video-section h2, .premium-features h2 {
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.video-player {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.premium-features ul {
+    list-style: none;
+    padding: 0;
+}
+
+.premium-features ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.premium-features ul li:last-child {
+    border-bottom: none;
+}
+
+/* Footer */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.9em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar .logo {
+        margin-bottom: 10px;
+    }
+
+    .navbar .nav-links {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar .nav-links li {
+        margin: 10px 0;
+    }
+
+    .navbar .nav-links .dropdown-menu {
+        position: static;
+        border: none;
+        width: 100%;
+    }
+
+    .navbar .nav-links .dropdown-menu a {
+        text-align: left;
+        padding-left: 20px;
+    }
+
+    .navbar .search-container {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    #search-bar {
+        width: calc(100% - 50px);
+    }
+}
