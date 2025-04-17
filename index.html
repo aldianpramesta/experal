@@ -2,43 +2,42 @@
 <html>
 <head>
   <title>Login - Video Premium</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 </head>
 <body>
   <h2>Login untuk akses modul premium</h2>
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Password">
-  <button id="loginBtn">Login</button>
+  <input type="email" id="email" placeholder="Email"><br>
+  <input type="password" id="password" placeholder="Password"><br>
+  <button onclick="login()">Login</button>
   <p id="error" style="color:red;"></p>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-
+  <script>
+    // Konfigurasi Firebase kamu
     const firebaseConfig = {
       apiKey: "AIzaSyA-GfPSmyhcCSXQm699jcMVhHYZzOF6lvk",
       authDomain: "aldian-pramesta-firebase.firebaseapp.com",
       projectId: "aldian-pramesta-firebase",
-      storageBucket: "aldian-pramesta-firebase.firebasestorage.app",
+      storageBucket: "aldian-pramesta-firebase.appspot.com",
       messagingSenderId: "19545798570",
-      appId: "1:19545798570:web:ca622f81fc2c5527981dd3",
-      measurementId: "G-2PZVCQJ5JY"
+      appId: "1:19545798570:web:ca622f81fc2c5527981dd3"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    // Inisialisasi Firebase
+    firebase.initializeApp(firebaseConfig);
 
-    document.getElementById("loginBtn").addEventListener("click", () => {
+    function login() {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
-      signInWithEmailAndPassword(auth, email, password)
+      firebase.auth().signInWithEmailAndPassword(email, password)
         .then(() => {
           window.location.href = "dashboard.html";
         })
         .catch(error => {
           document.getElementById("error").textContent = error.message;
         });
-    });
+    }
   </script>
 </body>
 </html>
