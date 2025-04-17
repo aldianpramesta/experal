@@ -125,10 +125,7 @@ button:hover {
 </div>
 
 <body>
-  document.querySelector(".dropdown-btn").addEventListener("click", function() {
-  const dropdown = document.querySelector(".dropdown-content");
-  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-});
+ 
 
   <div class="search-container">
   <input type="text" id="search-bar" placeholder="Search...">
@@ -147,6 +144,10 @@ button:hover {
   </div>
 
   <script>
+      document.querySelector(".dropdown-btn").addEventListener("click", function() {
+    const dropdown = document.querySelector(".dropdown-content");
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  });
     function search() {
   const query = document.getElementById("search-bar").value;
   console.log("Searching for:", query);
