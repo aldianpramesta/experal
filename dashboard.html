@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Modul Premium</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
+  <script src="firebase-config.js"></script>
+</head>
+<body>
+  <h2>Halo, selamat datang di ruang modul!</h2>
+  <button onclick="logout()">Logout</button>
+
+  <div id="konten">
+    <h3>Modul Video 1</h3>
+    <iframe src="https://drive.google.com/file/d/FILE_ID/preview" width="640" height="480" allow="autoplay"></iframe>
+  </div>
+
+  <script>
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged(user => {
+      if (!user) {
+        window.location.href = "index.html";
+      }
+    });
+
+    function logout() {
+      auth.signOut().then(() => {
+        window.location.href = "index.html";
+      });
+    }
+  </script>
+</body>
+</html>
