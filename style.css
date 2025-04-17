@@ -201,7 +201,109 @@ body {
     padding: 20px 0;
     font-size: 0.9em;
 }
+/* ... CSS sebelumnya ... */
 
+/* Notifications Section */
+.notifications-section {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.notifications-section h2 {
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+#notifications-list {
+    list-style: none;
+    padding: 0;
+}
+
+#notifications-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+#notifications-list li:last-child {
+    border-bottom: none;
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+}
+
+.notification-icon {
+    margin-right: 10px;
+    color: #5cb85c; /* Contoh warna ikon */
+}
+
+.notification-message {
+    flex-grow: 1;
+}
+
+.notification-time {
+    font-size: 0.8em;
+    color: #777;
+    margin-left: 10px;
+}
+
+/* Latest Videos Section */
+.latest-videos-section {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.latest-videos-section h2 {
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.latest-videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.video-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.video-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.video-info {
+    padding: 15px;
+}
+
+.video-title {
+    font-size: 1em;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.video-date {
+    font-size: 0.8em;
+    color: #777;
+}
+
+/* ... CSS setelahnya ... */
 /* Responsive Design */
 @media (max-width: 768px) {
     .navbar .container {
