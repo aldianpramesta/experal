@@ -4,14 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TEMTER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              poppins: ['Poppins', 'sans-serif'],
+            },
+            colors: {
+              custom: '#9065C7',
+              customGray: '#EDEDED'
+            },
+          },
+        },
+      }
+    </script>
   </head>
   <body class="bg-black text-white min-h-screen flex flex-col justify-between">
     <!-- Header -->
     <header class="p-6 flex justify-start items-center">
-      <div>
-        <h1 class="text-xl font-bold">ALDIAN PRAMESTA</h1>
-        <h2 class="text-5xl font-extrabold text-purple-400 -mt-2">TEMTER</h2>
+      <div class="font-poppins font-semibold flex flex-col leading-[0.7]">
+        <span class="text-base text-customGray text-custom tracking-[-0.04em]">ALDIAN PRAMESTA</span>
+        <span class="text-[45px] text-custom tracking-[-0.06em]">TEMTER</span>
       </div>
     </header>
 
