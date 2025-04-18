@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEMTER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              poppins: ['Poppins', 'sans-serif'],
+              sans: ['Instrument Sans', 'sans-serif'], // Default sans font
+            },
+            colors: {
+              custom: '#9065C7',
+              customGray: '#EDEDED'
+            },
+          },
+        },
+      }
+    </script>
+  </head>
+  <body class="bg-black text-white min-h-screen flex flex-col justify-between font-sans">
+    <!-- Header -->
+    <header class="p-6 flex justify-start items-center">
+      <div class="font-poppins font-semibold flex flex-col leading-[0.7]">
+        <span class="text-base text-customGray text-custom tracking-[-0.04em]">ALDIAN PRAMESTA</span>
+        <span class="text-[45px] text-custom tracking-[-0.06em]">TEMTER</span>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col items-center justify-center text-center px-4">
+      <h1 class="text-4xl md:text-6xl font-extrabold text-gray-300 mb-4">
+        Tempat orang yang peka
+      </h1>
+      <p class="text-xl text-gray-500 mb-8">
+        Bagi yang sudah beli silahkan <br />masuk kedalam
+      </p>
+      <a
+        href="login.html"
+        class="bg-neutral-900 hover:bg-neutral-800 text-white px-6 py-3 rounded-xl shadow-md transition"
+      >
+        Masuk
+      </a>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-sm text-gray-500 text-right px-6 py-4">
+      ©2025
+    </footer>
+  </body>
+</html>
