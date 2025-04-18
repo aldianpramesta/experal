@@ -3,315 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard VIP Experal</title>
+    <title>Temter</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        /* Contoh inline style untuk meniru tata letak awal */
-        body {
-            font-family: sans-serif;
-            margin: 0;
-            background-color: #111;
-            color: #eee;
-            overflow: hidden; /* Untuk efek background penuh */
-        }
-
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            max-width: 1200px;
-        }
-
-        .hero {
-            position: relative;
-            height: 60vh; /* Sesuaikan tinggi sesuai kebutuhan */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #fff;
-            /* Tambahkan background image atau gradient seperti contoh sebelumnya */
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(30, 30, 30, 0.9) 100%);
-        }
-
-        .hero h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-
-        .hero p {
-            font-size: 1.2em;
-        }
-
-        .navbar {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px 0;
-            position: fixed; /* Agar navbar tetap di atas */
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 100;
-        }
-
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .navbar .logo a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-
-        .navbar .nav-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .nav-links li {
-            margin-left: 20px;
-        }
-
-        .navbar .nav-links li a {
-            color: #ddd;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .navbar .nav-links li a:hover {
-            color: #fff;
-        }
-
-        .navbar .nav-links .dropdown {
-            position: relative;
-        }
-
-        .navbar .nav-links .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: rgba(0, 0, 0, 0.8);
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            padding: 10px 0;
-            display: none; /* Sembunyikan dropdown awal */
-        }
-
-        .navbar .nav-links .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
-        .navbar .nav-links .dropdown-menu a {
-            display: block;
-            padding: 10px 20px;
-            color: #ddd;
-            text-decoration: none;
-        }
-
-        .navbar .nav-links .dropdown-menu a:hover {
-            color: #fff;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .navbar .search-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar #search-bar {
-            padding: 8px;
-            border: none;
-            border-radius: 5px 0 0 5px;
-        }
-
-        .navbar .search-container button {
-            background-color: #555;
-            color: #fff;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 0 5px 5px 0;
-            cursor: pointer;
-        }
-
-        .content {
-            padding: 80px 0;
-            background-color: #222;
-            color: #ddd;
-        }
-
-        .content .container {
-            /* Layout konten akan diatur di CSS eksternal */
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .content h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            grid-column: 1 / -1; /* Membuat judul lebar penuh */
-            text-align: center;
-        }
-
-        .notifications-section,
-        .latest-videos-section,
-        .video-section,
-        .premium-features {
-            padding: 20px;
-            background-color: #333;
-            border-radius: 8px;
-        }
-
-        .latest-videos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .latest-videos-grid iframe {
-            width: 100%;
-            height: 150px;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .video-player iframe {
-            width: 100%;
-            height: 400px;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .premium-features ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .premium-features ul li {
-            padding: 8px 0;
-            border-bottom: 1px solid #444;
-        }
-
-        .premium-features ul li:last-child {
-            border-bottom: none;
-        }
-
-        .footer {
-            background-color: #333;
-            color: #ddd;
-            text-align: center;
-            padding: 20px 0;
-            position: relative; /* Untuk z-index jika diperlukan */
-            z-index: 10;
-        }
-
-        .footer .container p {
-            margin: 0;
-        }
-
-        /* Efek background seperti contoh sebelumnya */
-        .background-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Ganti dengan gambar atau gradient yang sesuai */
-            background: url('your-space-background.jpg') center center no-repeat;
-            background-size: cover;
-            z-index: -1; /* Di belakang semua konten */
-        }
-
-        /* Tambahkan class untuk elemen gambar seperti pada contoh sebelumnya */
-        .astronaut-image {
-            position: absolute;
-            /* Atur posisi sesuai keinginan */
-            top: 30%;
-            left: 70%;
-            width: 100px; /* Sesuaikan ukuran */
-            z-index: 1;
-        }
-
-        .ring-image {
-            position: absolute;
-            /* Atur posisi sesuai keinginan */
-            top: 40%;
-            left: 60%;
-            width: 150px; /* Sesuaikan ukuran */
-            z-index: 0;
-        }
-
-        .planet-image {
-            position: absolute;
-            /* Atur posisi sesuai keinginan */
-            top: 50%;
-            left: 50%;
-            width: 200px; /* Sesuaikan ukuran */
-            z-index: -1;
-        }
-
-        /* Semakin kecil layar */
-        @media (max-width: 768px) {
-            .navbar .container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .navbar .nav-links {
-                flex-direction: column;
-                width: 100%;
-                margin-top: 10px;
-                display: none; /* Sembunyikan menu mobile awal */
-            }
-            .navbar .nav-links.active {
-                display: flex;
-            }
-            .navbar .nav-links li {
-                margin-left: 0;
-                padding: 10px 0;
-                border-bottom: 1px solid #444;
-            }
-            .navbar .nav-links li:last-child {
-                border-bottom: none;
-            }
-            .navbar .dropdown-toggle::after {
-                content: '\f078'; /* Font Awesome down arrow */
-                font-family: 'Font Awesome 6 Free';
-                font-weight: 900;
-                margin-left: 5px;
-            }
-            .navbar .search-container {
-                margin-top: 10px;
-                width: 100%;
-            }
-            .navbar #search-bar {
-                width: calc(100% - 50px);
-            }
-            .hero h1 {
-                font-size: 2.5em;
-            }
-            .hero p {
-                font-size: 1em;
-            }
-            .content .container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
 </head>
 <body>
-    <div class="background-overlay"></div>
     <nav class="navbar">
         <div class="container">
             <div class="logo">
-                <a href="#">VIP Experal</a>
+                <a href="#">Temter</a>
             </div>
             <ul class="nav-links">
                 <li><a href="#">Beranda</a></li>
@@ -319,7 +20,7 @@
                 <li><a href="#">Unduh</a></li>
                 <li><a href="#">Kontak</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Akun <i class="fa fa-chevron-down"></i></a>
+                    <a href="#" class="dropdown-toggle">Akun <i class="arrow down"></i></a>
                     <div class="dropdown-menu">
                         <a href="#" onclick="logout()">Logout</a>
                     </div>
@@ -340,31 +41,48 @@
     </header>
 
     <section class="content">
+        <section class="content">
         <div class="container">
-            <h2>Konten Premium</h2>
             <div class="notifications-section">
-                <h3>Pemberitahuan</h3>
+                <h2>Pemberitahuan</h2>
                 <ul id="notifications-list">
                     </ul>
             </div>
 
             <div class="latest-videos-section">
-                <h3>Video Premium Terbaru</h3>
+                <h2>Video Premium Terbaru</h2>
                 <div class="latest-videos-grid">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video Terbaru 1" frameborder="0" allowfullscreen></iframe>
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video Terbaru 2" frameborder="0" allowfullscreen></iframe>
                     </div>
             </div>
 
             <div class="video-section">
-                <h3>Video Premium Pilihan</h3>
+                <h2>Video Premium Pilihan</h2>
                 <div class="video-player">
-                    <iframe width="100%" height="400" src="https://www.youtube.com/embed/your_premium_video_id" title="Premium Video" frameborder="0" allowfullscreen></iframe>
+                    <iframe width="100%" height="400" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Premium Video" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
 
             <div class="premium-features">
-                <h3>Fitur Premium Lainnya</h3>
+                <h2>Fitur Premium Lainnya</h2>
+                <ul>
+                    <li>Akses ke semua video premium tanpa batas.</li>
+                    <li>Unduh video untuk ditonton secara offline.</li>
+                    <li>Dukungan prioritas dari tim kami.</li>
+                    <li>Konten eksklusif yang tidak tersedia untuk pengguna gratis.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+        <div class="container">
+            <div class="video-section">
+                <h2>Video Premium Pilihan</h2>
+                <div class="video-player">
+                    <iframe width="100%" height="400" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Premium Video" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="premium-features">
+                <h2>Fitur Premium Lainnya</h2>
                 <ul>
                     <li>Akses ke semua video premium tanpa batas.</li>
                     <li>Unduh video untuk ditonton secara offline.</li>
@@ -377,45 +95,11 @@
 
     <footer class="footer">
         <div class="container">
-            <p>© 2025 VIP Experal. Hak Cipta Dilindungi.</p>
+            <p>&copy; 2025 VIP Experal. Hak Cipta Dilindungi.</p>
         </div>
     </footer>
 
     <script src="script.js"></script>
     <script src="https://kit.fontawesome.com/your_fontawesome_kit.js" crossorigin="anonymous"></script>
-    <script>
-        // Contoh sederhana untuk menampilkan/menyembunyikan menu mobile
-        document.addEventListener('DOMContentLoaded', function() {
-            const dropdownToggle = document.querySelector('.dropdown-toggle');
-            if (dropdownToggle) {
-                dropdownToggle.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const dropdownMenu = this.nextElementSibling;
-                    if (dropdownMenu) {
-                        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-                    }
-                });
-            }
-
-            // Contoh sederhana untuk menampilkan/menyembunyikan menu mobile (jika ada tombol hamburger)
-            const hamburger = document.querySelector('.hamburger'); // Anda perlu menambahkan elemen ini ke HTML jika ingin menu mobile
-            const navLinksMobile = document.querySelector('.nav-links');
-            if (hamburger && navLinksMobile) {
-                hamburger.addEventListener('click', function() {
-                    navLinksMobile.classList.toggle('active');
-                });
-            }
-        });
-
-        function logout() {
-            // Implementasi fungsi logout Anda di sini
-            alert('Logout berhasil (implementasi sebenarnya ada di script.js)');
-        }
-
-        function search() {
-            const searchTerm = document.getElementById('search-bar').value;
-            alert(`Mencari: ${searchTerm} (implementasi pencarian ada di script.js)`);
-        }
-    </script>
 </body>
 </html>
