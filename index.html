@@ -4,25 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TEMTER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              poppins: ['Poppins', 'sans-serif'],
-            },
-            colors: {
-              custom: '#9065C7',
-              customGray: '#EDEDED'
-            },
-          },
-        },
-      }
-    </script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              poppins: ['Poppins', 'sans-serif'],
+              sans: ['Instrument Sans', 'sans-serif'], // Default sans font
+            },
+            colors: {
+              custom: '#9065C7',
+              customGray: '#EDEDED'
+            },
+          },
+        },
+      }
+    </script>
   </head>
-  <body class="bg-black text-white min-h-screen flex flex-col justify-between">
+  <body class="bg-black text-white min-h-screen flex flex-col justify-between font-sans">
     <!-- Header -->
     <header class="p-6 flex justify-start items-center">
       <div class="font-poppins font-semibold flex flex-col leading-[0.7]">
