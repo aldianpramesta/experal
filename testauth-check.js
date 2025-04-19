@@ -10,7 +10,7 @@ const auth = firebase.auth();
 
 // Data langganan manual
 const akses = {
-  "aldianpramesta@gmail.com": {
+  "@gmail.com": {
     produk: ["produkA"],
     expiredAt: "2025-05-10"
   },
