@@ -55,7 +55,7 @@ function checkAccess(produkYangDiminta) {
     } else {
       console.log("❌ Akses ditolak.");
       alert("Akses kamu tidak valid untuk produk ini.");
-      window.location.href = "testno-access.html";
+      window.location.href = "no-access.html";
     }
 
     unsubscribe(); // Stop listener
