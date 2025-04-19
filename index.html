@@ -8,64 +8,67 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              poppins: ['Poppins', 'sans-serif'],
-              sans: ['Instrument Sans', 'sans-serif'], // Default sans font
-            },
-            colors: {
-              custom: '#9065C7',
-              customGray: '#EDEDED'
-            },
-          },
-        },
-      }
-    </script>
-  </head>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              poppins: ['Poppins', 'sans-serif'],
+              sans: ['Instrument Sans', 'sans-serif'], // Default sans font
+            },
+            colors: {
+              custom: '#9065C7',
+              customGray: '#EDEDED'
+            },
+          },
+        },
+      }
+    </script>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+      import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
+        authDomain: "temter-df972.firebaseapp.com",
+        projectId: "temter-df972",
+        storageBucket: "temter-df972.appspot.com",
+        messagingSenderId: "224267552779",
+        appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
+        measurementId: "G-CNYXFR6RKF"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider();
+
+      function loginWithGoogle() {
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            const email = result.user.email;
+            // GANTI ini dengan email pembeli yang diizinkan
+            const allowedEmails = ["aldianpramesta@gmail.com", "emailpembeli2@gmail.com"]; 
+
+            if (allowedEmails.includes(email)) {
+              // Redirect ke dashboard.html jika email terdaftar
+              window.location.href = "experal1.html"; 
+            } else {
+              alert("Akun belum terdaftar sebagai pembeli.");
+              // Sign out pengguna jika email tidak terdaftar
+              signOut(auth); 
+            }
+          })
+          .catch((error) => {
+            // Tangani error saat login
+            alert("Login gagal: " + error.message); 
+          });
+      }
+
+      // Ekspos fungsi loginWithGoogle ke window agar bisa dipanggil dari HTML
+      window.loginWithGoogle = loginWithGoogle;
+    </script>
+    </head>
   <body class="bg-black text-white min-h-screen flex flex-col justify-between font-sans">
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
-    authDomain: "temter-df972.firebaseapp.com",
-    projectId: "temter-df972",
-    storageBucket: "temter-df972.appspot.com",
-    messagingSenderId: "224267552779",
-    appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
-    measurementId: "G-CNYXFR6RKF"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
-
-  function loginWithGoogle() {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const email = result.user.email;
-        const allowedEmails = ["aldianpramesta@gmail.com", "emailpembeli2@gmail.com"]; // GANTI ini
-
-        if (allowedEmails.includes(email)) {
-          window.location.href = "experal1.html";
-        } else {
-          alert("Akun belum terdaftar sebagai pembeli.");
-          signOut(auth);
-        }
-      })
-      .catch((error) => {
-        alert("Login gagal: " + error.message);
-      });
-  }
-
-  window.loginWithGoogle = loginWithGoogle;
-</script>
-
-    
-    <!-- Header -->
     <header class="p-6 flex justify-start items-center">
       <div class="font-poppins font-semibold flex flex-col leading-[0.7]">
         <span class="text-base text-customGray text-custom tracking-[-0.04em]">ALDIAN PRAMESTA</span>
@@ -73,7 +76,6 @@
       </div>
     </header>
 
-    <!-- Main Content -->
     <main class="flex-1 flex flex-col items-center justify-center text-center px-4">
       <h1 class="text-4xl md:text-6xl font-extrabold text-gray-300 mb-4">
         Tempat orang yang peka
@@ -81,15 +83,14 @@
       <p class="text-xl text-gray-500 mb-8">
         Bagi yang sudah beli silahkan <br />masuk kedalam
       </p>
-      <a
-        href="login.html"
+      <button
+        onclick="loginWithGoogle()" 
         class="bg-neutral-900 hover:bg-neutral-800 text-white px-6 py-3 rounded-xl shadow-md transition"
       >
-      <button onclick="loginWithGoogle()">Login dengan Google</button>
-      </a>
-    </main>
+        Masuk dengan Google
+      </button>
+      </main>
 
-    <!-- Footer -->
     <footer class="text-sm text-gray-500 text-right px-6 py-4">
       ©2025
     </footer>
