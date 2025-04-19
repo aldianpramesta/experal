@@ -1,3 +1,4 @@
+// Firebase google sign in start
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 const auth = getAuth();
@@ -17,3 +18,4 @@ signInWithPopup(auth, provider)
   .catch((error) => {
     console.error(error);
   });
+// Firebase google sing in end
