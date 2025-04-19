@@ -1,0 +1,34 @@
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
+    authDomain: "temter-df972.firebaseapp.com",
+    projectId: "temter-df972",
+    storageBucket: "temter-df972.firebasestorage.app",
+    messagingSenderId: "224267552779",
+    appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
+    measurementId: "G-CNYXFR6RKF"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  const whitelist = ["aldianpramesta@gmail.com", "email2@gmail.com"]; // Ganti dengan daftar Gmail pembeli
+
+  function login() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+      .then((result) => {
+        const email = result.user.email;
+        if (whitelist.includes(email)) {
+          alert("Selamat datang! Anda punya akses.");
+          window.location.href = "experal1.html"; // Arahkan ke halaman modul
+        } else {
+          alert("Maaf, Anda belum diberi akses.");
+          auth.signOut();
+        }
+      })
+      .catch((error) => {
+        console.error("Login error", error);
+      });
+  }
+</script>
