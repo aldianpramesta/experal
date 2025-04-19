@@ -35,8 +35,8 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // ⚠️ Ganti ini sesuai field modul di Firestore, misalnya: "modulA", "modulB", "modulZ"
-    const namaModul = "modulA"; // ← GANTI INI SAJA untuk menyesuaikan dengan nama field di Firestore
+    // ⚠️ Ganti ini sesuai field modul di Firestore, misalnya: "modula", "modulB", "modulZ"
+    const namaModul = "modula"; // ← GANTI INI SAJA untuk menyesuaikan dengan nama field di Firestore
 
     // 🔐 verified firebase subscription, kick jika belum login
     onAuthStateChanged(auth, async (user) => {
