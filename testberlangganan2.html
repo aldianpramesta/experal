@@ -11,8 +11,8 @@
   <h2>Login dengan Google</h2>
 
   <!-- Tombol login ke modul -->
-  <button onclick="loginModul('modulA')">Login Modul A</button>
-  <button onclick="loginModul('modulB')">Login Modul B</button>
+  <button onclick="loginModul('modula')">Login Modul A</button>
+  <button onclick="loginModul('modulb')">Login Modul B</button>
 
   <script type="module">
     // Inisialisasi firebase
@@ -52,7 +52,7 @@
         }
 
         const userData = userSnap.data(); // Ambil semua data user
-        const modulData = userData[namaModul]; // Ambil data field modul yang diminta (modulA, modulB, dll)
+        const modulData = userData[namaModul]; // Ambil data field modul yang diminta (modula, modulb, dll)
 
         // Kalau user belum aktif atau belum beli modul
         if (!modulData || !modulData.aktif) {
