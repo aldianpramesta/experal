@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Modul A</title>
+  <title>Modul A</title> <!-- // Ganti ini sesuai nama modul yang sedang diakses -->
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 </head>
 <body>
-  <h2 id="judul">Memuat Modul A...</h2>
+  <h2 id="judul">Memuat Modul A...</h2> <!-- // Ganti teks ini juga sesuai nama modul -->
   <div id="konten" style="display: none;">
-    <!-- Konten Modul A di sini -->
-    <p>Selamat datang di Modul A! 🎉</p>
+    <!-- Konten Modul di sini -->
+    <p>Selamat datang di Modul A! 🎉</p> <!-- // Ganti teks sambutan sesuai modul -->
   </div>
 
   <script type="module">
+    // Firebase Import
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+    // Firebase Config (biarkan tetap)
     const firebaseConfig = {
       apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
       authDomain: "temter-df972.firebaseapp.com",
@@ -33,11 +35,14 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Tunggu user login
+    // ⚠️ Ganti ini sesuai field modul di Firestore, misalnya: "modulA", "modulB", "modulZ"
+    const namaModul = "modulA"; // ← GANTI INI SAJA untuk menyesuaikan dengan nama field di Firestore
+
+    // 🔐 verified firebase subscription, kick jika belum login
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         alert("Anda belum login.");
-        window.location.href = "index.html";
+        window.location.href = "index.html"; // ⛔ kick balik ke halaman login
         return;
       }
 
@@ -53,27 +58,27 @@
       }
 
       const userData = userSnap.data();
-      const modulA = userData.modulA;
+      const modul = userData[namaModul]; // ✅ ambil data berdasarkan nama modul yang kita tentukan
 
-      if (!modulA || !modulA.aktif) {
-        alert("Anda tidak memiliki akses ke Modul A.");
+      if (!modul || !modul.aktif) {
+        alert("Anda tidak memiliki akses ke modul ini.");
         await signOut(auth);
         window.location.href = "index.html";
         return;
       }
 
       const now = new Date();
-      const expiredDate = modulA.expired.toDate();
+      const expiredDate = modul.expired.toDate();
 
       if (now > expiredDate) {
-        alert("Langganan Anda untuk Modul A sudah habis.");
+        alert("Langganan Anda untuk modul ini sudah habis.");
         await signOut(auth);
         window.location.href = "index.html";
         return;
       }
 
-      // Jika semua aman, tampilkan konten
-      document.getElementById("judul").textContent = "Modul A";
+      // ✅ semua valid, tampilkan konten
+      document.getElementById("judul").textContent = `Modul ${namaModul.toUpperCase()}`;
       document.getElementById("konten").style.display = "block";
     });
   </script>
