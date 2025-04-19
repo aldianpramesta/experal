@@ -5,7 +5,6 @@
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  <!-- Include auth-check -->
   <script src="auth-check.js"></script>
 </head>
 <body>
@@ -13,8 +12,8 @@
   <p>Ini adalah konten eksklusif untuk pembeli produk A.</p>
 
   <script>
-    // Cek akses setelah halaman siap
-    window.addEventListener("load", function() {
+    window.addEventListener("load", function () {
+      console.log("Memanggil checkAccess...");
       checkAccess("produkB");
     });
   </script>
