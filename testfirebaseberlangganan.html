@@ -9,7 +9,8 @@
 </head>
 <body>
   <h2>Login dengan Google</h2>
-  <button onclick="login()">Login Modul A</button>
+  <button onclick="loginModulA()">Login Modul A</button>
+  <button onclick="loginModulB()">Login Modul B</button>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
@@ -31,7 +32,8 @@
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
-    window.login = async function() {
+    // Fungsi untuk login dan cek akses ke Modul A
+    window.loginModulA = async function() {
       try {
         const result = await signInWithPopup(auth, provider);
         const email = result.user.email;
@@ -64,6 +66,47 @@
 
         alert("Akses diberikan! Masuk ke Modul A");
         window.location.href = "modula.html";
+
+      } catch (error) {
+        console.error("Login error", error);
+        alert("Terjadi kesalahan saat login.");
+      }
+    };
+
+    // Fungsi untuk login dan cek akses ke Modul B
+    window.loginModulB = async function() {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const email = result.user.email;
+        const userRef = doc(db, "users", email);
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+          alert("Email Anda belum terdaftar.");
+          await signOut(auth);
+          return;
+        }
+
+        const userData = userSnap.data();
+        const modulB = userData.modulB;
+
+        if (!modulB || !modulB.aktif) {
+          alert("Anda tidak memiliki akses ke Modul B.");
+          await signOut(auth);
+          return;
+        }
+
+        const now = new Date();
+        const expiredDate = modulB.expired.toDate(); // Timestamp → Date
+
+        if (now > expiredDate) {
+          alert("Langganan Anda untuk Modul B telah habis.");
+          await signOut(auth);
+          return;
+        }
+
+        alert("Akses diberikan! Masuk ke Modul B");
+        window.location.href = "modulb.html";
 
       } catch (error) {
         console.error("Login error", error);
