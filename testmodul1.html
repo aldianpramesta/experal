@@ -5,16 +5,71 @@
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  <!-- Auth check -->
-  <script src="auth-check.js"></script>
 </head>
 <body>
   <h1>Selamat datang di Modul A</h1>
   <p>Ini adalah konten eksklusif untuk pembeli produk A.</p>
 
   <script>
-    // Cek apakah user punya akses ke produkA
-    checkAccess("produkB");
+    // Firebase setup
+    const firebaseConfig = {
+      apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
+      authDomain: "temter-df972.firebaseapp.com",
+      projectId: "temter-df972",
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Data langganan manual
+    const akses = {
+      // Kosongin ini untuk testing usiran
+      //"aldianpramesta@gmail.com": {
+      //  produk: ["produkA"],
+      //  expiredAt: "2025-05-10"
+      //},
+      "email2@gmail.com": {
+        produk: ["produkB"],
+        expiredAt: "2025-06-01"
+      }
+    };
+
+    // Fungsi cek tanggal
+    function isStillActive(expiredAt) {
+      const today = new Date().toISOString().split("T")[0];
+      return expiredAt >= today;
+    }
+
+    // Fungsi pengecekan akses
+    function checkAccess(produkYangDiminta) {
+      console.log("Memeriksa akses untuk:", produkYangDiminta);
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          console.log("User login:", user.email);
+          const email = user.email;
+          const userData = akses[email];
+
+          if (
+            userData &&
+            userData.produk.includes(produkYangDiminta) &&
+            isStillActive(userData.expiredAt)
+          ) {
+            console.log("✅ Akses diberikan untuk:", produkYangDiminta);
+          } else {
+            console.log("❌ Akses ditolak:", produkYangDiminta);
+            alert("Akses kamu tidak valid untuk produk ini.");
+            window.location.href = "no-access.html";
+          }
+        } else {
+          console.log("❗ Belum login");
+          alert("Silakan login terlebih dahulu.");
+          window.location.href = "index.html";
+        }
+      });
+    }
+
+    // Panggil fungsi
+    checkAccess("produkA"); // ganti produk sesuai halaman
   </script>
 </body>
 </html>
