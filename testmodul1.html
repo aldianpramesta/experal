@@ -3,18 +3,20 @@
 <head>
   <title>Modul A</title>
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js" defer></script>
   <!-- Auth check -->
-  <script src="auth-check.js"></script>
+  <script src="auth-check.js" defer></script>
 </head>
 <body>
   <h1>Selamat datang di Modul A</h1>
   <p>Ini adalah konten eksklusif untuk pembeli produk A.</p>
 
   <script>
-    // Cek apakah user punya akses ke produkA, ini bakal ngambil data dari auth-check.js
-    checkAccess("produkB");
+    // Delay panggilan sampai semua script dimuat
+    window.addEventListener("load", function() {
+      checkAccess("produkB");
+    });
   </script>
 </body>
 </html>
