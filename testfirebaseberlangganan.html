@@ -11,8 +11,8 @@
   <h2>Login dengan Google</h2>
 
   <!-- // tombol login ke modul, sesuai dengan field di Firestore -->
-  <button onclick="loginModul('modulA')">Login Modul A</button>
-  <button onclick="loginModul('modulB')">Login Modul B</button>
+  <button onclick="loginModul('modula')">Login Modul A</button>
+  <button onclick="loginModul('modulb')">Login Modul B</button>
 
   <script type="module">
     // // inisialisasi firebase
@@ -52,7 +52,7 @@
         }
 
         const userData = userSnap.data(); // // ambil semua data user
-        const modulData = userData[namaModul]; // // ambil data field modul yang diminta (modulA, modulB, dll)
+        const modulData = userData[namaModul]; // // ambil data field modul yang diminta (modula, modulb, dll)
 
         // // kalau user belum aktif atau belum beli modul
         if (!modulData || !modulData.aktif) {
@@ -72,7 +72,7 @@
         }
 
         // // kalau semua aman, redirect ke halaman modul
-        const halamanTujuan = `${namaModul.toLowerCase()}.html`; // // contoh: modulA → modula.html
+        const halamanTujuan = `${namaModul.toLowerCase()}.html`; // // contoh: modula → modula.html
         alert(`Akses diberikan! Masuk ke ${namaModul}`);
         window.location.href = halamanTujuan;
 
