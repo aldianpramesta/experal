@@ -38,7 +38,7 @@ function checkAccess(produkYangDiminta) {
   const unsubscribe = auth.onAuthStateChanged((user) => {
     if (!user) {
       alert("Silakan login terlebih dahulu.");
-      window.location.href = "testfirebasegoogle.html";
+      window.location.href = "index.html";
       return;
     }
 
