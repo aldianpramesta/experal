@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  // verified firebase v2, login via google, waktu akses kedarluasa dari firebase
   <title>Test Login Google</title>
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
@@ -10,14 +9,18 @@
 </head>
 <body>
   <h2>Login dengan Google</h2>
-  <button onclick="loginModulA()">Login Modul A</button>
-  <button onclick="loginModulB()">Login Modul B</button>
+
+  <!-- // tombol login ke modul, sesuai dengan field di Firestore -->
+  <button onclick="loginModul('modulA')">Login Modul A</button>
+  <button onclick="loginModul('modulB')">Login Modul B</button>
 
   <script type="module">
+    // // inisialisasi firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+    // // konfigurasi firebase project kamu
     const firebaseConfig = {
       apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
       authDomain: "temter-df972.firebaseapp.com",
@@ -28,89 +31,53 @@
       measurementId: "G-CNYXFR6RKF"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const provider = new GoogleAuthProvider();
+    const app = initializeApp(firebaseConfig); // // nyalain firebase
+    const auth = getAuth(app); // // inisialisasi auth
+    const db = getFirestore(app); // // inisialisasi firestore
+    const provider = new GoogleAuthProvider(); // // login google
 
-    // Fungsi untuk login dan cek akses ke Modul A
-    window.loginModulA = async function() {
+    // // fungsi umum untuk login ke modul manapun
+    window.loginModul = async function(namaModul) {
       try {
-        const result = await signInWithPopup(auth, provider);
-        const email = result.user.email;
-        const userRef = doc(db, "users", email);
-        const userSnap = await getDoc(userRef);
+        const result = await signInWithPopup(auth, provider); // // popup login google
+        const email = result.user.email; // // ambil email user
+        const userRef = doc(db, "users", email); // // referensi dokumen user di firestore
+        const userSnap = await getDoc(userRef); // // ambil data user dari firestore
 
+        // // kalau data gak ada di firestore
         if (!userSnap.exists()) {
           alert("Email Anda belum terdaftar.");
+          await signOut(auth); // // keluarin user
+          return;
+        }
+
+        const userData = userSnap.data(); // // ambil semua data user
+        const modulData = userData[namaModul]; // // ambil data field modul yang diminta (modulA, modulB, dll)
+
+        // // kalau user belum aktif atau belum beli modul
+        if (!modulData || !modulData.aktif) {
+          alert(`Anda tidak memiliki akses ke ${namaModul}.`);
           await signOut(auth);
           return;
         }
 
-        const userData = userSnap.data();
-        const modulA = userData.modulA;
+        const now = new Date(); // // waktu sekarang
+        const expiredDate = modulData.expired.toDate(); // // waktu kedaluwarsa dari firebase
 
-        if (!modulA || !modulA.aktif) {
-          alert("Anda tidak memiliki akses ke Modul A.");
-          await signOut(auth);
-          return;
-        }
-
-        const now = new Date();
-        const expiredDate = modulA.expired.toDate(); // Timestamp → Date
-
+        // // kalau sudah lewat tanggal expired
         if (now > expiredDate) {
-          alert("Langganan Anda untuk Modul A telah habis.");
+          alert(`Langganan Anda untuk ${namaModul} telah habis.`);
           await signOut(auth);
           return;
         }
 
-        alert("Akses diberikan! Masuk ke Modul A");
-        window.location.href = "modula.html";
+        // // kalau semua aman, redirect ke halaman modul
+        const halamanTujuan = `${namaModul.toLowerCase()}.html`; // // contoh: modulA → modula.html
+        alert(`Akses diberikan! Masuk ke ${namaModul}`);
+        window.location.href = halamanTujuan;
 
       } catch (error) {
-        console.error("Login error", error);
-        alert("Terjadi kesalahan saat login.");
-      }
-    };
-
-    // Fungsi untuk login dan cek akses ke Modul B
-    window.loginModulB = async function() {
-      try {
-        const result = await signInWithPopup(auth, provider);
-        const email = result.user.email;
-        const userRef = doc(db, "users", email);
-        const userSnap = await getDoc(userRef);
-
-        if (!userSnap.exists()) {
-          alert("Email Anda belum terdaftar.");
-          await signOut(auth);
-          return;
-        }
-
-        const userData = userSnap.data();
-        const modulB = userData.modulB;
-
-        if (!modulB || !modulB.aktif) {
-          alert("Anda tidak memiliki akses ke Modul B.");
-          await signOut(auth);
-          return;
-        }
-
-        const now = new Date();
-        const expiredDate = modulB.expired.toDate(); // Timestamp → Date
-
-        if (now > expiredDate) {
-          alert("Langganan Anda untuk Modul B telah habis.");
-          await signOut(auth);
-          return;
-        }
-
-        alert("Akses diberikan! Masuk ke Modul B");
-        window.location.href = "modulb.html";
-
-      } catch (error) {
-        console.error("Login error", error);
+        console.error("Login error", error); // // tangkap error login
         alert("Terjadi kesalahan saat login.");
       }
     };
