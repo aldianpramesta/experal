@@ -14,7 +14,7 @@ const auth = firebase.auth();
 // Data akses per email
 const akses = {
   "aldianpramesta@gmail.com": {
-    produk: ["produkB"],
+    produk: ["produkA"],
     expiredAt: "2025-05-10"
   },
   "email2@gmail.com": {
