@@ -1,34 +1,48 @@
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
-    authDomain: "temter-df972.firebaseapp.com",
-    projectId: "temter-df972",
-    storageBucket: "temter-df972.firebasestorage.app",
-    messagingSenderId: "224267552779",
-    appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
-    measurementId: "G-CNYXFR6RKF"
-  };
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Login Google</title>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+</head>
+<body>
+  <h2>Login dengan Google</h2>
+  <button onclick="login()">Login</button>
 
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
+      authDomain: "temter-df972.firebaseapp.com",
+      projectId: "temter-df972",
+      storageBucket: "temter-df972.firebasestorage.app",
+      messagingSenderId: "224267552779",
+      appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
+      measurementId: "G-CNYXFR6RKF"
+    };
 
-  const whitelist = ["aldianpramesta@gmail.com", "email2@gmail.com"]; // Ganti dengan daftar Gmail pembeli
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-  function login() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider)
-      .then((result) => {
-        const email = result.user.email;
-        if (whitelist.includes(email)) {
-          alert("Selamat datang! Anda punya akses.");
-          window.location.href = "experal1.html"; // Arahkan ke halaman modul
-        } else {
-          alert("Maaf, Anda belum diberi akses.");
-          auth.signOut();
-        }
-      })
-      .catch((error) => {
-        console.error("Login error", error);
-      });
-  }
-</script>
+    const whitelist = ["aldianpramesta@gmail.com", "email2@gmail.com"]; // Ganti dengan daftar Gmail pembeli
+
+    function login() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          const email = result.user.email;
+          if (whitelist.includes(email)) {
+            alert("Selamat datang! Anda punya akses.");
+            window.location.href = "experal1.html";
+          } else {
+            alert("Maaf, Anda belum diberi akses.");
+            auth.signOut();
+          }
+        })
+        .catch((error) => {
+          console.error("Login error", error);
+        });
+    }
+  </script>
+</body>
+</html>
