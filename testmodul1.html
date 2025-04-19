@@ -21,9 +21,8 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // Data langganan manual
     const akses = {
-      // Kosongin ini untuk testing usiran
+      // Kosongin untuk test
       //"aldianpramesta@gmail.com": {
       //  produk: ["produkA"],
       //  expiredAt: "2025-05-10"
@@ -34,42 +33,44 @@
       }
     };
 
-    // Fungsi cek tanggal
     function isStillActive(expiredAt) {
       const today = new Date().toISOString().split("T")[0];
       return expiredAt >= today;
     }
 
-    // Fungsi pengecekan akses
     function checkAccess(produkYangDiminta) {
-      console.log("Memeriksa akses untuk:", produkYangDiminta);
-      auth.onAuthStateChanged((user) => {
-        if (user) {
-          console.log("User login:", user.email);
-          const email = user.email;
-          const userData = akses[email];
-
-          if (
-            userData &&
-            userData.produk.includes(produkYangDiminta) &&
-            isStillActive(userData.expiredAt)
-          ) {
-            console.log("✅ Akses diberikan untuk:", produkYangDiminta);
-          } else {
-            console.log("❌ Akses ditolak:", produkYangDiminta);
-            alert("Akses kamu tidak valid untuk produk ini.");
-            window.location.href = "no-access.html";
-          }
-        } else {
-          console.log("❗ Belum login");
+      console.log("Menunggu user login...");
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (!user) {
           alert("Silakan login terlebih dahulu.");
           window.location.href = "index.html";
+          return;
         }
+
+        const email = user.email;
+        const userData = akses[email];
+        console.log("Login sebagai:", email);
+
+        if (
+          userData &&
+          userData.produk.includes(produkYangDiminta) &&
+          isStillActive(userData.expiredAt)
+        ) {
+          console.log("✅ Akses diberikan.");
+        } else {
+          console.log("❌ Akses ditolak.");
+          alert("Akses kamu tidak valid untuk produk ini.");
+          window.location.href = "no-access.html";
+        }
+
+        unsubscribe(); // stop listening
       });
     }
 
-    // Panggil fungsi
-    checkAccess("produkA"); // ganti produk sesuai halaman
+    // Tunggu sampai halaman benar-benar siap
+    window.addEventListener("load", function() {
+      checkAccess("produkA");
+    });
   </script>
 </body>
 </html>
