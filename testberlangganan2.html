@@ -41,10 +41,15 @@
     // // Tangani hasil redirect login (khusus mobile)
     getRedirectResult(auth)
       .then(async (result) => {
-        if (result) {
+        // Tambahan untuk debug dan menghindari error jika result kosong
+        console.log("Hasil redirect login:", result);
+
+        if (result && result.user) {
           const modul = localStorage.getItem("modulTujuan") || "modula";
           localStorage.removeItem("modulTujuan");
           await prosesLogin(result, modul);
+        } else {
+          console.log("Tidak ada hasil redirect login.");
         }
       })
       .catch((error) => {
@@ -82,14 +87,26 @@
       const userData = userSnap.data();
       const modulData = userData[namaModul];
 
+      console.log("Data user:", userData); // // Tambahan debug
+      console.log("Data modul:", modulData); // // Tambahan debug
+
       if (!modulData || !modulData.aktif) {
         alert(`Anda tidak memiliki akses ke ${namaModul}.`);
         await signOut(auth);
         return;
       }
 
+      let expiredDate;
+      try {
+        expiredDate = modulData.expired.toDate();
+      } catch (e) {
+        console.error("Format tanggal expired salah:", e);
+        alert("Terjadi kesalahan data tanggal kadaluarsa.");
+        await signOut(auth);
+        return;
+      }
+
       const now = new Date();
-      const expiredDate = modulData.expired.toDate();
 
       if (now > expiredDate) {
         alert(`Langganan Anda untuk ${namaModul} telah habis.`);
