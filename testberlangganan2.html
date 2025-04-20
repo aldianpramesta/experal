@@ -35,6 +35,9 @@
     const auth = getAuth(app); // Inisialisasi auth
     const db = getFirestore(app); // Inisialisasi firestore
     const provider = new GoogleAuthProvider(); // Login Google
+    provider.setCustomParameters({
+      prompt: 'select_account' // ← Ini memaksa pemilihan akun setiap login
+    });
 
     // Fungsi umum untuk login ke modul manapun
     window.loginModul = async function(namaModul) {
