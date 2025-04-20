@@ -42,7 +42,9 @@
     getRedirectResult(auth)
       .then(async (result) => {
         if (result) {
-          await prosesLogin(result, "modulA"); // Default redirect ke modulA, bisa kamu sesuaikan
+          const modul = localStorage.getItem("modulTujuan") || "modulA";
+          localStorage.removeItem("modulTujuan");
+          await prosesLogin(result, modul);
         }
       })
       .catch((error) => {
@@ -53,7 +55,8 @@
     window.loginModul = async function(namaModul) {
       try {
         if (/Mobi|Android/i.test(navigator.userAgent)) {
-          await signInWithRedirect(auth, provider); // Mobile pakai redirect
+          localStorage.setItem("modulTujuan", namaModul); // Simpan nama modul
+          await signInWithRedirect(auth, provider);       // Mobile pakai redirect
         } else {
           const result = await signInWithPopup(auth, provider); // Desktop pakai popup
           await prosesLogin(result, namaModul);
