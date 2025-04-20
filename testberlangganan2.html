@@ -39,7 +39,7 @@
     // Fungsi umum untuk login ke modul manapun
     window.loginModul = async function(namaModul) {
       try {
-        const result = await signInWithPopup(auth, provider); // Popup login Google
+        const result = await signInWithRedirect(auth, provider); // Popup login Google
         const email = result.user.email; // Ambil email user
         const userRef = doc(db, "users", email); // Referensi dokumen user di Firestore
         const userSnap = await getDoc(userRef); // Ambil data user dari Firestore
