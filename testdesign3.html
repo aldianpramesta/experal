@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEMTER</title>
+  <style>
+    /* Mengimpor font dari Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
+
+    body {
+      margin: 0;
+      background-color: #000; /* Warna latar belakang hitam */
+      color: #ffffff; /* Warna teks default putih */
+      font-family: 'Instrument Sans', sans-serif; /* Font utama */
+    }
+
+    section {
+      width: 100%; /* Lebar penuh */
+      display: flex; /* Flexbox layout */
+      flex-direction: column; /* Susun elemen ke bawah */
+      justify-content: center;
+      align-items: center; /* Posisi tengah secara horizontal */
+    }
+
+/* ========== Animasi Global, lagi diilangin dulu ga ada yang pas ========== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+    
+    /* Section 1 - Judul Nama */
+    .section-1 {
+      height: auto; /* Otomatis mengikuti isi */
+      padding: 32px 16px; /* Spasi atas bawah 32px, samping 16px */
+      display: block; /* Supaya kontennya gak center (default block) */
+    }
+    .section-1 .judul {
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: -0.04em; /* Spasi antar huruf lebih rapat */
+      line-height: 1em;
+      padding-left: 32px; /* ← ini tambahan baru */
+    }
+    .section-1 .temter {
+      font-family: 'Instrument Serif', serif; /* Font khusus untuk TEMTER */
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* Section 2 - Judul Tengah */
+    .section-2 {
+      height: auto;
+      padding: 40px 16px; /* Spasi agar tidak nempel ke section lain */
+      text-align: center;
+    }
+    .section-2 h2 {
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 1.2em;
+      margin: 0; /* Hilangkan margin bawaan */
+    }
+
+    /* Section 3 - Info Utama */
+    .section-3 {
+      height: auto; /* Fleksibel berdasarkan isi */
+      padding: 40px 20px; /* Spasi atas bawah dan samping */
+      text-align: center;
+    }
+    .section-3 .info {
+      font-weight: 600;
+      font-size: 18px;
+      color: #B3B3B3; /* Abu-abu terang */
+      margin-bottom: 0px; /* Jarak ke elemen bawahnya */
+    }
+    .section-3 .village {
+      font-weight: bold;
+      font-size: 115px; /* Ukuran besar banget */
+      letter-spacing: -5px; /* Hurufnya saling rapat */
+      line-height: 110px;
+      color: #ffffff;
+      text-shadow: 0px 1px 2px rgba(0,0,0,0.5); /* Efek bayangan biar nendang */
+      margin-bottom: -16px;
+    }
+
+    .section-3 .quote {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.8em;
+      letter-spacing: 0em;
+      color: #ffffff;
+      white-space: pre-line; /* Supaya enter di teks quote tetap muncul */
+      margin: 0;
+    }
+
+    /* Section 4 - Modul Percintaan */
+.section-4 {
+  height: auto; /* auto agar menyesuaikan isi */
+  padding: 0px 16px; /* padding atas bawah besar, samping sedang */
+  text-align: center;
+}
+
+.section-4 .judul-modul {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 35px;
+  letter-spacing: -0.04em;
+  line-height: 1.8em;
+  margin-bottom: 0px;
+}
+
+.section-4 .video-wrapper {
+  margin-bottom: 0px;
+}
+
+.section-4 .deskripsi-modul {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 16px;
+  letter-spacing: -0.04em;
+  line-height: 1.8em;
+  margin: 0;
+}
+
+    .gate-button {
+      position: relative;
+      width: 200px;
+      height: 60px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: white;
+      overflow: hidden;
+      font-family: 'Instrument Sans', sans-serif;
+    }
+
+    .gate-button .gate {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      top: 0;
+      background: #38804B;
+      transition: transform 0.5s ease;
+      z-index: 1;
+    }
+
+    .gate-button .left {
+      left: 0;
+      border-right: 1px solid #333;
+    }
+
+    .gate-button .right {
+      right: 0;
+      border-left: 1px solid #333;
+    }
+
+    .gate-button .text {
+  position: relative;
+  z-index: 2;
+  color: #fff; /* ← ini bikin teks jadi merah */
+  transition: color 0.3s ease;
+      font-weight: bold;
+    }
+
+    .gate-button:hover .left {
+      transform: translateX(-100%);
+    }
+
+    .gate-button:hover .right {
+      transform: translateX(100%);
+    }
+
+    .gate-button:hover .text {
+      color: #966406;
+    }
+
+/* Section 5 - Pricing Cards */
+.section-5 {
+  height: 655px;
+  padding: 40px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pricing-wrapper {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.pricing-card {
+  background-color: #111111;
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  max-width: 360px;
+  height: 562px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.harga-durasi {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  margin-bottom: 45px;
+}
+
+.harga-durasi .harga {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+.harga-durasi .durasi {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  line-height: 15px;
+  color: #808080;
+}
+
+.pricing-card .judul-modul {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  color: #ffffff;
+  margin-bottom: 45px;
+  text-align: left;
+}
+
+.pricing-card .deskripsi {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 23.4px;
+  color: #808080;
+  margin-bottom: 80px;
+  text-align: left;
+}
+
+.pricing-card .keuntungan {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.pricing-card .fitur {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pricing-card .fitur li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.pricing-card .check {
+  font-size: 13px;
+  color: #ffffff;
+}
+
+.pricing-card .text {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  line-height: 15px;
+  color: #808080;
+}
+
+    
+  </style>
+</head>
+<body>
+
+  <!-- Section 1: Nama & Branding -->
+  <section class="section-1">
+    <div class="judul">
+      ALDIAN PRAMESTA <span class="temter">TEMTER</span>
+    </div>
+  </section>
+
+  <!-- Section 2: CTA atau ajakan -->
+  <section class="section-2">
+      <button class="gate-button">
+    <div class="gate left"></div>
+    <div class="gate right"></div>
+    <div class="text">MASUK</div>
+  </button>
+  </section>
+
+  <!-- Section 3: Info dan quote branding -->
+  <section class="section-3">
+    <div class="info">TEMTER GRATIS UNTUK PENGUNJUNG, INFO UNTUK MODUL PERCINTAAN GESER KEBAWAH</div>
+    <div class="village">TEMTER VILLAGE</div>
+    <div class="quote">
+"TAK APA - APA BELUM MENJADI SESUATU,
+TAK USAH BURU - BURU MENJADI APA YANG KAMU INGINKAN
+AKU HOKAGE ALDIAN SENSEI, AKAN MEMBANTUMU MENDAPATKANNYA DI DESA INI"
+    </div>
+  </section>
+  
+  <!-- Section 4: Modul Percintaan -->
+<section class="section-4">
+  <h3 class="judul-modul">MODUL PERCINTAAN PART 1 (GRATIS)</h3>
+  <div class="video-wrapper">
+    <iframe width="480" height="270" src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+      title="Video Modul" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <p class="deskripsi-modul">
+    Bagaimana cara orang yang tidak cakep dan tidak kaya, bisa mendapatkan pasangan ideal?
+  </p>
+</section>
+
+  <!-- Section 5: Pricing -->
+<section class="section-5">
+  <div class="pricing-wrapper">
+
+    <!-- Pricing Card 1 -->
+    <div class="pricing-card">
+      <div class="harga-durasi">
+        <span class="harga">Rp149.000</span>
+        <span class="durasi">/ 1 TAHUN</span>
+      </div>
+      <div class="judul-modul">LANGGANAN MODUL SETIA</div>
+      <div class="deskripsi">Dunia ini tidak seperti film</div>
+      <div class="keuntungan">Keuntungan</div>
+      <ul class="fitur">
+        <li><span class="check">✔</span> <span class="text">jutsu wajib</span></li>
+      </ul>
+    </div>
+
+    <!-- Pricing Card 2 -->
+    <div class="pricing-card">
+      <div class="harga-durasi">
+        <span class="harga">Rp149.000</span>
+        <span class="durasi">/ 1 TAHUN</span>
+      </div>
+      <div class="judul-modul">MODUL MINDSET & PERCAYA DIRI</div>
+      <div class="deskripsi">Sikapmu menentukan siapa yang datang</div>
+      <div class="keuntungan">Keuntungan</div>
+      <ul class="fitur">
+        <li><span class="check">✔</span> <span class="text">jutsu wajib</span></li>
+      </ul>
+    </div>
+
+    <!-- Pricing Card 3 -->
+    <div class="pricing-card">
+      <div class="harga-durasi">
+        <span class="harga">Rp149.000</span>
+        <span class="durasi">/ 1 TAHUN</span>
+      </div>
+      <div class="judul-modul">MODUL STRATEGI CINTA</div>
+      <div class="deskripsi">Mainnya gak asal deketin doang</div>
+      <div class="keuntungan">Keuntungan</div>
+      <ul class="fitur">
+        <li><span class="check">✔</span> <span class="text">jutsu wajib</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+</body>
+</html>
