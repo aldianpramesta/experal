@@ -1,125 +1,121 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TEMTER VILLAGE</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEMTER</title>
   <style>
+    /* // Global font */
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&family=Instrument+Serif:ital@1&display=swap');
+
     body {
-      background-color: black;
-      color: white;
-      font-family: 'Instrument Sans', sans-serif;
       margin: 0;
-      padding: 2rem;
-      text-align: center;
+      background-color: #000; /* // Biar teks putih kontras */
+      color: #fff;
+      font-family: 'Instrument Sans', sans-serif;
     }
 
-    .logo {
-      text-align: left;
-      font-weight: 700;
-      font-size: 1.2rem;
+    /* Section 1 */
+    .section-1 {
+      padding: 16px;
     }
-
-    .logo span {
+    .section-1 .nama {
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: -0.04em;
+      line-height: 1em;
+      color: #ffffff;
+    }
+    .section-1 .temter {
       font-family: 'Instrument Serif', serif;
       font-style: italic;
-      font-weight: 400;
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: -0.04em;
+      line-height: 1em;
+      color: #ffffff;
     }
 
-    .sub-header {
-      margin-top: 2rem;
-      font-size: 1.2rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
-    }
-
-    h1 {
-      font-size: 6rem;
-      font-weight: 700;
-      margin: 1rem 0;
-    }
-
-    .quote {
-      margin-top: 1rem;
-      font-size: 1rem;
-      line-height: 1.8;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .masuk {
-      font-size: 1.5rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-top: 2rem;
-    }
-
-    // ✅ Tambahkan gaya ini ke CSS kamu
-    .custom-style {
-      font-size: 12px;
-      font-family: sans-serif;
-      --token-7b448ef5-7ce1-495a-abeb-d5ce0eaca19f: rgb(255, 255, 255);
-      --token-d8ea1561-b58d-4e0b-b280-f2ffe2b6d5fa: rgb(10, 10, 10);
-      --token-89c4b510-5a86-46a0-8c68-3987c5766e8a: rgb(255, 255, 255);
-      --token-48559e7f-f35f-4ff5-ad85-0fc5d7a5b816: rgb(10, 10, 10);
-      --token-4f65569e-a737-44de-93fe-de76b1d56595: rgb(10, 11, 10);
-      --token-203d64de-8058-4b51-b189-5d693a26f8dd: rgb(10, 10, 10);
-      --token-51f63814-023e-4a1e-a9ff-2997269a8477: rgb(255, 255, 255);
-      --token-e2c1fb71-1eb7-44af-a585-b507de9274fb: rgb(10, 11, 10);
-      --token-1c958151-6074-445b-ae9f-556c9b296ae6: rgb(10, 10, 10);
-      --token-d810bcd2-8f2d-48a5-b002-9f157d05b195: rgb(255, 255, 255);
-      --token-d82cdffd-5792-4cac-aa31-d8e716020d8f: rgb(10, 10, 10);
-      --token-9345c87d-cba2-48d1-8228-3a157ca601dd: rgb(255, 255, 255);
-      --token-d013501d-fbb1-44eb-a45b-f4bd846b911f: rgb(255, 255, 255);
-      --token-04a3dd71-6315-4fbf-ab28-2f57028dee58: rgb(10, 10, 10);
-      --token-7db971c0-22d3-40a0-a973-34ddf415c1f1: rgb(10, 11, 10);
-      --token-e47e15cb-34d0-49cc-af3d-53d334ba8d5f: rgb(145, 75, 241);
-      --token-fbf061f4-5229-450c-bfa3-b6b8e07d9054: rgb(10, 10, 10);
-      --token-d8782617-50a1-4559-9546-24f0e7cdbb47: rgb(255, 255, 255);
-      --token-4b39c9cd-ad6d-42d8-95e9-08f551fa79bb: rgb(255, 255, 255);
-      --token-49c3d14e-4af4-4b3f-9abb-e0cbf0172724: rgb(153, 153, 153);
-      --token-4a6db714-8563-4e98-aa61-37c72048aa26: rgba(34, 34, 34, .1);
-      --framer-will-change-override: none;
-      --framer-aspect-ratio-supported: auto;
-      box-sizing: border-box;
-      -webkit-font-smoothing: inherit;
-      align-content: center;
-      align-items: center;
-      background-color: #000;
-      display: flex;
-      flex: none;
-      flex-direction: column;
-      flex-wrap: nowrap;
-      gap: 20px;
-      height: 28px;
-      justify-content: center;
-      overflow: hidden;
-      padding: 40px;
+    /* Section 2 */
+    .section-2 {
       position: relative;
       width: 100%;
+      height: 180px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .section-2 h2 {
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: bold;
+      font-size: 24px;
+      letter-spacing: 0em;
+      line-height: 1.2em;
+      color: #ffffff;
+    }
+
+    /* Section 3 */
+    .section-3 {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      padding: 16px;
+    }
+    .section-3 .info {
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.5em;
+      line-height: 1.2em;
+      color: #dddddd; /* // Gak disebut, jadi aku pake abu terang */
+    }
+    .section-3 .village {
+      font-weight: bold;
+      font-size: 115px;
+      letter-spacing: -5px;
+      line-height: 110px;
+      text-shadow: 0px 1px 2px rgba(0,0,0,0.5);
+    }
+    .section-3 .quote {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.8em;
+      letter-spacing: 0em;
+    }
+
+    /* Section 4 */
+    .section-4 {
+      width: 100%;
+      height: 140px;
     }
   </style>
 </head>
 <body>
-  <div class="logo">ALDIAN PRAMESTA <span>TEMTER</span></div>
 
-  <div class="masuk">MASUK KE TEMTER</div>
-
-  <div class="sub-header">
-    TEMTER GRATIS UNTUK PENGUNJUNG, INFO UNTUK MODUL PERCINTAAN GESER KEBAWAH
+  <!-- // Section 1 -->
+  <div class="section-1">
+    <div class="nama">ALDIAN PRAMESTA</div>
+    <div class="temter">TEMTER</div>
   </div>
 
-  <h1>TEMTER VILLAGE</h1>
-
-  <div class="quote">
-    "TAK APA - APA BELUM MENJADI SESUATU,<br />
-    TAK USAH BURU - BURU MENJADI APA YANG KAMU INGINKAN<br />
-    AKU HOKAGE ALDIAN SENSEI, AKAN MEMBANTUMU MENDAPATKANNYA DI DESA INI"
+  <!-- // Section 2 -->
+  <div class="section-2">
+    <h2>MASUK KE TEMTER</h2>
   </div>
 
-  // ✅ Tambahkan elemen berikut agar style-nya tampak di halaman
-  <div class="custom-style"></div>
+  <!-- // Section 3 -->
+  <div class="section-3">
+    <div class="info">TEMTER GRATIS UNTUK PENGUNJUNG, INFO UNTUK MODUL PERCINTAAN GESER KEBAWAH</div>
+    <div class="village">TEMTER VILLAGE</div>
+    <div class="quote">
+      TAK APA - APA BELUM MENJADI SESUATU,<br>
+      TAK USAH BURU - BURU MENJADI APA YANG KAMU INGINKAN<br>
+      AKU HOKAGE ALDIAN SENSEI, AKAN MEMBANTUMU MENDAPATKANNYA DI DESA INI
+    </div>
+  </div>
+
+  <!-- // Section 4 -->
+  <div class="section-4"></div>
+
 </body>
 </html>
