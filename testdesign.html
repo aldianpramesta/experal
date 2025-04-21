@@ -41,13 +41,16 @@
     .section-1 .judul .temter {
       font-family: 'Instrument Serif', serif;
       font-style: italic;
-      font-weight: regular; /* // Ditambahkan */
+      font-weight: 400; /* // Ubah dari bold ke 400 biar gak terlalu tebal */
     }
 
     /* Section 2 */
     .section-2 {
       height: 180px;
-      text-align: center;
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      text-align: center; /* // Tambahan buat pastiin isi di tengah */
     }
     .section-2 h2 {
       font-weight: bold;
@@ -55,6 +58,8 @@
       letter-spacing: 0em;
       line-height: 1.2em;
       color: #ffffff;
+      margin: 0; /* // Ditambahkan supaya teks benar-benar center */
+      text-align: center; /* // Supaya isi teks tetap rata tengah */
     }
 
     /* Section 3 */
