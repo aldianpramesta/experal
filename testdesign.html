@@ -5,85 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEMTER</title>
   <style>
-    /* // Global font import */
+    /* Mengimpor font dari Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
 
     body {
       margin: 0;
-      background-color: #000;
-      color: #ffffff; /* // Putih terang */
-      font-family: 'Instrument Sans', sans-serif;
+      background-color: #000; /* Warna latar belakang hitam */
+      color: #ffffff; /* Warna teks default putih */
+      font-family: 'Instrument Sans', sans-serif; /* Font utama */
     }
 
-    /* // General styling for sections */
     section {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
+      width: 100%; /* Lebar penuh */
+      display: flex; /* Flexbox layout */
+      flex-direction: column; /* Susun elemen ke bawah */
       justify-content: center;
-      align-items: center;
+      align-items: center; /* Posisi tengah secara horizontal */
     }
 
-    /* Section 1 */
+    /* Section 1 - Judul Nama */
     .section-1 {
-      height: auto; /* // Bisa diubah kalau kamu mau jarak section-1 lebih tinggi */
-      padding: 16px; /* // Tambah padding atas/bawah buat jarak vertikal */
-      display: block; /* // Supaya isi section kiri */
+      height: auto; /* Otomatis mengikuti isi */
+      padding: 32px 16px; /* Spasi atas bawah 32px, samping 16px */
+      display: block; /* Supaya kontennya gak center (default block) */
     }
     .section-1 .judul {
-      font-family: 'Instrument Sans', sans-serif;
       font-weight: bold;
       font-size: 16px;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.04em; /* Spasi antar huruf lebih rapat */
       line-height: 1em;
-      color: #ffffff;
     }
-    .section-1 .judul .temter {
-      font-family: 'Instrument Serif', serif;
+    .section-1 .temter {
+      font-family: 'Instrument Serif', serif; /* Font khusus untuk TEMTER */
       font-style: italic;
-      font-weight: 400; /* // Ubah dari bold ke 400 biar gak terlalu tebal */
+      font-weight: 400;
     }
 
-    /* Section 2 */
+    /* Section 2 - Judul Tengah */
     .section-2 {
-      height: 180px; /* // Ubah tinggi section ini buat jarak antar blok */
-      display: flex; /* // Supaya teks bisa ditaruh pas tengah */
-      justify-content: center;
-      align-items: center;
+      height: auto;
+      padding: 40px 16px; /* Spasi agar tidak nempel ke section lain */
       text-align: center;
     }
     .section-2 h2 {
       font-weight: bold;
       font-size: 24px;
-      letter-spacing: 0em;
       line-height: 1.2em;
-      color: #ffffff;
-      margin: 0; /* // Biar gak ada spasi tambahan */
-      text-align: center;
+      margin: 0; /* Hilangkan margin bawaan */
     }
 
-    /* Section 3 */
+    /* Section 3 - Info Utama */
     .section-3 {
-      height: 240px; /* // Ubah ini untuk kasih jarak vertikal antar section */
+      height: auto; /* Fleksibel berdasarkan isi */
+      padding: 40px 20px; /* Spasi atas bawah dan samping */
       text-align: center;
-      padding: 0 20px;
     }
     .section-3 .info {
       font-weight: 600;
       font-size: 18px;
-      letter-spacing: 0em;
-      line-height: 1.2em;
-      color: #B3B3B3;
-      margin-bottom: 10px; /* // Jarak bawah antar tulisan */
+      color: #B3B3B3; /* Abu-abu terang */
+      margin-bottom: 10px; /* Jarak ke elemen bawahnya */
     }
     .section-3 .village {
       font-weight: bold;
-      font-size: 115px;
-      letter-spacing: -5px;
+      font-size: 115px; /* Ukuran besar banget */
+      letter-spacing: -5px; /* Hurufnya saling rapat */
       line-height: 110px;
       color: #ffffff;
-      text-shadow: 0px 1px 2px rgba(0,0,0,0.5);
-      margin-bottom: 16px; /* // Jarak bawah ke teks berikutnya */
+      text-shadow: 0px 1px 2px rgba(0,0,0,0.5); /* Efek bayangan biar nendang */
+      margin-bottom: -16px;
     }
     .section-3 .quote {
       font-weight: 500;
@@ -91,31 +81,32 @@
       line-height: 1.8em;
       letter-spacing: 0em;
       color: #ffffff;
-      white-space: pre-line;
-      margin: 0; /* // Bisa tambah margin-top kalau mau turun */
+      white-space: pre-line; /* Supaya enter di teks quote tetap muncul */
+      margin: 0;
     }
 
-    /* Section 4 */
+    /* Section 4 - Ruang Kosong Penutup */
     .section-4 {
-      height: 140px; /* // Section kosong ini bisa jadi spasi tambahan bawah */
+      height: auto;
+      padding: 60px 16px; /* Tambah jarak ke bawah */
     }
   </style>
 </head>
 <body>
 
-  <!-- // Section 1 -->
+  <!-- Section 1: Nama & Branding -->
   <section class="section-1">
     <div class="judul">
       ALDIAN PRAMESTA <span class="temter">TEMTER</span>
     </div>
   </section>
 
-  <!-- // Section 2 -->
+  <!-- Section 2: CTA atau ajakan -->
   <section class="section-2">
     <h2>MASUK KE TEMTER</h2>
   </section>
 
-  <!-- // Section 3 -->
+  <!-- Section 3: Info dan quote branding -->
   <section class="section-3">
     <div class="info">TEMTER GRATIS UNTUK PENGUNJUNG, INFO UNTUK MODUL PERCINTAAN GESER KEBAWAH</div>
     <div class="village">TEMTER VILLAGE</div>
@@ -126,7 +117,7 @@ AKU HOKAGE ALDIAN SENSEI, AKAN MEMBANTUMU MENDAPATKANNYA DI DESA INI"
     </div>
   </section>
 
-  <!-- // Section 4 -->
+  <!-- Section 4: Bagian kosong (spacer/penutup) -->
   <section class="section-4"></section>
 
 </body>
