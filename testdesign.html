@@ -7,13 +7,27 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital,wght@1,400&display=swap');
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background-color: black;
+      background-color: #000000; // // disamain supaya full hitam
       color: white;
       font-family: 'Instrument Sans', sans-serif;
       margin: 0;
-      padding: 2rem;
+      padding: 0;
+      display: flex;
+      justify-content: center;
     }
+
+    .container {
+      max-width: 800px; // // bikin lebar pas seperti Framer
+      width: 100%;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
     .logo {
       text-align: left;
       font-weight: 700;
@@ -23,65 +37,66 @@
       text-transform: uppercase;
       color: rgb(255, 255, 255);
     }
+
     .logo span {
       font-family: 'Instrument Serif', serif;
       font-style: italic;
       font-weight: 400;
     }
+
     .masuk {
-      text-align: center;
       font-size: 24px;
       font-weight: 700;
       color: rgb(255, 255, 255);
       text-transform: uppercase;
-      margin-top: 1rem;
-    }
-    .sub-header {
-      text-align: center;
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      line-height: 20px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
       margin-top: 2rem;
     }
+
+    .sub-header {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      line-height: 24px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-top: 1.5rem;
+    }
+
     h1 {
-      text-align: center;
-      font-size: 90px;
+      font-size: 96px; // // diperbesar biar pas
       font-weight: 700;
       letter-spacing: -4px;
-      line-height: 70px;
+      line-height: 1em;
       text-transform: uppercase;
       color: rgb(255, 255, 255);
-      margin: 1rem 0;
+      margin: 2rem 0 1rem 0;
     }
+
     .quote {
-      text-align: center;
       font-size: 18px;
       font-weight: 500;
       line-height: 1.8em;
-      max-width: 800px;
-      margin: 1rem auto 0 auto;
       color: rgb(255, 255, 255);
     }
   </style>
 </head>
 <body>
-  <div class="logo">ALDIAN PRAMESTA <span>TEMTER</span></div>
+  <div class="container">
+    <div class="logo">ALDIAN PRAMESTA <span>TEMTER</span></div>
 
-  <div class="masuk">MASUK KE TEMTER</div>
+    <div class="masuk">MASUK KE TEMTER</div>
 
-  <div class="sub-header">
-    TEMTER GRATIS UNTUK PENGUNJUNG, INFO UNTUK MODUL PERCINTAAN GESER KEBAWAH
-  </div>
+    <div class="sub-header">
+      TEMTER GRATIS UNTUK PENGUNJUNG, INFO UNTUK MODUL PERCINTAAN GESER KEBAWAH
+    </div>
 
-  <h1>TEMTER VILLAGE</h1>
+    <h1>TEMTER VILLAGE</h1>
 
-  <div class="quote">
-    "TAK APA - APA BELUM MENJADI SESUATU,<br />
-    TAK USAH BURU - BURU MENJADI APA YANG KAMU INGINKAN<br />
-    AKU HOKAGE ALDIAN SENSEI, AKAN MEMBANTUMU MENDAPATKANNYA DI DESA INI"
+    <div class="quote">
+      "TAK APA - APA BELUM MENJADI SESUATU,<br />
+      TAK USAH BURU - BURU MENJADI APA YANG KAMU INGINKAN<br />
+      AKU HOKAGE ALDIAN SENSEI, AKAN MEMBANTUMU MENDAPATKANNYA DI DESA INI"
+    </div>
   </div>
 </body>
 </html>
