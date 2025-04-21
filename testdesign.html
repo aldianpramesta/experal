@@ -11,11 +11,10 @@
     body {
       margin: 0;
       background-color: #000;
-      color: #ffffff; /* // Putih terang */
+      color: #ffffff; // Putih terang
       font-family: 'Instrument Sans', sans-serif;
     }
 
-    /* // General styling for sections */
     section {
       width: 100%;
       display: flex;
@@ -24,11 +23,10 @@
       align-items: center;
     }
 
-    /* Section 1 */
+    /* // Section 1 */
     .section-1 {
-      height: auto;
-      padding: 16px;
-      display: block; /* // Kembaliin ke kiri */
+      padding: 16px 20px;
+      display: block; // Supaya kontennya rata kiri
     }
     .section-1 .judul {
       font-family: 'Instrument Sans', sans-serif;
@@ -41,12 +39,14 @@
     .section-1 .judul .temter {
       font-family: 'Instrument Serif', serif;
       font-style: italic;
-      font-weight: 400; /* // Ubah dari bold ke 400 biar gak terlalu tebal */
+      font-weight: 400; // Supaya gak terlalu tebal
     }
 
-    /* Section 2 */
+    /* // Section 2 */
     .section-2 {
-      height: 180px;
+      min-height: 180px; // Pakai min-height biar fleksibel
+      padding-top: 40px; // Tambah jarak atas
+      padding-bottom: 40px; // Tambah jarak bawah
     }
     .section-2 h2 {
       font-weight: bold;
@@ -54,20 +54,24 @@
       letter-spacing: 0em;
       line-height: 1.2em;
       color: #ffffff;
+      text-align: center; // Pastikan teks bener-bener di tengah
     }
 
-    /* Section 3 */
+    /* // Section 3 */
     .section-3 {
-      height: 240px;
+      min-height: 240px; // Ganti height jadi min-height
+      padding-top: 40px; // Tambah jarak atas
+      padding-bottom: 40px; // Tambah jarak bawah
       text-align: center;
-      padding: 0 20px;
+      padding-left: 20px;
+      padding-right: 20px;
     }
     .section-3 .info {
       font-weight: 600;
       font-size: 18px;
-      letter-spacing: 0em; /* // Direvisi jadi 0em */
+      letter-spacing: 0em; // Sesuai revisi
       line-height: 1.2em;
-      color: #BFBFBF;
+      color: #B3B3B3; // Abu-abu terang, bukan putih
       margin-bottom: 10px;
     }
     .section-3 .village {
@@ -76,7 +80,7 @@
       letter-spacing: -5px;
       line-height: 110px;
       color: #ffffff;
-      text-shadow: 0px 1px 2px rgba(0,0,0,0.5);
+      text-shadow: 0px 1px 2px rgba(0,0,0,0.5); // Tambah efek shadow
     }
     .section-3 .quote {
       font-weight: 500;
@@ -88,9 +92,11 @@
       margin-top: 10px;
     }
 
-    /* Section 4 */
+    /* // Section 4 */
     .section-4 {
-      height: 140px;
+      min-height: 140px; // Ganti dari height ke min-height
+      padding-top: 40px; // Tambah jarak atas
+      padding-bottom: 40px; // Tambah jarak bawah
     }
   </style>
 </head>
@@ -113,9 +119,9 @@
     <div class="info">TEMTER GRATIS UNTUK PENGUNJUNG, INFO UNTUK MODUL PERCINTAAN GESER KEBAWAH</div>
     <div class="village">TEMTER VILLAGE</div>
     <div class="quote">
-"TAK APA - APA BELUM MENJADI SESUATU,
+TAK APA - APA BELUM MENJADI SESUATU,
 TAK USAH BURU - BURU MENJADI APA YANG KAMU INGINKAN
-AKU HOKAGE ALDIAN SENSEI, AKAN MEMBANTUMU MENDAPATKANNYA DI DESA INI"
+AKU HOKAGE ALDIAN SENSEI, AKAN MEMBANTUMU MENDAPATKANNYA DI DESA INI
     </div>
   </section>
 
