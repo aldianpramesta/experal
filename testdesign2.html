@@ -10,110 +10,118 @@
 
     body {
       margin: 0;
-      background-color: #000;
-      color: #ffffff;
-      font-family: 'Instrument Sans', sans-serif;
+      background-color: #000; /* Warna latar belakang hitam */
+      color: #ffffff; /* Warna teks default putih */
+      font-family: 'Instrument Sans', sans-serif; /* Font utama */
     }
 
     section {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
+      width: 100%; /* Lebar penuh */
+      display: flex; /* Flexbox layout */
+      flex-direction: column; /* Susun elemen ke bawah */
       justify-content: center;
-      align-items: center;
+      align-items: center; /* Posisi tengah secara horizontal */
     }
 
+/* ========== Animasi Global ========== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+    
+    /* Section 1 - Judul Nama */
     .section-1 {
-      height: auto;
-      padding: 32px 16px;
-      display: block;
+      height: auto; /* Otomatis mengikuti isi */
+      padding: 32px 16px; /* Spasi atas bawah 32px, samping 16px */
+      display: block; /* Supaya kontennya gak center (default block) */
     }
     .section-1 .judul {
       font-weight: bold;
       font-size: 16px;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.04em; /* Spasi antar huruf lebih rapat */
       line-height: 1em;
     }
     .section-1 .temter {
-      font-family: 'Instrument Serif', serif;
+      font-family: 'Instrument Serif', serif; /* Font khusus untuk TEMTER */
       font-style: italic;
       font-weight: 400;
     }
 
+    /* Section 2 - Judul Tengah */
     .section-2 {
       height: auto;
-      padding: 40px 16px;
+      padding: 40px 16px; /* Spasi agar tidak nempel ke section lain */
       text-align: center;
     }
     .section-2 h2 {
       font-weight: bold;
       font-size: 24px;
       line-height: 1.2em;
-      margin: 0;
+      margin: 0; /* Hilangkan margin bawaan */
+            /* // Animasi fade in */
+      animation: fadeIn 1.2s ease-out both;
     }
 
+    /* Section 3 - Info Utama */
     .section-3 {
-      height: auto;
-      padding: 40px 20px;
+      height: auto; /* Fleksibel berdasarkan isi */
+      padding: 40px 20px; /* Spasi atas bawah dan samping */
       text-align: center;
     }
     .section-3 .info {
       font-weight: 600;
       font-size: 18px;
-      color: #B3B3B3;
-      margin-bottom: 10px;
+      color: #B3B3B3; /* Abu-abu terang */
+      margin-bottom: 10px; /* Jarak ke elemen bawahnya */
+            /* // Animasi fade in */
+      animation: fadeIn 1.2s ease-out both;
     }
-
     .section-3 .village {
       font-weight: bold;
-      font-size: 115px;
-      letter-spacing: -5px;
+      font-size: 115px; /* Ukuran besar banget */
+      letter-spacing: -5px; /* Hurufnya saling rapat */
       line-height: 110px;
       color: #ffffff;
-      text-shadow: 0px 1px 2px rgba(0,0,0,0.5);
+      text-shadow: 0px 1px 2px rgba(0,0,0,0.5); /* Efek bayangan biar nendang */
       margin-bottom: -16px;
+            /* // Animasi fade in */
+      animation: fadeIn 1.2s ease-out both;
     }
 
-    /* // Tambahan: animasi fade in untuk "TEMTER VILLAGE" */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
     .section-3 .quote {
       font-weight: 500;
       font-size: 16px;
       line-height: 1.8em;
       letter-spacing: 0em;
       color: #ffffff;
-      white-space: pre-line;
+      white-space: pre-line; /* Supaya enter di teks quote tetap muncul */
       margin: 0;
-
-      /* // Animasi fade in */
+            /* // Animasi fade in */
       animation: fadeIn 1.2s ease-out both;
     }
 
+    /* Section 4 - Ruang Kosong Penutup */
     .section-4 {
       height: auto;
-      padding: 60px 16px;
+      padding: 60px 16px; /* Tambah jarak ke bawah */
     }
   </style>
 </head>
 <body>
 
-  <!-- Section 1 -->
+  <!-- Section 1: Nama & Branding -->
   <section class="section-1">
     <div class="judul">
       ALDIAN PRAMESTA <span class="temter">TEMTER</span>
     </div>
   </section>
 
-  <!-- Section 2 -->
+  <!-- Section 2: CTA atau ajakan -->
   <section class="section-2">
     <h2>MASUK KE TEMTER</h2>
   </section>
 
-  <!-- Section 3 -->
+  <!-- Section 3: Info dan quote branding -->
   <section class="section-3">
     <div class="info">TEMTER GRATIS UNTUK PENGUNJUNG, INFO UNTUK MODUL PERCINTAAN GESER KEBAWAH</div>
     <div class="village">TEMTER VILLAGE</div>
@@ -124,7 +132,7 @@ AKU HOKAGE ALDIAN SENSEI, AKAN MEMBANTUMU MENDAPATKANNYA DI DESA INI"
     </div>
   </section>
 
-  <!-- Section 4 -->
+  <!-- Section 4: Bagian kosong (spacer/penutup) -->
   <section class="section-4"></section>
 
 </body>
