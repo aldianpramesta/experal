@@ -11,10 +11,11 @@
     body {
       margin: 0;
       background-color: #000;
-      color: #ffffff; // Putih terang
+      color: #ffffff; /* // Putih terang */
       font-family: 'Instrument Sans', sans-serif;
     }
 
+    /* // General styling for sections */
     section {
       width: 100%;
       display: flex;
@@ -23,10 +24,11 @@
       align-items: center;
     }
 
-    /* // Section 1 */
+    /* Section 1 */
     .section-1 {
-      padding: 16px 20px;
-      display: block; // Supaya kontennya rata kiri
+      height: auto; /* // Bisa diubah kalau kamu mau jarak section-1 lebih tinggi */
+      padding: 16px; /* // Tambah padding atas/bawah buat jarak vertikal */
+      display: block; /* // Supaya isi section kiri */
     }
     .section-1 .judul {
       font-family: 'Instrument Sans', sans-serif;
@@ -39,14 +41,16 @@
     .section-1 .judul .temter {
       font-family: 'Instrument Serif', serif;
       font-style: italic;
-      font-weight: 400; // Supaya gak terlalu tebal
+      font-weight: 400; /* // Ubah dari bold ke 400 biar gak terlalu tebal */
     }
 
-    /* // Section 2 */
+    /* Section 2 */
     .section-2 {
-      min-height: 180px; // Pakai min-height biar fleksibel
-      padding-top: 40px; // Tambah jarak atas
-      padding-bottom: 40px; // Tambah jarak bawah
+      height: 180px; /* // Ubah tinggi section ini buat jarak antar blok */
+      display: flex; /* // Supaya teks bisa ditaruh pas tengah */
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
     .section-2 h2 {
       font-weight: bold;
@@ -54,25 +58,23 @@
       letter-spacing: 0em;
       line-height: 1.2em;
       color: #ffffff;
-      text-align: center; // Pastikan teks bener-bener di tengah
+      margin: 0; /* // Biar gak ada spasi tambahan */
+      text-align: center;
     }
 
-    /* // Section 3 */
+    /* Section 3 */
     .section-3 {
-      min-height: 240px; // Ganti height jadi min-height
-      padding-top: 40px; // Tambah jarak atas
-      padding-bottom: 40px; // Tambah jarak bawah
+      height: 240px; /* // Ubah ini untuk kasih jarak vertikal antar section */
       text-align: center;
-      padding-left: 20px;
-      padding-right: 20px;
+      padding: 0 20px;
     }
     .section-3 .info {
       font-weight: 600;
       font-size: 18px;
-      letter-spacing: 0em; // Sesuai revisi
+      letter-spacing: 0em;
       line-height: 1.2em;
-      color: #B3B3B3; // Abu-abu terang, bukan putih
-      margin-bottom: 10px;
+      color: #B3B3B3;
+      margin-bottom: 10px; /* // Jarak bawah antar tulisan */
     }
     .section-3 .village {
       font-weight: bold;
@@ -80,7 +82,8 @@
       letter-spacing: -5px;
       line-height: 110px;
       color: #ffffff;
-      text-shadow: 0px 1px 2px rgba(0,0,0,0.5); // Tambah efek shadow
+      text-shadow: 0px 1px 2px rgba(0,0,0,0.5);
+      margin-bottom: 16px; /* // Jarak bawah ke teks berikutnya */
     }
     .section-3 .quote {
       font-weight: 500;
@@ -89,14 +92,12 @@
       letter-spacing: 0em;
       color: #ffffff;
       white-space: pre-line;
-      margin-top: 10px;
+      margin: 0; /* // Bisa tambah margin-top kalau mau turun */
     }
 
-    /* // Section 4 */
+    /* Section 4 */
     .section-4 {
-      min-height: 140px; // Ganti dari height ke min-height
-      padding-top: 40px; // Tambah jarak atas
-      padding-bottom: 40px; // Tambah jarak bawah
+      height: 140px; /* // Section kosong ini bisa jadi spasi tambahan bawah */
     }
   </style>
 </head>
@@ -119,9 +120,9 @@
     <div class="info">TEMTER GRATIS UNTUK PENGUNJUNG, INFO UNTUK MODUL PERCINTAAN GESER KEBAWAH</div>
     <div class="village">TEMTER VILLAGE</div>
     <div class="quote">
-TAK APA - APA BELUM MENJADI SESUATU,
+"TAK APA - APA BELUM MENJADI SESUATU,
 TAK USAH BURU - BURU MENJADI APA YANG KAMU INGINKAN
-AKU HOKAGE ALDIAN SENSEI, AKAN MEMBANTUMU MENDAPATKANNYA DI DESA INI
+AKU HOKAGE ALDIAN SENSEI, AKAN MEMBANTUMU MENDAPATKANNYA DI DESA INI"
     </div>
   </section>
 
