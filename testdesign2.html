@@ -131,6 +131,57 @@
   margin: 0;
 }
 
+    .gate-button {
+      position: relative;
+      width: 200px;
+      height: 60px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: white;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .gate-button .gate {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      top: 0;
+      background: #1f1f1f;
+      transition: transform 0.5s ease;
+      z-index: 1;
+    }
+
+    .gate-button .left {
+      left: 0;
+      border-right: 1px solid #333;
+    }
+
+    .gate-button .right {
+      right: 0;
+      border-left: 1px solid #333;
+    }
+
+    .gate-button .text {
+      position: relative;
+      z-index: 2;
+      transition: color 0.3s ease;
+    }
+
+    .gate-button:hover .left {
+      transform: translateX(-100%);
+    }
+
+    .gate-button:hover .right {
+      transform: translateX(100%);
+    }
+
+    .gate-button:hover .text {
+      color: #ffcc00;
+    }
+    
   </style>
 </head>
 <body>
@@ -144,7 +195,11 @@
 
   <!-- Section 2: CTA atau ajakan -->
   <section class="section-2">
-    <h2>MASUK</h2>
+      <button class="gate-button">
+    <div class="gate left"></div>
+    <div class="gate right"></div>
+    <div class="text">MASUK</div>
+  </button>
   </section>
 
   <!-- Section 3: Info dan quote branding -->
