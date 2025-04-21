@@ -23,6 +23,12 @@
       align-items: center; /* Posisi tengah secara horizontal */
     }
 
+/* ========== Animasi Global ========== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+    
     /* Section 1 - Judul Nama */
     .section-1 {
       height: auto; /* Otomatis mengikuti isi */
@@ -52,6 +58,8 @@
       font-size: 24px;
       line-height: 1.2em;
       margin: 0; /* Hilangkan margin bawaan */
+            /* // Animasi fade in */
+      animation: fadeIn 1.2s ease-out both;
     }
 
     /* Section 3 - Info Utama */
@@ -65,6 +73,8 @@
       font-size: 18px;
       color: #B3B3B3; /* Abu-abu terang */
       margin-bottom: 10px; /* Jarak ke elemen bawahnya */
+            /* // Animasi fade in */
+      animation: fadeIn 1.2s ease-out both;
     }
     .section-3 .village {
       font-weight: bold;
@@ -74,13 +84,10 @@
       color: #ffffff;
       text-shadow: 0px 1px 2px rgba(0,0,0,0.5); /* Efek bayangan biar nendang */
       margin-bottom: -16px;
+            /* // Animasi fade in */
+      animation: fadeIn 1.2s ease-out both;
     }
 
-        /* // Tambahan: animasi fade in untuk "TEMTER VILLAGE" */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
     .section-3 .quote {
       font-weight: 500;
       font-size: 16px;
