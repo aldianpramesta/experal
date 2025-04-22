@@ -23,6 +23,12 @@
       align-items: center; /* Posisi tengah secara horizontal */
     }
 
+/* ========== Animasi Global, lagi diilangin dulu ga ada yang pas ========== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+    
     /* Section 1 - Judul Nama */
     .section-1 {
       height: auto; /* Otomatis mengikuti isi */
@@ -43,32 +49,33 @@
     }
     
     .section-2 {
-      height: auto; /* auto agar menyesuaikan isi */
-      padding: 0px 16px; /* padding atas bawah besar, samping sedang */
-      text-align: center;
-    }
+  height: auto; /* auto agar menyesuaikan isi */
+  padding: 0px 16px; /* padding atas bawah besar, samping sedang */
+  text-align: center;
+}
     .section-2 .video-wrapper {
-      margin-bottom: 0px;
-      display: inline-block;
-      padding: 0px;
-      border-radius: 12px;
-      background: #523587; /* warna neon, bisa diganti misalnya #ff00ff */
-      box-shadow: 0 0 15px #523587, 0 0 30px #523587;
-      transform: scale(1.01);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+  margin-bottom: 0px;
+  display: inline-block;
+  padding: 0px;
+  border-radius: 12px;
+  background: #523587; /* warna neon, bisa diganti misalnya #ff00ff */
+  box-shadow: 0 0 15px #523587, 0 0 30px #523587;
+  transform: scale(1.01);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    .video-wrapper:hover {
-      transform: scale(1.03); /* efek membesar dikit saat hover */
-      box-shadow: 0 0 20px #523587, 0 0 40px #523587, 0 0 60px #523587;
-    }
+.video-wrapper:hover {
+  transform: scale(1.03); /* efek membesar dikit saat hover */
+  box-shadow: 0 0 20px #523587, 0 0 40px #523587, 0 0 60px #523587;
+}
 
-    .video-wrapper iframe {
-      display: block;
-      border-radius: 2px;
-      border: none;
-      pointer-events: none; /* Mencegah interaksi langsung dengan video */
-    }
+.video-wrapper iframe {
+  display: block;
+  border-radius: 2px;
+  border: none;
+}
+
+
   </style>
 </head>
 <body>
@@ -80,38 +87,14 @@
     </div>
   </section>
   
-<!-- Section 2: Modul Percintaan -->
+    <!-- Section 2: Modul Percintaan -->
 <section class="section-2">
-  <h3 class="judul-modul">MODUL PERCINTAAN PART 1 (GRATIS)</h3>
-  <div class="video-wrapper">
-    <video id="secure-video" width="480" height="270" controls></video>
+    <h3 class="judul-modul">MODUL PERCINTAAN PART 1 (GRATIS)</h3>
+    <div class="video-wrapper">
+    <iframe width="480" height="270" src="https://youtu.be/mU_Ch0GoT20" 
+      title="Video Modul" frameborder="0" allowfullscreen></iframe>
   </div>
-</section>
-
-<script>
-  // List video dummy (ganti dengan path kamu sendiri nanti)
-  const videoList = [
-    '/videos/part1.mp4',
-    '/videos/part2.mp4',
-    '/videos/part3.mp4'
-  ];
-
-  // Ambil satu video secara acak
-  const selectedVideo = videoList[Math.floor(Math.random() * videoList.length)];
-
-  // Ambil file video dan ubah ke blob
-  fetch(selectedVideo)
-    .then(res => {
-      if (!res.ok) throw new Error("Gagal mengambil video.");
-      return res.blob();
-    })
-    .then(blob => {
-      const blobURL = URL.createObjectURL(blob);
-      document.getElementById('secure-video').src = blobURL;
-    })
-    .catch(err => console.error(err));
-</script>
-
+  </section>
   
 </body>
 </html>
