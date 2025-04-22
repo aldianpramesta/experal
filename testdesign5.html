@@ -55,7 +55,26 @@
 }
     .section-2 .video-wrapper {
   margin-bottom: 0px;
+  display: inline-block;
+  padding: 0px;
+  border-radius: 12px;
+  background: #523587; /* warna neon, bisa diganti misalnya #ff00ff */
+  box-shadow: 0 0 15px #523587, 0 0 30px #523587;
+  transform: scale(1.01);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.video-wrapper:hover {
+  transform: scale(1.03); /* efek membesar dikit saat hover */
+  box-shadow: 0 0 20px #523587, 0 0 40px #523587, 0 0 60px #523587;
+}
+
+.video-wrapper iframe {
+  display: block;
+  border-radius: 2px;
+  border: none;
+}
+
 
   </style>
 </head>
