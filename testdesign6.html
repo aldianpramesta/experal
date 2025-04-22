@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TEMTER</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: 'Instrument Sans', sans-serif;
+    }
+
+    .section-2 {
+      text-align: center;
+      padding: 32px 16px;
+    }
+
+    .video-wrapper {
+      display: inline-block;
+      border-radius: 12px;
+      background: #523587;
+      box-shadow: 0 0 15px #523587, 0 0 30px #523587;
+      overflow: hidden;
+      transform: scale(1.01);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .video-wrapper:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 20px #523587, 0 0 40px #523587;
+    }
+
+    #player {
+      width: 480px;
+      height: 270px;
+    }
+
+    /* Disable klik kanan */
+    .no-right-click {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <section class="section-2">
+    <h3 class="judul-modul">MODUL PERCINTAAN PART 1 (GRATIS)</h3>
+    <div class="video-wrapper no-right-click" oncontextmenu="return false;">
+      <div id="player"></div>
+    </div>
+  </section>
+
+  <!-- Load YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    let player;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        videoId: 'dQw4w9WgXcQ', // ID video
+        playerVars: {
+          rel: 0,
+          modestbranding: 1,
+          controls: 1,
+          fs: 1,
+        },
+        events: {
+          onReady: function (event) {
+            // Disable click ke logo YouTube
+            const iframe = event.target.getIframe();
+            iframe.style.pointerEvents = 'none'; // Blok semua klik dulu
+            setTimeout(() => {
+              iframe.style.pointerEvents = 'auto'; // Aktifkan klik ke kontrol
+            }, 500); // Delay biar logo gak bisa dipencet pas awal
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
