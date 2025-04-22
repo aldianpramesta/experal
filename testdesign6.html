@@ -5,43 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEMTER</title>
   <style>
+    /* Mengimpor font dari Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
 
     body {
       margin: 0;
-      background-color: #000;
-      color: #ffffff;
-      font-family: 'Instrument Sans', sans-serif;
+      background-color: #000; /* Warna latar belakang hitam */
+      color: #ffffff; /* Warna teks default putih */
+      font-family: 'Instrument Sans', sans-serif; /* Font utama */
     }
 
     section {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
+      width: 100%; /* Lebar penuh */
+      display: flex; /* Flexbox layout */
+      flex-direction: column; /* Susun elemen ke bawah */
       justify-content: center;
-      align-items: center;
+      align-items: center; /* Posisi tengah secara horizontal */
     }
 
+    /* Section 1 - Judul Nama */
     .section-1 {
-      height: auto;
-      padding: 32px 16px;
+      height: auto; /* Otomatis mengikuti isi */
+      padding: 32px 16px; /* Spasi atas bawah 32px, samping 16px */
+      display: block; /* Supaya kontennya gak center (default block) */
     }
     .section-1 .judul {
       font-weight: bold;
       font-size: 16px;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.04em; /* Spasi antar huruf lebih rapat */
       line-height: 1em;
-      padding-left: 20px;
+      padding-left: 20px; /* ← ini tambahan baru */
     }
     .section-1 .temter {
-      font-family: 'Instrument Serif', serif;
+      font-family: 'Instrument Serif', serif; /* Font khusus untuk TEMTER */
       font-style: italic;
       font-weight: 400;
     }
-
+    
     .section-2 {
-      height: auto;
-      padding: 0px 16px;
+      height: auto; /* auto agar menyesuaikan isi */
+      padding: 0px 16px; /* padding atas bawah besar, samping sedang */
       text-align: center;
     }
     .section-2 .video-wrapper {
@@ -49,14 +52,14 @@
       display: inline-block;
       padding: 0px;
       border-radius: 12px;
-      background: #523587;
+      background: #523587; /* warna neon, bisa diganti misalnya #ff00ff */
       box-shadow: 0 0 15px #523587, 0 0 30px #523587;
       transform: scale(1.01);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .video-wrapper:hover {
-      transform: scale(1.03);
+      transform: scale(1.03); /* efek membesar dikit saat hover */
       box-shadow: 0 0 20px #523587, 0 0 40px #523587, 0 0 60px #523587;
     }
 
@@ -64,26 +67,7 @@
       display: block;
       border-radius: 2px;
       border: none;
-    }
-
-    /* Styling untuk tombol kustom */
-    .controls {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-    .control-btn {
-      background-color: #523587;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-    .control-btn:hover {
-      background-color: #400b73;
+      pointer-events: none; /* Mencegah interaksi langsung dengan video */
     }
   </style>
 </head>
@@ -96,60 +80,14 @@
     </div>
   </section>
   
-  <!-- Section 2: Video dengan Kontrol Kustom -->
+  <!-- Section 2: Modul Percintaan -->
   <section class="section-2">
     <h3 class="judul-modul">MODUL PERCINTAAN PART 1 (GRATIS)</h3>
     <div class="video-wrapper">
-      <iframe id="player" width="480" height="270" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1" 
+      <iframe width="480" height="270" src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&autoplay=0&modestbranding=1&fs=1&mute=0"
         title="Video Modul" frameborder="0" allowfullscreen></iframe>
     </div>
-
-    <!-- Kontrol Kustom -->
-    <div class="controls">
-      <button class="control-btn" id="playBtn">Play</button>
-      <button class="control-btn" id="pauseBtn">Pause</button>
-      <button class="control-btn" id="muteBtn">Mute</button>
-      <button class="control-btn" id="unmuteBtn">Unmute</button>
-    </div>
   </section>
-
-  <!-- YouTube IFrame API -->
-  <script>
-    // Muat API YouTube
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    var player;
-
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        events: {
-          'onReady': onPlayerReady,
-        }
-      });
-    }
-
-    function onPlayerReady(event) {
-      // Event listener untuk tombol Play dan Pause
-      document.getElementById('playBtn').addEventListener('click', function() {
-        player.playVideo();
-      });
-
-      document.getElementById('pauseBtn').addEventListener('click', function() {
-        player.pauseVideo();
-      });
-
-      document.getElementById('muteBtn').addEventListener('click', function() {
-        player.mute();
-      });
-
-      document.getElementById('unmuteBtn').addEventListener('click', function() {
-        player.unMute();
-      });
-    }
-  </script>
   
 </body>
 </html>
