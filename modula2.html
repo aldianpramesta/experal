@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Modul A</title>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-functions.js"></script>
+</head>
+<body>
+  <h2 id="judul">Memuat Modul A...</h2>
+  <div id="konten" style="display: none;">
+    <p>Selamat datang di Modul A! 🎉</p>
+
+    <!-- ⏯️ Tempat Video -->
+    <video id="videoPlayer" controls width="600">Memuat video...</video>
+  </div>
+
+  <script type="module">
+    // Firebase Import
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-functions.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
+      authDomain: "temter-df972.firebaseapp.com",
+      projectId: "temter-df972",
+      storageBucket: "temter-df972.appspot.com",
+      messagingSenderId: "224267552779",
+      appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
+      measurementId: "G-CNYXFR6RKF"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const functions = getFunctions(app);
+
+    const namaModul = "modula"; // Ganti sesuai modul
+    const namaVideo = "modulA_intro"; // Ganti sesuai nama file di Firebase Storage (tanpa .mp4)
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        alert("Anda belum login.");
+        window.location.href = "index.html";
+        return;
+      }
+
+      const email = user.email;
+      const userRef = doc(db, "users", email);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        alert("Data Anda tidak ditemukan.");
+        await signOut(auth);
+        window.location.href = "index.html";
+        return;
+      }
+
+      const userData = userSnap.data();
+      const modul = userData[namaModul];
+
+      if (!modul || !modul.aktif) {
+        alert("Anda tidak memiliki akses ke modul ini.");
+        await signOut(auth);
+        window.location.href = "index.html";
+        return;
+      }
+
+      const now = new Date();
+      const expiredDate = modul.expired.toDate();
+
+      if (now > expiredDate) {
+        alert("Langganan Anda untuk modul ini sudah habis.");
+        await signOut(auth);
+        window.location.href = "index.html";
+        return;
+      }
+
+      // ✅ Akses valid, tampilkan konten
+      document.getElementById("judul").textContent = `Modul ${namaModul.toUpperCase()}`;
+      document.getElementById("konten").style.display = "block";
+
+      // 🎥 Ambil Signed URL dari Function
+      const getSignedVideoUrl = httpsCallable(functions, 'getSignedVideoUrl');
+      try {
+        const response = await getSignedVideoUrl({ videoName: namaVideo });
+        document.getElementById("videoPlayer").src = response.data.url;
+      } catch (err) {
+        console.error(err);
+        alert("Gagal memuat video. Hubungi admin.");
+      }
+    });
+  </script>
+</body>
+</html>
