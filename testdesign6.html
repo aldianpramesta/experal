@@ -80,15 +80,38 @@
     </div>
   </section>
   
-  <!-- Section 2: Modul Percintaan -->
-  <section class="section-2">
-    <h3 class="judul-modul">MODUL PERCINTAAN PART 1 (GRATIS)</h3>
-    <div class="video-wrapper">
-      <!-- Kontrol diaktifkan dengan menambahkan parameter controls=1 pada URL iframe -->
-      <iframe width="480" height="270" src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&autoplay=0&modestbranding=1&fs=1&mute=0"
-        title="Video Modul" frameborder="0" allowfullscreen></iframe>
-    </div>
-  </section>
+<!-- Section 2: Modul Percintaan -->
+<section class="section-2">
+  <h3 class="judul-modul">MODUL PERCINTAAN PART 1 (GRATIS)</h3>
+  <div class="video-wrapper">
+    <video id="secure-video" width="480" height="270" controls></video>
+  </div>
+</section>
+
+<script>
+  // List video dummy (ganti dengan path kamu sendiri nanti)
+  const videoList = [
+    '/videos/part1.mp4',
+    '/videos/part2.mp4',
+    '/videos/part3.mp4'
+  ];
+
+  // Ambil satu video secara acak
+  const selectedVideo = videoList[Math.floor(Math.random() * videoList.length)];
+
+  // Ambil file video dan ubah ke blob
+  fetch(selectedVideo)
+    .then(res => {
+      if (!res.ok) throw new Error("Gagal mengambil video.");
+      return res.blob();
+    })
+    .then(blob => {
+      const blobURL = URL.createObjectURL(blob);
+      document.getElementById('secure-video').src = blobURL;
+    })
+    .catch(err => console.error(err));
+</script>
+
   
 </body>
 </html>
