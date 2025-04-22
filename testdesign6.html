@@ -1,85 +1,105 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEMTER</title>
   <style>
+    /* Mengimpor font dari Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
+
     body {
       margin: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: 'Instrument Sans', sans-serif;
+      background-color: #000; /* Warna latar belakang hitam */
+      color: #ffffff; /* Warna teks default putih */
+      font-family: 'Instrument Sans', sans-serif; /* Font utama */
     }
 
+    section {
+      width: 100%; /* Lebar penuh */
+      display: flex; /* Flexbox layout */
+      flex-direction: column; /* Susun elemen ke bawah */
+      justify-content: center;
+      align-items: center; /* Posisi tengah secara horizontal */
+    }
+
+/* ========== Animasi Global, lagi diilangin dulu ga ada yang pas ========== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+    
+    /* Section 1 - Judul Nama */
+    .section-1 {
+      height: auto; /* Otomatis mengikuti isi */
+      padding: 32px 16px; /* Spasi atas bawah 32px, samping 16px */
+      display: block; /* Supaya kontennya gak center (default block) */
+    }
+    .section-1 .judul {
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: -0.04em; /* Spasi antar huruf lebih rapat */
+      line-height: 1em;
+      padding-left: 20px; /* ← ini tambahan baru */
+    }
+    .section-1 .temter {
+      font-family: 'Instrument Serif', serif; /* Font khusus untuk TEMTER */
+      font-style: italic;
+      font-weight: 400;
+    }
+    
     .section-2 {
-      text-align: center;
-      padding: 32px 16px;
-    }
+  height: auto; /* auto agar menyesuaikan isi */
+  padding: 0px 16px; /* padding atas bawah besar, samping sedang */
+  text-align: center;
+}
+    .section-2 .video-wrapper {
+  margin-bottom: 0px;
+  display: inline-block;
+  padding: 0px;
+  border-radius: 12px;
+  background: #523587; /* warna neon, bisa diganti misalnya #ff00ff */
+  box-shadow: 0 0 15px #523587, 0 0 30px #523587;
+  transform: scale(1.01);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    .video-wrapper {
-      display: inline-block;
-      border-radius: 12px;
-      background: #523587;
-      box-shadow: 0 0 15px #523587, 0 0 30px #523587;
-      overflow: hidden;
-      transform: scale(1.01);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+.video-wrapper:hover {
+  transform: scale(1.03); /* efek membesar dikit saat hover */
+  box-shadow: 0 0 20px #523587, 0 0 40px #523587, 0 0 60px #523587;
+}
 
-    .video-wrapper:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 20px #523587, 0 0 40px #523587;
-    }
+.video-wrapper iframe {
+  display: block;
+  border-radius: 2px;
+  border: none;
+}
 
-    #player {
-      width: 480px;
-      height: 270px;
-    }
 
-    /* Disable klik kanan */
-    .no-right-click {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
   </style>
 </head>
 <body>
-  <section class="section-2">
-    <h3 class="judul-modul">MODUL PERCINTAAN PART 1 (GRATIS)</h3>
-    <div class="video-wrapper no-right-click" oncontextmenu="return false;">
-      <div id="player"></div>
+
+  <!-- Section 1: Nama & Branding -->
+  <section class="section-1">
+    <div class="judul">
+      ALDIAN PRAMESTA <span class="temter">TEMTER</span>
     </div>
   </section>
+  
+    <!-- Section 2: Modul Percintaan -->
+<section class="section-2">
+  <h3 class="judul-modul">MODUL PERCINTAAN PART 1 (GRATIS)</h3>
+  <p style="font-size: 12px; color: #ccc; margin-bottom: 8px;">
+    Video ini hanya bisa ditonton di halaman ini.
+  </p>
+  <div class="video-wrapper">
+    <iframe width="480" height="270" 
+      src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1&controls=1&showinfo=0" 
+      title="Video Modul" frameborder="0" allowfullscreen></iframe>
+  </div>
+</section>
 
-  <!-- Load YouTube IFrame API -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script>
-    let player;
-
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        videoId: 'dQw4w9WgXcQ', // ID video
-        playerVars: {
-          rel: 0,
-          modestbranding: 1,
-          controls: 1,
-          fs: 1,
-        },
-        events: {
-          onReady: function (event) {
-            // Disable click ke logo YouTube
-            const iframe = event.target.getIframe();
-            iframe.style.pointerEvents = 'none'; // Blok semua klik dulu
-            setTimeout(() => {
-              iframe.style.pointerEvents = 'auto'; // Aktifkan klik ke kontrol
-            }, 500); // Delay biar logo gak bisa dipencet pas awal
-          }
-        }
-      });
-    }
-  </script>
+  
 </body>
 </html>
