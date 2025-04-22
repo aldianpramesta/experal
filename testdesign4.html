@@ -1,1 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEMTER</title>
+  <style>
+    /* Mengimpor font dari Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
 
+    body {
+      margin: 0;
+      background-color: #000; /* Warna latar belakang hitam */
+      color: #ffffff; /* Warna teks default putih */
+      font-family: 'Instrument Sans', sans-serif; /* Font utama */
+    }
+
+    section {
+      width: 100%; /* Lebar penuh */
+      display: flex; /* Flexbox layout */
+      flex-direction: column; /* Susun elemen ke bawah */
+      justify-content: center;
+      align-items: center; /* Posisi tengah secara horizontal */
+    }
+
+/* ========== Animasi Global, lagi diilangin dulu ga ada yang pas ========== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+    
+    /* Section 1 - Judul Nama */
+    .section-1 {
+      height: auto; /* Otomatis mengikuti isi */
+      padding: 32px 16px; /* Spasi atas bawah 32px, samping 16px */
+      display: block; /* Supaya kontennya gak center (default block) */
+    }
+    .section-1 .judul {
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: -0.04em; /* Spasi antar huruf lebih rapat */
+      line-height: 1em;
+      padding-left: 32px; /* ← ini tambahan baru */
+    }
+    .section-1 .temter {
+      font-family: 'Instrument Serif', serif; /* Font khusus untuk TEMTER */
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .section-2 {
+      padding: 64px 24px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .module-wrapper {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      max-width: 1024px;
+      justify-content: center;
+    }
+
+    .module-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo {
+      width: 30px;
+      height: 30px;
+      background-color: #8B5E3C; /* Warna kayu */
+      mask: url('https://img.icons8.com/ios-filled/50/home--v1.png') center/contain no-repeat;
+      -webkit-mask: url('https://img.icons8.com/ios-filled/50/home--v1.png') center/contain no-repeat;
+      margin-bottom: 5px;
+    }
+
+    .title {
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: -0.04em;
+      line-height: 1.8em;
+      text-align: center;
+      font-weight: bold;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- Section 1: Nama & Branding -->
+  <section class="section-1">
+    <div class="judul">
+      ALDIAN PRAMESTA <span class="temter">TEMTER</span>
+    </div>
+  </section>
+
+        <!-- Section 2 -->
+  <section class="section-2">
+    <div class="module-wrapper">
+
+      <!-- Modul 1 -->
+      <div class="module-item">
+        <div class="logo"></div>
+        <div class="title">MODUL PERCINTAAN</div>
+      </div>
+
+      <!-- Modul 2 -->
+      <div class="module-item">
+        <div class="logo"></div>
+        <div class="title">MODUL PERCINTAAN</div>
+      </div>
+
+      <!-- Modul 3 -->
+      <div class="module-item">
+        <div class="logo"></div>
+        <div class="title">MODUL PERCINTAAN</div>
+      </div>
+
+    </div>
+  </section>
+  
+</body>
+</html>
