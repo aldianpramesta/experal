@@ -12,8 +12,6 @@
   <h2 id="judul">Memuat Modul A...</h2>
   <div id="konten" style="display: none;">
     <p>Selamat datang di Modul A! 🎉</p>
-
-    <!-- ⏯️ Tempat Video -->
     <video id="videoPlayer" controls width="600">Memuat video...</video>
   </div>
 
@@ -24,23 +22,25 @@
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
     import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-functions.js";
 
+    // Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
       authDomain: "temter-df972.firebaseapp.com",
       projectId: "temter-df972",
-      storageBucket: "temter-df972.appspot.com",
+      storageBucket: "temter-df972.appspot.com", // ← ini juga harus .appspot.com, bukan .firebasestorage.app
       messagingSenderId: "224267552779",
       appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
       measurementId: "G-CNYXFR6RKF"
     };
 
+    // Inisialisasi Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
     const functions = getFunctions(app);
 
-    const namaModul = "modula"; // Ganti sesuai modul
-    const namaVideo = "modulA_intro"; // Ganti sesuai nama file di Firebase Storage (tanpa .mp4)
+    const namaModul = "modula"; // ← ganti sesuai nama field modul di Firestore
+    const namaVideo = "500_very_slow"; // ← nama file video di Firebase Storage TANPA .mp4
 
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
@@ -80,23 +80,21 @@
         return;
       }
 
-      // ✅ Akses valid, tampilkan konten
+      // ✅ semua valid, tampilkan konten
       document.getElementById("judul").textContent = `Modul ${namaModul.toUpperCase()}`;
       document.getElementById("konten").style.display = "block";
 
-      // 🎥 Ambil Signed URL dari Function
-<script type="module">
-  ...
-  // 🎥 Ambil Signed URL dari Function
-  const getSignedVideoUrl = httpsCallable(functions, 'getSignedVideoUrl');
-  try {
-    const response = await getSignedVideoUrl({ videoName: const namaVideo = "500_very_slow"; }); // Tanpa folder
-    document.getElementById("videoPlayer").src = response.data.url;
-  } catch (err) {
-    console.error(err);
-    alert("Gagal memuat video. Hubungi admin.");
-  }
-</script>
+      // 🎥 Ambil Signed URL dari Firebase Function
+      const getSignedVideoUrl = httpsCallable(functions, 'getSignedVideoUrl');
 
+      try {
+        const response = await getSignedVideoUrl({ videoName: namaVideo });
+        document.getElementById("videoPlayer").src = response.data.url;
+      } catch (err) {
+        console.error(err);
+        alert("Gagal memuat video. Hubungi admin.");
+      }
+    });
+  </script>
 </body>
 </html>
