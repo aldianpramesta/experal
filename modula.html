@@ -90,8 +90,7 @@
   // 🎥 Ambil Signed URL dari Function
   const getSignedVideoUrl = httpsCallable(functions, 'getSignedVideoUrl');
   try {
-    const response = await getSignedVideoUrl({ videoName: const namaVideo = "500_very_slow"; // Tanpa folder
- });
+    const response = await getSignedVideoUrl({ videoName: const namaVideo = "500_very_slow"; }); // Tanpa folder
     document.getElementById("videoPlayer").src = response.data.url;
   } catch (err) {
     console.error(err);
