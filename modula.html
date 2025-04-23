@@ -2,11 +2,6 @@
 <html>
 <head>
   <title>Modul A</title>
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-functions.js"></script>
 </head>
 <body>
   <h2 id="judul">Memuat Modul A...</h2>
@@ -16,32 +11,34 @@
   </div>
 
   <script type="module">
-    // Firebase Import
+    // ✅ Import modul Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
     import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-functions.js";
 
-    // Firebase Config
+    // ✅ Konfigurasi Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
       authDomain: "temter-df972.firebaseapp.com",
       projectId: "temter-df972",
-      storageBucket: "temter-df972.appspot.com", // ← ini juga harus .appspot.com, bukan .firebasestorage.app
+      storageBucket: "temter-df972.appspot.com",
       messagingSenderId: "224267552779",
       appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
       measurementId: "G-CNYXFR6RKF"
     };
 
-    // Inisialisasi Firebase
+    // ✅ Inisialisasi Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
     const functions = getFunctions(app);
 
-    const namaModul = "modula"; // ← ganti sesuai nama field modul di Firestore
-    const namaVideo = "500_very_slow"; // ← nama file video di Firebase Storage TANPA .mp4
+    // ⚙️ Nama modul & video
+    const namaModul = "modula"; // sesuai field modul di Firestore
+    const namaVideo = "500_very_slow"; // TANPA .mp4
 
+    // 🔐 Cek login user dan akses modul
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         alert("Anda belum login.");
@@ -72,7 +69,6 @@
 
       const now = new Date();
       const expiredDate = modul.expired.toDate();
-
       if (now > expiredDate) {
         alert("Langganan Anda untuk modul ini sudah habis.");
         await signOut(auth);
@@ -80,18 +76,17 @@
         return;
       }
 
-      // ✅ semua valid, tampilkan konten
+      // ✅ Akses valid, tampilkan konten
       document.getElementById("judul").textContent = `Modul ${namaModul.toUpperCase()}`;
       document.getElementById("konten").style.display = "block";
 
       // 🎥 Ambil Signed URL dari Firebase Function
-      const getSignedVideoUrl = httpsCallable(functions, 'getSignedVideoUrl');
-
       try {
+        const getSignedVideoUrl = httpsCallable(functions, "getSignedVideoUrl");
         const response = await getSignedVideoUrl({ videoName: namaVideo });
         document.getElementById("videoPlayer").src = response.data.url;
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        console.error(error);
         alert("Gagal memuat video. Hubungi admin.");
       }
     });
