@@ -85,15 +85,19 @@
       document.getElementById("konten").style.display = "block";
 
       // 🎥 Ambil Signed URL dari Function
-      const getSignedVideoUrl = httpsCallable(functions, 'getSignedVideoUrl');
-      try {
-        const response = await getSignedVideoUrl({ videoName: namaVideo });
-        document.getElementById("videoPlayer").src = response.data.url;
-      } catch (err) {
-        console.error(err);
-        alert("Gagal memuat video. Hubungi admin.");
-      }
-    });
-  </script>
+<script type="module">
+  ...
+  // 🎥 Ambil Signed URL dari Function
+  const getSignedVideoUrl = httpsCallable(functions, 'getSignedVideoUrl');
+  try {
+    const response = await getSignedVideoUrl({ videoName: const namaVideo = "500_very_slow"; // Tanpa folder
+ });
+    document.getElementById("videoPlayer").src = response.data.url;
+  } catch (err) {
+    console.error(err);
+    alert("Gagal memuat video. Hubungi admin.");
+  }
+</script>
+
 </body>
 </html>
