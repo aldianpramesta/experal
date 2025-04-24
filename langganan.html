@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login ke Modul A</title>
+  <title>Login dengan Google</title>
   <script type="module">
-    // Firebase SDK
+    // Import SDK dari Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
-    // Konfigurasi Firebase
+    // Konfigurasi Firebase (INI PUNYA KAMU)
     const firebaseConfig = {
       apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
       authDomain: "temter-df972.firebaseapp.com",
@@ -18,36 +18,28 @@
       measurementId: "G-CNYXFR6RKF"
     };
 
-    // Inisialisasi Firebase
+    // 🔌 Inisialisasi Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
-    // Fungsi login
-    async function loginUser(e) {
-      e.preventDefault();
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
+    // 🔐 Fungsi login pakai popup Google
+    window.loginWithGoogle = async () => {
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "modula.html"; // Redirect setelah login
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        console.log("Login berhasil:", user.email);
+
+        // ✅ Redirect ke halaman modula.html
+        window.location.href = "modula.html";
       } catch (error) {
-        alert("Login gagal: " + error.message);
+        console.error("Login gagal:", error.message);
       }
     }
-
-    // Event listener
-    window.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("loginForm").addEventListener("submit", loginUser);
-    });
   </script>
 </head>
 <body>
-  <h2>Login ke Modul A</h2>
-  <form id="loginForm">
-    <input type="email" id="email" placeholder="Email" required><br><br>
-    <input type="password" id="password" placeholder="Password" required><br><br>
-    <button type="submit">Login</button>
-  </form>
+  <h2>Login ke TEMTER</h2>
+  <button onclick="loginWithGoogle()">Login dengan Google</button>
 </body>
 </html>
