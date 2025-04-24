@@ -60,7 +60,7 @@
       const userData = userSnap.data();
       const modul = userData[namaModul]; // ✅ ambil data berdasarkan nama modul yang kita tentukan
 
-      if (!modul || !modul.aktif) {
+      if (!modul || !modul.active) {
         alert("Anda tidak memiliki akses ke modul ini.");
         await signOut(auth);
         window.location.href = "index.html";
