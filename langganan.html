@@ -1,78 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Modul A - Part 1</title>
+  <meta charset="UTF-8">
+  <title>Login Temter</title>
   <script type="module">
+    // Import Firebase modules
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
       authDomain: "temter-df972.firebaseapp.com",
       projectId: "temter-df972",
-      storageBucket: "temter-df972.appspot.com",
+      storageBucket: "temter-df972.firebasestorage.app",
       messagingSenderId: "224267552779",
       appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
       measurementId: "G-CNYXFR6RKF"
     };
 
+    // Init Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
-    // Login
-    document.getElementById('loginBtn').addEventListener('click', async () => {
+    // Fungsi login
+    async function loginWithGoogle() {
       try {
-        await signInWithPopup(auth, provider);
-      } catch (e) {
-        alert("Login gagal: " + e.message);
-      }
-    });
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        const userEmail = user.email;
 
-    // Cek user login dan akses Firestore
-    onAuthStateChanged(auth, async user => {
-      if (user) {
-        document.getElementById('status').textContent = "Halo, " + user.email;
-        const userRef = doc(db, "users", user.email);
-        const snap = await getDoc(userRef);
+        // Ambil data dari Firestore berdasarkan email
+        const userDocRef = doc(db, "users", userEmail);
+        const userDocSnap = await getDoc(userDocRef);
 
-        if (snap.exists()) {
-          const data = snap.data();
-          const now = new Date();
-          const expiry = data.modulA_expiry?.toDate?.();
+        if (userDocSnap.exists()) {
+          const data = userDocSnap.data();
+          const isActive = data.modula_active;
+          const expiryDate = data.modula_expiry?.toDate();
 
-          if (data.modulA_active && expiry && now < expiry) {
-            document.getElementById('modulA').style.display = 'block';
+          // Cek status aktif dan tanggal expired
+          if (isActive && expiryDate > new Date()) {
+            window.location.href = "modula.html";
           } else {
-            document.getElementById('status').textContent += " (Modul A tidak aktif atau expired)";
+            alert("Akses ke modulA sudah tidak aktif atau kedaluwarsa.");
           }
         } else {
-          document.getElementById('status').textContent += " (Data tidak ditemukan)";
+          alert("Data pengguna tidak ditemukan.");
         }
+      } catch (error) {
+        console.error("Login gagal:", error);
+        alert("Terjadi kesalahan saat login.");
+      }
+    }
+
+    // Auto redirect kalau user sudah login
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        loginWithGoogle(); // Trigger ulang validasi dan redirect
       }
     });
 
-    // Langsung embed video setelah klik tombol
-    document.getElementById('modulA').addEventListener('click', () => {
-      const videoContainer = document.getElementById('videoContainer');
-      videoContainer.innerHTML = `
-        <h3>Modul A - Part 1</h3>
-        <video controls width="640">
-          <source src="https://firebasestorage.googleapis.com/v0/b/temter-df972.appspot.com/o/500_very_slow.mp4?alt=media" type="video/mp4">
-          Browser kamu gak support video tag.
-        </video>
-      `;
+    // Event listener tombol
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('loginBtn').addEventListener('click', loginWithGoogle);
     });
   </script>
 </head>
 <body>
-  <h1>🔥 Akses Modul</h1>
+  <h1>Login ke TEMTER</h1>
   <button id="loginBtn">Login dengan Google</button>
-  <p id="status">Belum login</p>
-
-  <button id="modulA" style="display:none;">🎬 Lihat Modul A - Part 1</button>
-  <div id="videoContainer" style="margin-top: 20px;"></div>
 </body>
 </html>
