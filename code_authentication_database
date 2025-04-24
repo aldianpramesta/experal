@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login dengan Google</title>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+</head>
+<body>
+  <button id="login-button">Login dengan Google</button>
+
+  <script>
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBUmWClLRONCLocqLMfbhjVNZAG0srp1sQ",
+      authDomain: "aldian-pramesta-temter.firebaseapp.com",
+      projectId: "aldian-pramesta-temter",
+      storageBucket: "aldian-pramesta-temter.appspot.com",
+      messagingSenderId: "467001407990",
+      appId: "1:467001407990:web:706a8a91e27e971b562fd7",
+      measurementId: "G-RD75GDJX53"
+    };
+
+    // Inisialisasi Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Setup Google provider
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    // Fungsi login
+    document.getElementById("login-button").addEventListener("click", () => {
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          const user = result.user;
+          console.log("Login berhasil:", user.email);
+
+          // Simpan data pengguna ke Firestore
+          saveUserData(user);
+        })
+        .catch((error) => {
+          console.error("Login gagal:", error.message);
+        });
+    });
+
+    // Fungsi untuk menyimpan data pengguna ke Firestore
+    function saveUserData(user) {
+      const userRef = db.collection("users").doc(user.email);  // Gunakan email sebagai ID
+      userRef.set({
+        email: user.email,
+        modula_active: true,  // Status modul aktif
+        modula_expiry: firebase.firestore.Timestamp.fromDate(new Date(new Date().setFullYear(new Date().getFullYear() + 1)))  // Set expiry 1 tahun
+      })
+      .then(() => {
+        console.log("Data pengguna berhasil disimpan!");
+        // Setelah menyimpan, bisa redirect ke halaman lain atau tampilkan konten modul
+      })
+      .catch((error) => {
+        console.error("Error menyimpan data pengguna: ", error);
+      });
+    }
+  </script>
+</body>
+</html>
