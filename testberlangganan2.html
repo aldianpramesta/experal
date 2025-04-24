@@ -57,8 +57,8 @@
         const userData = userSnap.data(); // Ambil semua data user
         const modulData = userData[namaModul]; // Ambil data field modul yang diminta (modula, modulb, dll)
 
-        // Kalau user belum aktif atau belum beli modul
-        if (!modulData || !modulData.aktif) {
+        // Kalau user belum  atau belum beli modul
+        if (!modulData || !modulData.active) {
           alert(`Anda tidak memiliki akses ke ${namaModul}.`);
           await signOut(auth);
           return;
