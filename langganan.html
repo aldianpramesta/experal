@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Halaman ModulA</title>
+  <meta charset="UTF-8">
+  <title>Login ModulA</title>
   <script type="module">
     // Import Firebase SDK
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-    // Konfigurasi Firebase
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
       authDomain: "temter-df972.firebaseapp.com",
@@ -23,40 +24,50 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
 
-    // Saat pengguna login
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const email = user.email;
-        const userRef = doc(db, "users", email);
+    // Fungsi login dan cek akses modulA
+    async function loginWithGoogle() {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        const userEmail = user.email;
+
+        // Ambil dokumen user dari Firestore
+        const userRef = doc(db, "users", userEmail);
         const userSnap = await getDoc(userRef);
 
         if (userSnap.exists()) {
           const data = userSnap.data();
-          const modulaActive = data.modula_active;
-          const modulaExpiry = data.modula_expiry?.toDate();
 
-          // Cek apakah modul aktif dan belum kedaluwarsa
-          if (modulaActive && modulaExpiry && modulaExpiry > new Date()) {
-            document.getElementById("modula-content").style.display = "block";
+          // Cek apakah aktif dan belum expired
+          const isActive = data.modula_active === true;
+          const expiry = data.modula_expiry?.toDate?.(); // Jika Firestore Timestamp
+          const now = new Date();
+
+          if (isActive && expiry && expiry > now) {
+            // Akses diberikan, redirect ke halaman modulA
+            window.location.href = "modula.html";
           } else {
-            document.getElementById("error-message").textContent = "Akses ke ModulA tidak aktif atau sudah kedaluwarsa.";
+            alert("Akses ke modul A tidak aktif atau sudah kedaluwarsa.");
           }
         } else {
-          document.getElementById("error-message").textContent = "Data pengguna tidak ditemukan.";
+          alert("Data pengguna tidak ditemukan.");
         }
-      } else {
-        document.getElementById("error-message").textContent = "Silakan login terlebih dahulu.";
+      } catch (error) {
+        console.error("Login error:", error);
+        alert("Gagal login: " + error.message);
       }
-    });
+    }
+
+    // Tunggu tombol diklik
+    window.onload = () => {
+      document.getElementById("loginBtn").addEventListener("click", loginWithGoogle);
+    };
   </script>
 </head>
 <body>
-  <h1>Halaman ModulA</h1>
-  <div id="modula-content" style="display:none;">
-    <p>Selamat datang di ModulA! Ini kontennya hanya untuk user yang aktif.</p>
-    <!-- Tambahkan konten video, teks, atau lainnya di sini -->
-  </div>
-  <p id="error-message" style="color:red;"></p>
+  <h2>Login untuk Akses Modul A</h2>
+  <button id="loginBtn">Login dengan Google</button>
 </body>
 </html>
