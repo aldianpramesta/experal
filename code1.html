@@ -3,61 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Firebase Google Login</title>
-  <!-- Include Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <h2>Login with Google</h2>
-  <button id="loginButton">Login with Google</button>
-
-  <script>
-    // Your web app's Firebase configuration
+  <title>Login dan Sistem Langganan</title>
+  <script type="module">
+    // Impor modul Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js";
+    
+    // Konfigurasi Firebase
     const firebaseConfig = {
-      apiKey: "AIzaSyBUmWClLRONCLocqLMfbhjVNZAG0srp1sQ",
-      authDomain: "aldian-pramesta-temter.firebaseapp.com",
-      projectId: "aldian-pramesta-temter",
-      storageBucket: "aldian-pramesta-temter.firebasestorage.app",
-      messagingSenderId: "467001407990",
-      appId: "1:467001407990:web:706a8a91e27e971b562fd7",
-      measurementId: "G-RD75GDJX53"
+      apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
+      authDomain: "temter-df972.firebaseapp.com",
+      projectId: "temter-df972",
+      storageBucket: "temter-df972.firebasestorage.app",
+      messagingSenderId: "224267552779",
+      appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
+      measurementId: "G-CNYXFR6RKF"
     };
 
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const analytics = firebase.analytics(app);
+    // Inisialisasi Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const firestore = getFirestore(app);
 
-    // Get Auth instance
-    const auth = firebase.auth();
-    const provider = new firebase.auth.GoogleAuthProvider();
+    // Tombol Login
+    const loginBtn = document.getElementById("login-btn");
+    const errorMessage = document.getElementById("error-message");
 
-    // Set up the login button
-    document.getElementById('loginButton').addEventListener('click', () => {
-      auth.signInWithPopup(provider)
-        .then((result) => {
-          // Get user info (optional)
-          const user = result.user;
-          console.log('User:', user);
-          
-          // Redirect to modula.html after successful login
-          window.location.href = "modula.html";
-        })
-        .catch((error) => {
-          console.error("Error during sign-in: ", error.message);
-        });
-    });
+    loginBtn.addEventListener('click', async function() {
+      const provider = new GoogleAuthProvider();
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        
+        // Ambil data langganan pengguna dari Firestore
+        const userDocRef = doc(firestore, "users", user.email);
+        const docSnap = await getDoc(userDocRef);
+        
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          const modulaActive = data.modula_active;
+          const modulaExpiry = data.modula_expiry.seconds * 1000; // Convert to milliseconds
 
-    // Optional: Check if the user is already logged in
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        // If already logged in, redirect to modula.html
-        window.location.href = "modula.html";
+          const currentDate = new Date().getTime();
+
+          if (modulaActive && currentDate < modulaExpiry) {
+            window.location.href = 'testdesign5.html';
+          } else {
+            alert('Langganan Anda sudah kedaluwarsa.');
+          }
+        } else {
+          console.log("Data pengguna tidak ditemukan.");
+          errorMessage.style.display = "block"; // Tampilkan pesan error
+        }
+      } catch (error) {
+        console.error("Login gagal:", error);
+        errorMessage.style.display = "block"; // Tampilkan pesan error
       }
     });
   </script>
+</head>
+<body>
+  <h1>Login dan Sistem Langganan</h1>
+  <button id="login-btn">Login dengan Google</button>
+  <p id="error-message" style="color:red; display:none;">Login gagal. Coba lagi.</p>
 </body>
 </html>
