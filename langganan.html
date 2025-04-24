@@ -1,63 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login dengan Google</title>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-    // Konfigurasi Firebase milik kamu
-    const firebaseConfig = {
-      apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
-      authDomain: "temter-df972.firebaseapp.com",
-      projectId: "temter-df972",
-      storageBucket: "temter-df972.firebasestorage.app",
-      messagingSenderId: "224267552779",
-      appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
-      measurementId: "G-CNYXFR6RKF"
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
+    authDomain: "temter-df972.firebaseapp.com",
+    projectId: "temter-df972",
+  };
 
-    // 🔌 Inisialisasi Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const provider = new GoogleAuthProvider();
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    // 🔐 Fungsi login dengan pengecekan Firestore
-    window.loginWithGoogle = async () => {
-      try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        const email = user.email;
+  // Tes ambil dokumen dari Firestore
+  const test = async () => {
+    const email = "aldianpramesta@gmail.com"; // ganti sesuai dokumen yang ada
+    const docRef = doc(db, "users", email);
+    const snap = await getDoc(docRef);
 
-        // 🔎 Cek akses user di Firestore
-        const userDocRef = doc(db, "users", email);
-        const userSnap = await getDoc(userDocRef);
-
-        if (userSnap.exists()) {
-          const data = userSnap.data();
-
-          // Cek apakah modula aktif dan belum expired
-          if (data.modula_active) {
-            const now = new Date();
-            const expiryDate = data.modula_expiry.toDate(); // konversi dari Timestamp
-            if (expiryDate > now) {
-              // ✅ Akses diperbolehkan
-              window.location.href = "modula.html";
-              return;
-            }
-          }
-        }
-
-        // ❌ Kalau tidak memenuhi syarat
-        alert("Akses ditolak. Email kamu belum terdaftar atau langganan sudah berakhir.");
-      } catch (error) {
-        console.error("Login error:", error.message);
-        alert("Gagal login: " + error.message);
-      }
+    if (snap.exists()) {
+      console.log("Data ditemukan:", snap.data());
+    } else {
+      console.log("Dokumen tidak ditemukan.");
     }
-  </script>
+  };
+
+  test();
+</script>
+
 </head>
 <body>
   <h2>Login ke TEMTER</h2>
