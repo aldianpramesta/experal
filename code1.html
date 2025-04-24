@@ -3,77 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login dan Langganan</title>
-  <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js"></script>
+  <title>Google Login</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 </head>
 <body>
+  <h1>Login with Google</h1>
 
-  <h1>Login dan Sistem Langganan</h1>
-
-  <!-- Tombol Login Google -->
-  <button id="login-btn">Login dengan Google</button>
-
-  <!-- Pesan jika login gagal -->
-  <p id="error-message" style="color:red; display:none;">Login gagal. Coba lagi.</p>
+  <!-- Google Login Button -->
+  <button id="login-button">Login with Google</button>
 
   <script>
-    // Konfigurasi Firebase
+    // Firebase configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
-      authDomain: "temter-df972.firebaseapp.com",
-      projectId: "temter-df972",
-      storageBucket: "temter-df972.firebasestorage.app",
-      messagingSenderId: "224267552779",
-      appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
-      measurementId: "G-CNYXFR6RKF"
+      apiKey: "AIzaSyBUmWClLRONCLocqLMfbhjVNZAG0srp1sQ",
+      authDomain: "aldian-pramesta-temter.firebaseapp.com",
+      projectId: "aldian-pramesta-temter",
+      storageBucket: "aldian-pramesta-temter.firebasestorage.app",
+      messagingSenderId: "467001407990",
+      appId: "1:467001407990:web:706a8a91e27e971b562fd7",
+      measurementId: "G-RD75GDJX53"
     };
 
-    // Inisialisasi Firebase
+    // Initialize Firebase
     const app = firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const firestore = firebase.firestore();
-    const analytics = firebase.analytics(app);
+    const analytics = firebase.analytics();
 
-    // Login menggunakan Google
-    const loginBtn = document.getElementById("login-btn");
-    const errorMessage = document.getElementById("error-message");
+    // Google login provider
+    const provider = new firebase.auth.GoogleAuthProvider();
 
-    loginBtn.addEventListener('click', function() {
-      const provider = new firebase.auth.GoogleAuthProvider();
+    // Handle the login when the button is clicked
+    document.getElementById("login-button").addEventListener("click", function () {
       auth.signInWithPopup(provider)
         .then((result) => {
+          // Google Account Info
           const user = result.user;
-          // Mengambil data langganan user dari Firestore
-          const userDocRef = firestore.collection('users').doc(user.email);
-
-          userDocRef.get().then((doc) => {
-            if (doc.exists) {
-              const modulaActive = doc.data().modula_active;
-              const modulaExpiry = doc.data().modula_expiry.seconds * 1000; // Timestamp to milliseconds
-
-              const currentDate = new Date().getTime();
-              
-              if (modulaActive && currentDate < modulaExpiry) {
-                // Arahkan ke halaman testdesign5.html jika langganan aktif
-                window.location.href = 'testdesign5.html';
-              } else {
-                // Tampilkan pesan jika langganan sudah kedaluwarsa
-                alert('Langganan Anda sudah kedaluwarsa.');
-              }
-            } else {
-              console.log("User data tidak ditemukan.");
-              errorMessage.style.display = "block"; // Tampilkan pesan error
-            }
-          }).catch((error) => {
-            console.error("Error fetching user data: ", error);
-          });
-
-        }).catch((error) => {
-          console.error("Login failed: ", error);
-          errorMessage.style.display = "block"; // Tampilkan pesan error
+          console.log("User Info:", user);
+          alert("Logged in as: " + user.displayName);
+        })
+        .catch((error) => {
+          console.error("Error during login:", error.message);
         });
     });
   </script>
