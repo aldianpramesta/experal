@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Modul Pembelajaran</title>
+  <title>Modul A - Part 1</title>
   <script type="module">
-    // Import Firebase SDK
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-    // Firebase config (pakai punyamu)
     const firebaseConfig = {
       apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
       authDomain: "temter-df972.firebaseapp.com",
@@ -19,7 +17,6 @@
       measurementId: "G-CNYXFR6RKF"
     };
 
-    // Init
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -34,7 +31,7 @@
       }
     });
 
-    // Cek login & akses Firestore
+    // Cek user login dan akses Firestore
     onAuthStateChanged(auth, async user => {
       if (user) {
         document.getElementById('status').textContent = "Halo, " + user.email;
@@ -44,18 +41,29 @@
         if (snap.exists()) {
           const data = snap.data();
           const now = new Date();
-          const expiry = data.modula_expiry?.toDate?.(); // Firestore timestamp → JS Date
+          const expiry = data.modulA_expiry?.toDate?.();
 
-          if (data.modula_active && expiry && now < expiry) {
-            document.getElementById('modula').style.display = 'block';
+          if (data.modulA_active && expiry && now < expiry) {
+            document.getElementById('modulA').style.display = 'block';
+          } else {
+            document.getElementById('status').textContent += " (Modul A tidak aktif atau expired)";
           }
+        } else {
+          document.getElementById('status').textContent += " (Data tidak ditemukan)";
         }
       }
     });
 
-    // Simulasi generate signed URL
-    document.getElementById('modula').addEventListener('click', () => {
-      alert("🔗 Di sini kamu panggil backend buat generate signed URL dan tampilkan video");
+    // Langsung embed video setelah klik tombol
+    document.getElementById('modulA').addEventListener('click', () => {
+      const videoContainer = document.getElementById('videoContainer');
+      videoContainer.innerHTML = `
+        <h3>Modul A - Part 1</h3>
+        <video controls width="640">
+          <source src="https://firebasestorage.googleapis.com/v0/b/temter-df972.appspot.com/o/500_very_slow.mp4?alt=media" type="video/mp4">
+          Browser kamu gak support video tag.
+        </video>
+      `;
     });
   </script>
 </head>
@@ -64,6 +72,7 @@
   <button id="loginBtn">Login dengan Google</button>
   <p id="status">Belum login</p>
 
-  <button id="modula" style="display:none;">🎬 Lihat Modul A</button>
+  <button id="modulA" style="display:none;">🎬 Lihat Modul A - Part 1</button>
+  <div id="videoContainer" style="margin-top: 20px;"></div>
 </body>
 </html>
