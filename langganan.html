@@ -3,11 +3,11 @@
 <head>
   <title>Login dengan Google</title>
   <script type="module">
-    // Import SDK dari Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-    // Konfigurasi Firebase (INI PUNYA KAMU)
+    // Konfigurasi Firebase milik kamu
     const firebaseConfig = {
       apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
       authDomain: "temter-df972.firebaseapp.com",
@@ -21,19 +21,40 @@
     // 🔌 Inisialisasi Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
-    // 🔐 Fungsi login pakai popup Google
+    // 🔐 Fungsi login dengan pengecekan Firestore
     window.loginWithGoogle = async () => {
       try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
-        console.log("Login berhasil:", user.email);
+        const email = user.email;
 
-        // ✅ Redirect ke halaman modula.html
-        window.location.href = "modula.html";
+        // 🔎 Cek akses user di Firestore
+        const userDocRef = doc(db, "users", email);
+        const userSnap = await getDoc(userDocRef);
+
+        if (userSnap.exists()) {
+          const data = userSnap.data();
+
+          // Cek apakah modula aktif dan belum expired
+          if (data.modula_active) {
+            const now = new Date();
+            const expiryDate = data.modula_expiry.toDate(); // konversi dari Timestamp
+            if (expiryDate > now) {
+              // ✅ Akses diperbolehkan
+              window.location.href = "modula.html";
+              return;
+            }
+          }
+        }
+
+        // ❌ Kalau tidak memenuhi syarat
+        alert("Akses ditolak. Email kamu belum terdaftar atau langganan sudah berakhir.");
       } catch (error) {
-        console.error("Login gagal:", error.message);
+        console.error("Login error:", error.message);
+        alert("Gagal login: " + error.message);
       }
     }
   </script>
