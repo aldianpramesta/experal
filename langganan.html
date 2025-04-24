@@ -1,72 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Modul Saya</title>
+  <title>Modul Pembelajaran</title>
   <script type="module">
-    // 🔗 Import SDK Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    // Import Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-    // 🔧 Konfigurasi Firebase
+    // Firebase config (pakai punyamu)
     const firebaseConfig = {
       apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
       authDomain: "temter-df972.firebaseapp.com",
       projectId: "temter-df972",
-      storageBucket: "temter-df972.appspot.com", // <- diperbaiki
+      storageBucket: "temter-df972.appspot.com",
       messagingSenderId: "224267552779",
       appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
       measurementId: "G-CNYXFR6RKF"
     };
 
-    // 🔌 Inisialisasi
+    // Init
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
-    const db = getFirestore();
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
 
-    const loginBtn = document.getElementById("loginBtn");
-    const videoSection = document.getElementById("videoSection");
-
-    loginBtn.addEventListener("click", async () => {
-      const provider = new GoogleAuthProvider();
+    // Login
+    document.getElementById('loginBtn').addEventListener('click', async () => {
       try {
         await signInWithPopup(auth, provider);
-      } catch (err) {
-        alert("Login gagal: " + err.message);
+      } catch (e) {
+        alert("Login gagal: " + e.message);
       }
     });
 
-    onAuthStateChanged(auth, async (user) => {
+    // Cek login & akses Firestore
+    onAuthStateChanged(auth, async user => {
       if (user) {
-        const email = user.email;
-        const docRef = doc(db, "users", email);
-        const docSnap = await getDoc(docRef);
+        document.getElementById('status').textContent = "Halo, " + user.email;
+        const userRef = doc(db, "users", user.email);
+        const snap = await getDoc(userRef);
 
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          const isActive = data.modula_active;
-          const expiry = data.modula_expiry?.toDate(); // konversi Firestore Timestamp
-
+        if (snap.exists()) {
+          const data = snap.data();
           const now = new Date();
+          const expiry = data.modulA_expiry?.toDate?.(); // Firestore timestamp → JS Date
 
-          if (isActive && expiry && now < expiry) {
-            videoSection.innerHTML = `
-              <h2>Modul A</h2>
-              <button onclick="alert('Siapkan fungsi generate URL di sini')">Tonton Part 1</button>
-            `;
-          } else {
-            videoSection.innerHTML = "<p>Akses tidak aktif atau sudah kedaluwarsa.</p>";
+          if (data.modulA_active && expiry && now < expiry) {
+            document.getElementById('modulA').style.display = 'block';
           }
-        } else {
-          videoSection.innerHTML = "<p>Data tidak ditemukan.</p>";
         }
       }
+    });
+
+    // Simulasi generate signed URL
+    document.getElementById('modulA').addEventListener('click', () => {
+      alert("🔗 Di sini kamu panggil backend buat generate signed URL dan tampilkan video");
     });
   </script>
 </head>
 <body>
-  <h1>Selamat Datang</h1>
+  <h1>🔥 Akses Modul</h1>
   <button id="loginBtn">Login dengan Google</button>
-  <div id="videoSection"></div>
+  <p id="status">Belum login</p>
+
+  <button id="modulA" style="display:none;">🎬 Lihat Modul A</button>
 </body>
 </html>
