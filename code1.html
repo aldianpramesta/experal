@@ -3,65 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login dengan Google</title>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+  <title>Login dan Langganan</title>
+  <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js"></script>
 </head>
 <body>
-  <button id="login-button">Login dengan Google</button>
+
+  <h1>Login dan Sistem Langganan</h1>
+
+  <!-- Tombol Login Google -->
+  <button id="login-btn">Login dengan Google</button>
+
+  <!-- Pesan jika login gagal -->
+  <p id="error-message" style="color:red; display:none;">Login gagal. Coba lagi.</p>
 
   <script>
     // Konfigurasi Firebase
     const firebaseConfig = {
-      apiKey: "AIzaSyBUmWClLRONCLocqLMfbhjVNZAG0srp1sQ",
-      authDomain: "aldian-pramesta-temter.firebaseapp.com",
-      projectId: "aldian-pramesta-temter",
-      storageBucket: "aldian-pramesta-temter.appspot.com",
-      messagingSenderId: "467001407990",
-      appId: "1:467001407990:web:706a8a91e27e971b562fd7",
-      measurementId: "G-RD75GDJX53"
+      apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
+      authDomain: "temter-df972.firebaseapp.com",
+      projectId: "temter-df972",
+      storageBucket: "temter-df972.firebasestorage.app",
+      messagingSenderId: "224267552779",
+      appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
+      measurementId: "G-CNYXFR6RKF"
     };
 
     // Inisialisasi Firebase
     const app = firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const db = firebase.firestore();
+    const firestore = firebase.firestore();
+    const analytics = firebase.analytics(app);
 
-    // Setup Google provider
-    const provider = new firebase.auth.GoogleAuthProvider();
+    // Login menggunakan Google
+    const loginBtn = document.getElementById("login-btn");
+    const errorMessage = document.getElementById("error-message");
 
-    // Fungsi login
-    document.getElementById("login-button").addEventListener("click", () => {
+    loginBtn.addEventListener('click', function() {
+      const provider = new firebase.auth.GoogleAuthProvider();
       auth.signInWithPopup(provider)
         .then((result) => {
           const user = result.user;
-          console.log("Login berhasil:", user.email);
+          // Mengambil data langganan user dari Firestore
+          const userDocRef = firestore.collection('users').doc(user.email);
 
-          // Simpan data pengguna ke Firestore
-          saveUserData(user);
-        })
-        .catch((error) => {
-          console.error("Login gagal:", error.message);
+          userDocRef.get().then((doc) => {
+            if (doc.exists) {
+              const modulaActive = doc.data().modula_active;
+              const modulaExpiry = doc.data().modula_expiry.seconds * 1000; // Timestamp to milliseconds
+
+              const currentDate = new Date().getTime();
+              
+              if (modulaActive && currentDate < modulaExpiry) {
+                // Arahkan ke halaman testdesign5.html jika langganan aktif
+                window.location.href = 'testdesign5.html';
+              } else {
+                // Tampilkan pesan jika langganan sudah kedaluwarsa
+                alert('Langganan Anda sudah kedaluwarsa.');
+              }
+            } else {
+              console.log("User data tidak ditemukan.");
+              errorMessage.style.display = "block"; // Tampilkan pesan error
+            }
+          }).catch((error) => {
+            console.error("Error fetching user data: ", error);
+          });
+
+        }).catch((error) => {
+          console.error("Login failed: ", error);
+          errorMessage.style.display = "block"; // Tampilkan pesan error
         });
     });
-
-    // Fungsi untuk menyimpan data pengguna ke Firestore
-    function saveUserData(user) {
-      const userRef = db.collection("users").doc(user.email);  // Gunakan email sebagai ID
-      userRef.set({
-        email: user.email,
-        modula_active: true,  // Status modul aktif
-        modula_expiry: firebase.firestore.Timestamp.fromDate(new Date(new Date().setFullYear(new Date().getFullYear() + 1)))  // Set expiry 1 tahun
-      })
-      .then(() => {
-        console.log("Data pengguna berhasil disimpan!");
-        // Setelah menyimpan, bisa redirect ke halaman lain atau tampilkan konten modul
-      })
-      .catch((error) => {
-        console.error("Error menyimpan data pengguna: ", error);
-      });
-    }
   </script>
 </body>
 </html>
