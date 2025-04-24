@@ -11,27 +11,31 @@
     <h1>Login with Google</h1>
     <button id="loginBtn">Login with Google</button>
 
-    <script>
+    <script type="module">
         // Firebase config - replace with your own configuration
         const firebaseConfig = {
-  apiKey: "AIzaSyBUmWClLRONCLocqLMfbhjVNZAG0srp1sQ",
-  authDomain: "aldian-pramesta-temter.firebaseapp.com",
-  projectId: "aldian-pramesta-temter",
-  storageBucket: "aldian-pramesta-temter.firebasestorage.app",
-  messagingSenderId: "467001407990",
-  appId: "1:467001407990:web:706a8a91e27e971b562fd7",
+            apiKey: "AIzaSyBUmWClLRONCLocqLMfbhjVNZAG0srp1sQ",
+            authDomain: "aldian-pramesta-temter.firebaseapp.com",
+            projectId: "aldian-pramesta-temter",
+            storageBucket: "aldian-pramesta-temter.firebasestorage.app",
+            messagingSenderId: "467001407990",
+            appId: "1:467001407990:web:706a8a91e27e971b562fd7",
         };
 
+        // Import necessary Firebase modules
+        import { initializeApp } from 'firebase/app';
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+
         // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
         // Google Auth provider
-        const provider = new firebase.auth.GoogleAuthProvider();
+        const provider = new GoogleAuthProvider();
 
         // Login button event listener
         document.getElementById('loginBtn').addEventListener('click', () => {
-            auth.signInWithPopup(provider)
+            signInWithPopup(auth, provider)
                 .then((result) => {
                     // Logged in successfully, now redirect
                     window.location.href = 'testdesign5.html'; // Redirect to testdesign5.html
