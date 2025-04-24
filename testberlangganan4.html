@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,21 +44,21 @@
     window.loginModul = async function(namaModul) {
       try {
         const result = await signInWithPopup(auth, provider); // Popup login Google
-        const uid = result.user.uid; // Ambil UID user
-        const userRef = doc(db, "users", uid); // Referensi dokumen user berdasarkan UID
+        const email = result.user.email; // Ambil email user
+        const userRef = doc(db, "users", email); // Referensi dokumen user di Firestore
         const userSnap = await getDoc(userRef); // Ambil data user dari Firestore
 
         // Kalau data gak ada di Firestore
         if (!userSnap.exists()) {
-          alert("Akun Anda belum terdaftar.");
-          await signOut(auth);
+          alert("Email Anda belum terdaftar.");
+          await signOut(auth); // Logout user
           return;
         }
 
         const userData = userSnap.data(); // Ambil semua data user
-        const modulData = userData[namaModul]; // Ambil data field modul
+        const modulData = userData[namaModul]; // Ambil data field modul yang diminta (modula, modulb, dll)
 
-        // Cek akses dan status aktif
+        // Kalau user belum  atau belum beli modul
         if (!modulData || !modulData.active) {
           alert(`Anda tidak memiliki akses ke ${namaModul}.`);
           await signOut(auth);
@@ -65,21 +66,22 @@
         }
 
         const now = new Date(); // Waktu sekarang
-        const expiredDate = modulData.expired.toDate(); // Waktu kedaluwarsa
+        const expiredDate = modulData.expired.toDate(); // Waktu kedaluwarsa dari firebase
 
+        // Kalau sudah lewat tanggal expired
         if (now > expiredDate) {
           alert(`Langganan Anda untuk ${namaModul} telah habis.`);
           await signOut(auth);
           return;
         }
 
-        // Akses diizinkan
-        const halamanTujuan = `${namaModul}.html`;
+        // Kalau semua aman, redirect ke halaman modul
+        const halamanTujuan = `${namaModul}.html`; // Nama file yang konsisten dengan field Firestore
         alert(`Akses diberikan! Masuk ke ${namaModul}`);
         window.location.href = halamanTujuan;
 
       } catch (error) {
-        console.error("Login error", error);
+        console.error("Login error", error); // Tangkap error login
         alert("Terjadi kesalahan saat login.");
       }
     };
