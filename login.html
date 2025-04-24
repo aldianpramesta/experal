@@ -1,105 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login Firebase - Temter</title>
-
-  <!-- Firebase SDK -->
+  <meta charset="UTF-8">
+  <title>Login - Temter</title>
   <script type="module">
-    // Import the Firebase modules
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    // 1. Import modul dari Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-    // Konfigurasi Firebase kamu
+    // 2. Konfigurasi Firebase dari project kamu
     const firebaseConfig = {
       apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
       authDomain: "temter-df972.firebaseapp.com",
       projectId: "temter-df972",
-      storageBucket: "temter-df972.appspot.com", // typo sebelumnya: firebasestorage.app
+      storageBucket: "temter-df972.firebasestorage.app",
       messagingSenderId: "224267552779",
       appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
       measurementId: "G-CNYXFR6RKF"
     };
 
-    // Inisialisasi Firebase
+    // 3. Inisialisasi Firebase
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // 4. Inisialisasi provider Google
     const provider = new GoogleAuthProvider();
 
-    // Login
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById("login-btn").addEventListener("click", () => {
-        signInWithPopup(auth, provider)
-          .then((result) => {
-            const user = result.user;
-            console.log("Login success:", user.displayName);
-            document.getElementById("user-info").textContent = `Halo, ${user.displayName}`;
-            document.getElementById("login-btn").style.display = "none";
-            document.getElementById("logout-btn").style.display = "block";
-          })
-          .catch((error) => {
-            console.error("Login error:", error.message);
-          });
-      });
+    // 5. Fungsi untuk login pakai Google
+    async function login() {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
 
-      // Logout
-      document.getElementById("logout-btn").addEventListener("click", () => {
-        signOut(auth)
-          .then(() => {
-            document.getElementById("user-info").textContent = "";
-            document.getElementById("login-btn").style.display = "block";
-            document.getElementById("logout-btn").style.display = "none";
-          })
-          .catch((error) => {
-            console.error("Logout error:", error.message);
-          });
-      });
+        // Ambil dokumen user dari Firestore
+        const docRef = doc(db, "users", user.email);
+        const docSnap = await getDoc(docRef);
 
-      // Cek status login
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          document.getElementById("user-info").textContent = `Halo, ${user.displayName}`;
-          document.getElementById("login-btn").style.display = "none";
-          document.getElementById("logout-btn").style.display = "block";
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+
+          // Cek apakah user punya akses aktif
+          if (data.modula_active && new Date() < data.modula_expiry.toDate()) {
+            document.getElementById("status").innerText = "Login sukses! Akses aktif hingga " + data.modula_expiry.toDate();
+          } else {
+            document.getElementById("status").innerText = "Akses modul tidak aktif atau sudah expired.";
+            signOut(auth);
+          }
         } else {
-          document.getElementById("user-info").textContent = "";
-          document.getElementById("login-btn").style.display = "block";
-          document.getElementById("logout-btn").style.display = "none";
+          document.getElementById("status").innerText = "Email belum terdaftar. Hubungi admin.";
+          signOut(auth);
         }
-      });
-    });
-  </script>
+      } catch (error) {
+        console.error("Login error", error);
+        document.getElementById("status").innerText = "Gagal login.";
+      }
+    }
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 2rem;
-      background: #f4f4f4;
+    // 6. Monitor status login (untuk auto logout/refresh tampilan)
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById("user-email").innerText = user.email;
+        document.getElementById("logout-btn").style.display = "block";
+      } else {
+        document.getElementById("user-email").innerText = "";
+        document.getElementById("logout-btn").style.display = "none";
+      }
+    });
+
+    // 7. Logout
+    function logout() {
+      signOut(auth);
+      document.getElementById("status").innerText = "Anda telah logout.";
     }
-    button {
-      padding: 10px 15px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      background-color: #4285F4;
-      color: white;
-      border-radius: 4px;
-    }
-    #logout-btn {
-      background-color: #DB4437;
-      display: none;
-    }
-    #user-info {
-      margin-top: 1rem;
-      font-size: 18px;
-    }
-  </style>
+
+    // 8. Bind fungsi ke tombol
+    window.login = login;
+    window.logout = logout;
+  </script>
 </head>
-<body>
-  <h2>Login dengan Google - Temter</h2>
-  <button id="login-btn">Login dengan Google</button>
-  <button id="logout-btn">Logout</button>
-  <div id="user-info"></div>
+<body style="font-family: sans-serif; padding: 2rem;">
+  <h1>Login ke Temter</h1>
+  <button onclick="login()">Login dengan Google</button>
+  <button onclick="logout()" id="logout-btn" style="display: none;">Logout</button>
+  <p id="user-email"></p>
+  <p id="status"></p>
 </body>
 </html>
