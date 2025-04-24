@@ -1,95 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Modul A</title>
-</head>
-<body>
-  <h2 id="judul">Memuat Modul A...</h2>
-  <div id="konten" style="display: none;">
-    <p>Selamat datang di Modul A! 🎉</p>
-    <video id="videoPlayer" controls width="600">Memuat video...</video>
-  </div>
-
+  <meta charset="UTF-8">
+  <title>Login dan Cek Langganan</title>
   <script type="module">
-    // ✅ Import modul Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-functions.js";
+    // ✅ Import Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     // ✅ Konfigurasi Firebase
     const firebaseConfig = {
-      apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
-      authDomain: "temter-df972.firebaseapp.com",
-      projectId: "temter-df972",
-      storageBucket: "temter-df972.appspot.com",
-      messagingSenderId: "224267552779",
-      appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
-      measurementId: "G-CNYXFR6RKF"
+      apiKey: "AIzaSyBUmWClLRONCLocqLMfbhjVNZAG0srp1sQ",
+      authDomain: "aldian-pramesta-temter.firebaseapp.com",
+      projectId: "aldian-pramesta-temter",
+      storageBucket: "aldian-pramesta-temter.firebasestorage.app",
+      messagingSenderId: "467001407990",
+      appId: "1:467001407990:web:706a8a91e27e971b562fd7",
+      measurementId: "G-RD75GDJX53"
     };
 
     // ✅ Inisialisasi Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const functions = getFunctions(app);
+    const provider = new GoogleAuthProvider();
 
-    // ⚙️ Nama modul & video
-    const namaModul = "modula"; // sesuai field modul di Firestore
-    const namaVideo = "500_very_slow"; // TANPA .mp4
-
-    // 🔐 Cek login user dan akses modul
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        alert("Anda belum login.");
-        window.location.href = "index.html";
-        return;
-      }
-
-      const email = user.email;
-      const userRef = doc(db, "users", email);
-      const userSnap = await getDoc(userRef);
-
-      if (!userSnap.exists()) {
-        alert("Data Anda tidak ditemukan.");
-        await signOut(auth);
-        window.location.href = "index.html";
-        return;
-      }
-
-      const userData = userSnap.data();
-      const modul = userData[namaModul];
-
-      if (!modul || !modul.aktif) {
-        alert("Anda tidak memiliki akses ke modul ini.");
-        await signOut(auth);
-        window.location.href = "index.html";
-        return;
-      }
-
-      const now = new Date();
-      const expiredDate = modul.expired.toDate();
-      if (now > expiredDate) {
-        alert("Langganan Anda untuk modul ini sudah habis.");
-        await signOut(auth);
-        window.location.href = "index.html";
-        return;
-      }
-
-      // ✅ Akses valid, tampilkan konten
-      document.getElementById("judul").textContent = `Modul ${namaModul.toUpperCase()}`;
-      document.getElementById("konten").style.display = "block";
-
-      // 🎥 Ambil Signed URL dari Firebase Function
+    // ✅ Fungsi Login & Cek Langganan
+    async function loginAndCheckSubscription() {
       try {
-        const getSignedVideoUrl = httpsCallable(functions, "getSignedVideoUrl");
-        const response = await getSignedVideoUrl({ videoName: namaVideo });
-        document.getElementById("videoPlayer").src = response.data.url;
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+
+        const userDocRef = doc(db, "users", user.email); // Ambil dokumen user berdasarkan email
+        const userSnap = await getDoc(userDocRef);
+
+        if (userSnap.exists()) {
+          const data = userSnap.data();
+          const active = data.modula_active;
+          const expiry = data.modula_expiry?.toDate(); // konversi Firestore Timestamp ke JS Date
+
+          const now = new Date();
+
+          if (active && expiry && expiry > now) {
+            // ✅ Langganan aktif dan belum kedaluwarsa
+            window.location.href = "modula.html";
+          } else {
+            // ❌ Langganan kedaluwarsa
+            document.getElementById("status").innerText = "Langganan Anda telah kedaluwarsa. Silakan perpanjang.";
+          }
+        } else {
+          document.getElementById("status").innerText = "Data pengguna tidak ditemukan di database.";
+        }
+
       } catch (error) {
-        console.error(error);
-        alert("Gagal memuat video. Hubungi admin.");
+        console.error("Login error:", error);
+        document.getElementById("status").innerText = "Gagal login: " + error.message;
       }
-    });
+    }
   </script>
+</head>
+<body>
+  <h1>Login untuk Akses ModulA</h1>
+  <button onclick="loginAndCheckSubscription()">Login dengan Google</button>
+  <p id="status"></p>
 </body>
 </html>
