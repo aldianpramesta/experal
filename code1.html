@@ -54,18 +54,18 @@
         const userData = userSnap.data(); // // ambil semua data user
         const modulData = userData[namaModul]; // // ambil data field modul yang diminta (modula, modulb, dll)
 
-        // // kalau user belum active atau belum beli modul
-        if (!modulData || !modulData.active) {
+        // // kalau user belum aktif atau belum beli modul
+        if (!modulData || !modulData.aktif) {
           alert(`Anda tidak memiliki akses ke ${namaModul}.`);
           await signOut(auth);
           return;
         }
 
         const now = new Date(); // // waktu sekarang
-        const expiryDate = modulData.expiry.toDate(); // // waktu kedaluwarsa dari firebase
+        const expiredDate = modulData.expired.toDate(); // // waktu kedaluwarsa dari firebase
 
-        // // kalau sudah lewat tanggal expiry
-        if (now > expiryDate) {
+        // // kalau sudah lewat tanggal expired
+        if (now > expiredDate) {
           alert(`Langganan Anda untuk ${namaModul} telah habis.`);
           await signOut(auth);
           return;
@@ -84,3 +84,4 @@
   </script>
 </body>
 </html>
+
