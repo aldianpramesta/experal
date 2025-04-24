@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Firebase - Temter</title>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import the Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    // Konfigurasi Firebase kamu
+    const firebaseConfig = {
+      apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
+      authDomain: "temter-df972.firebaseapp.com",
+      projectId: "temter-df972",
+      storageBucket: "temter-df972.appspot.com", // typo sebelumnya: firebasestorage.app
+      messagingSenderId: "224267552779",
+      appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
+      measurementId: "G-CNYXFR6RKF"
+    };
+
+    // Inisialisasi Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+
+    // Login
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById("login-btn").addEventListener("click", () => {
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            const user = result.user;
+            console.log("Login success:", user.displayName);
+            document.getElementById("user-info").textContent = `Halo, ${user.displayName}`;
+            document.getElementById("login-btn").style.display = "none";
+            document.getElementById("logout-btn").style.display = "block";
+          })
+          .catch((error) => {
+            console.error("Login error:", error.message);
+          });
+      });
+
+      // Logout
+      document.getElementById("logout-btn").addEventListener("click", () => {
+        signOut(auth)
+          .then(() => {
+            document.getElementById("user-info").textContent = "";
+            document.getElementById("login-btn").style.display = "block";
+            document.getElementById("logout-btn").style.display = "none";
+          })
+          .catch((error) => {
+            console.error("Logout error:", error.message);
+          });
+      });
+
+      // Cek status login
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          document.getElementById("user-info").textContent = `Halo, ${user.displayName}`;
+          document.getElementById("login-btn").style.display = "none";
+          document.getElementById("logout-btn").style.display = "block";
+        } else {
+          document.getElementById("user-info").textContent = "";
+          document.getElementById("login-btn").style.display = "block";
+          document.getElementById("logout-btn").style.display = "none";
+        }
+      });
+    });
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f4f4f4;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background-color: #4285F4;
+      color: white;
+      border-radius: 4px;
+    }
+    #logout-btn {
+      background-color: #DB4437;
+      display: none;
+    }
+    #user-info {
+      margin-top: 1rem;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Login dengan Google - Temter</h2>
+  <button id="login-btn">Login dengan Google</button>
+  <button id="logout-btn">Logout</button>
+  <div id="user-info"></div>
+</body>
+</html>
