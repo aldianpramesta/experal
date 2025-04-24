@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEMTER</title>
+<script>
+  function toggleVideo(id) {
+    const videoEl = document.getElementById(id);
+    videoEl.style.display = videoEl.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
+  
+  <style>
+    /* Mengimpor font dari Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
+
+    body {
+      margin: 0;
+      background-color: #000; /* Warna latar belakang hitam */
+      color: #ffffff; /* Warna teks default putih */
+      font-family: 'Instrument Sans', sans-serif; /* Font utama */
+    }
+
+    section {
+      width: 100%; /* Lebar penuh */
+      display: flex; /* Flexbox layout */
+      flex-direction: column; /* Susun elemen ke bawah */
+      justify-content: center;
+      align-items: center; /* Posisi tengah secara horizontal */
+    }
+
+/* ========== Animasi Global, lagi diilangin dulu ga ada yang pas ========== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+    /* Section 1 - Judul Nama */
+    .section-1 {
+      height: auto; /* Otomatis mengikuti isi */
+      padding: 32px 16px; /* Spasi atas bawah 32px, samping 16px */
+      display: block; /* Supaya kontennya gak center (default block) */
+    }
+    .section-1 .judul {
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: -0.04em; /* Spasi antar huruf lebih rapat */
+      line-height: 1em;
+      padding-left: 20px; /* ← ini tambahan baru */
+    }
+    .section-1 .temter {
+      font-family: 'Instrument Serif', serif; /* Font khusus untuk TEMTER */
+      font-style: italic;
+      font-weight: 400;
+    }
+    
+    .section-2 {
+    padding: 24px 16px;
+    width: 100%;
+  }
+
+  .modul {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .modul-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-left: 8px;
+  }
+
+  .part {
+    background-color: #111;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    position: relative;
+  }
+
+  .part:hover {
+    background-color: #222;
+  }
+
+  .video-container {
+    margin-top: 12px;
+    display: none; /* Disembunyikan dulu */
+  }
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Section 1: Nama & Branding -->
+  <section class="section-1">
+    <div class="judul">
+      ALDIAN PRAMESTA <span class="temter">TEMTER</span>
+    </div>
+  </section>
+  
+<!-- Section 2: Modul A -->
+<section class="section-2">
+  <div class="modul">
+    <div class="modul-title">MODUL A</div>
+    
+    <div class="part" onclick="toggleVideo('video1')">
+      Part 1
+      <div class="video-container" id="video1">
+        <video controls width="320">
+          <source src="video1.mp4" type="video/mp4">
+          Browser kamu tidak mendukung video.
+        </video>
+      </div>
+    </div>
+
+    <div class="part" onclick="toggleVideo('video2')">
+      Part 2
+      <div class="video-container" id="video2">
+        <video controls width="320">
+          <source src="video2.mp4" type="video/mp4">
+          Browser kamu tidak mendukung video.
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+  
+</body>
+</html>
