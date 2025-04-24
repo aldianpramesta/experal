@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Modul Saya</title>
+  <script type="module">
+    // 🔗 Import SDK Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // 🔧 Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyDAjJ-_jTNh7HucY66o1A6PZh-ohrpETVY",
+      authDomain: "temter-df972.firebaseapp.com",
+      projectId: "temter-df972",
+      storageBucket: "temter-df972.appspot.com", // <- diperbaiki
+      messagingSenderId: "224267552779",
+      appId: "1:224267552779:web:99d8e441a9b019950f1f0e",
+      measurementId: "G-CNYXFR6RKF"
+    };
+
+    // 🔌 Inisialisasi
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const db = getFirestore();
+
+    const loginBtn = document.getElementById("loginBtn");
+    const videoSection = document.getElementById("videoSection");
+
+    loginBtn.addEventListener("click", async () => {
+      const provider = new GoogleAuthProvider();
+      try {
+        await signInWithPopup(auth, provider);
+      } catch (err) {
+        alert("Login gagal: " + err.message);
+      }
+    });
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const email = user.email;
+        const docRef = doc(db, "users", email);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          const isActive = data.modula_active;
+          const expiry = data.modula_expiry?.toDate(); // konversi Firestore Timestamp
+
+          const now = new Date();
+
+          if (isActive && expiry && now < expiry) {
+            videoSection.innerHTML = `
+              <h2>Modul A</h2>
+              <button onclick="alert('Siapkan fungsi generate URL di sini')">Tonton Part 1</button>
+            `;
+          } else {
+            videoSection.innerHTML = "<p>Akses tidak aktif atau sudah kedaluwarsa.</p>";
+          }
+        } else {
+          videoSection.innerHTML = "<p>Data tidak ditemukan.</p>";
+        }
+      }
+    });
+  </script>
+</head>
+<body>
+  <h1>Selamat Datang</h1>
+  <button id="loginBtn">Login dengan Google</button>
+  <div id="videoSection"></div>
+</body>
+</html>
