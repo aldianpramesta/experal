@@ -44,17 +44,17 @@
         if (snap.exists()) {
           const data = snap.data();
           const now = new Date();
-          const expiry = data.modulA_expiry?.toDate?.(); // Firestore timestamp → JS Date
+          const expiry = data.modula_expiry?.toDate?.(); // Firestore timestamp → JS Date
 
-          if (data.modulA_active && expiry && now < expiry) {
-            document.getElementById('modulA').style.display = 'block';
+          if (data.modula_active && expiry && now < expiry) {
+            document.getElementById('modula').style.display = 'block';
           }
         }
       }
     });
 
     // Simulasi generate signed URL
-    document.getElementById('modulA').addEventListener('click', () => {
+    document.getElementById('modula').addEventListener('click', () => {
       alert("🔗 Di sini kamu panggil backend buat generate signed URL dan tampilkan video");
     });
   </script>
@@ -64,6 +64,6 @@
   <button id="loginBtn">Login dengan Google</button>
   <p id="status">Belum login</p>
 
-  <button id="modulA" style="display:none;">🎬 Lihat Modul A</button>
+  <button id="modula" style="display:none;">🎬 Lihat Modul A</button>
 </body>
 </html>
