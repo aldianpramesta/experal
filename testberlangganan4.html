@@ -43,30 +43,21 @@
     window.loginModul = async function(namaModul) {
       try {
         const result = await signInWithPopup(auth, provider); // Popup login Google
-        const email = result.user.email; // Ambil email user
-        const userRef = doc(db, "users", result.user.uid); // Ganti email dengan user ID
+        const uid = result.user.uid; // Ambil UID user
+        const userRef = doc(db, "users", uid); // Referensi dokumen user berdasarkan UID
         const userSnap = await getDoc(userRef); // Ambil data user dari Firestore
 
         // Kalau data gak ada di Firestore
         if (!userSnap.exists()) {
-          alert("Email Anda belum terdaftar.");
-          await signOut(auth); // Logout user
-          return;
-        }
-
-        const userData = userSnap.data(); // Ambil semua data user
-        const storedEmail = userData.email; // Ambil field email dari dokumen
-
-        // Cek apakah email di Firestore sesuai dengan email yang login
-        if (storedEmail !== email) {
-          alert("Email tidak sesuai.");
+          alert("Akun Anda belum terdaftar.");
           await signOut(auth);
           return;
         }
 
-        const modulData = userData[namaModul]; // Ambil data field modul yang diminta (modula, modulb, dll)
+        const userData = userSnap.data(); // Ambil semua data user
+        const modulData = userData[namaModul]; // Ambil data field modul
 
-        // Kalau user belum  atau belum beli modul
+        // Cek akses dan status aktif
         if (!modulData || !modulData.active) {
           alert(`Anda tidak memiliki akses ke ${namaModul}.`);
           await signOut(auth);
@@ -74,22 +65,21 @@
         }
 
         const now = new Date(); // Waktu sekarang
-        const expiredDate = modulData.expired.toDate(); // Waktu kedaluwarsa dari firebase
+        const expiredDate = modulData.expired.toDate(); // Waktu kedaluwarsa
 
-        // Kalau sudah lewat tanggal expired
         if (now > expiredDate) {
           alert(`Langganan Anda untuk ${namaModul} telah habis.`);
           await signOut(auth);
           return;
         }
 
-        // Kalau semua aman, redirect ke halaman modul
-        const halamanTujuan = `${namaModul}.html`; // Nama file yang konsisten dengan field Firestore
+        // Akses diizinkan
+        const halamanTujuan = `${namaModul}.html`;
         alert(`Akses diberikan! Masuk ke ${namaModul}`);
         window.location.href = halamanTujuan;
 
       } catch (error) {
-        console.error("Login error", error); // Tangkap error login
+        console.error("Login error", error);
         alert("Terjadi kesalahan saat login.");
       }
     };
