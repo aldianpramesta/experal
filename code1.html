@@ -1,49 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login with Google</title>
-    <script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Google Login</title>
+  <!-- Include Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Login with Google</h1>
-    <button id="loginBtn">Login with Google</button>
+  <h2>Login with Google</h2>
+  <button id="loginButton">Login with Google</button>
 
-    <script type="module">
-        // Firebase config - replace with your own configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBUmWClLRONCLocqLMfbhjVNZAG0srp1sQ",
-            authDomain: "aldian-pramesta-temter.firebaseapp.com",
-            projectId: "aldian-pramesta-temter",
-            storageBucket: "aldian-pramesta-temter.firebasestorage.app",
-            messagingSenderId: "467001407990",
-            appId: "1:467001407990:web:706a8a91e27e971b562fd7",
-        };
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBUmWClLRONCLocqLMfbhjVNZAG0srp1sQ",
+      authDomain: "aldian-pramesta-temter.firebaseapp.com",
+      projectId: "aldian-pramesta-temter",
+      storageBucket: "aldian-pramesta-temter.firebasestorage.app",
+      messagingSenderId: "467001407990",
+      appId: "1:467001407990:web:706a8a91e27e971b562fd7",
+      measurementId: "G-RD75GDJX53"
+    };
 
-        // Import necessary Firebase modules
-        import { initializeApp } from 'firebase/app';
-        import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const analytics = firebase.analytics(app);
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+    // Get Auth instance
+    const auth = firebase.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
 
-        // Google Auth provider
-        const provider = new GoogleAuthProvider();
-
-        // Login button event listener
-        document.getElementById('loginBtn').addEventListener('click', () => {
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    // Logged in successfully, now redirect
-                    window.location.href = 'testdesign5.html'; // Redirect to testdesign5.html
-                })
-                .catch((error) => {
-                    console.error(error.message);
-                });
+    // Set up the login button
+    document.getElementById('loginButton').addEventListener('click', () => {
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          // Get user info (optional)
+          const user = result.user;
+          console.log('User:', user);
+          
+          // Redirect to modula.html after successful login
+          window.location.href = "modula.html";
+        })
+        .catch((error) => {
+          console.error("Error during sign-in: ", error.message);
         });
-    </script>
+    });
+
+    // Optional: Check if the user is already logged in
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        // If already logged in, redirect to modula.html
+        window.location.href = "modula.html";
+      }
+    });
+  </script>
 </body>
 </html>
