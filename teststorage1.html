@@ -22,21 +22,6 @@
   });
 </script>
 
-<script>
-  setInterval(function () {
-    const devtools = /./;
-    devtools.toString = function () {
-      this.opened = true;
-      throw new Error("DevTools is open");
-    };
-    console.log('%c', devtools);
-    if (devtools.opened) {
-      window.location.href = "about:blank"; // bisa kamu ganti ke halaman lain
-    }
-  }, 1000);
-</script>
-
-  
   <style>
     /* Mengimpor font dari Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
