@@ -4,73 +4,69 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEMTER</title>
-
 <script>
-  // Blok klik kanan
-  document.addEventListener('contextmenu', event => event.preventDefault());
-
-  function toggleVideo(showId) {
-    const allContainers = document.querySelectorAll('.video-container');
-
-    allContainers.forEach(container => {
-      const video = container.querySelector('video');
-      
-      // Pause semua video
-      if (video) {
-        video.pause();
-        video.currentTime = 0;
-      }
-
-      // Sembunyikan semua container
-      container.style.display = 'none';
-    });
-
-    // Tampilkan hanya yang dipilih
-    const selectedContainer = document.getElementById(showId);
-    if (selectedContainer) {
-      selectedContainer.style.display = 'block';
-    }
+  function toggleVideo(id) {
+    const videoEl = document.getElementById(id);
+    videoEl.style.display = videoEl.style.display === 'block' ? 'none' : 'block';
   }
 </script>
+  <script>
+  document.addEventListener('keydown', function (e) {
+    if (
+      e.key === 'F12' ||
+      (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key)) ||
+      (e.ctrlKey && e.key === 'U')
+    ) {
+      e.preventDefault();
+    }
+  });
+</script>
 
+  <style>
+    /* Mengimpor font dari Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
+    body {
+      margin: 0;
+      background-color: #000; /* Warna latar belakang hitam */
+      color: #ffffff; /* Warna teks default putih */
+      font-family: 'Instrument Sans', sans-serif; /* Font utama */
+    }
 
-  body {
-    margin: 0;
-    background-color: #000;
-    color: #ffffff;
-    font-family: 'Instrument Sans', sans-serif;
-  }
+    section {
+      width: 100%; /* Lebar penuh */
+      display: flex; /* Flexbox layout */
+      flex-direction: column; /* Susun elemen ke bawah */
+      justify-content: center;
+      align-items: center; /* Posisi tengah secara horizontal */
+    }
 
-  section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+/* ========== Animasi Global, lagi diilangin dulu ga ada yang pas ========== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  .section-1 {
-    height: auto;
-    padding: 32px 16px;
-    display: block;
-  }
-  .section-1 .judul {
-    font-weight: bold;
-    font-size: 16px;
-    letter-spacing: -0.04em;
-    line-height: 1em;
-    padding-left: 20px;
-  }
-  .section-1 .temter {
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-weight: 400;
-  }
-
-  .section-2 {
+    /* Section 1 - Judul Nama */
+    .section-1 {
+      height: auto; /* Otomatis mengikuti isi */
+      padding: 32px 16px; /* Spasi atas bawah 32px, samping 16px */
+      display: block; /* Supaya kontennya gak center (default block) */
+    }
+    .section-1 .judul {
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: -0.04em; /* Spasi antar huruf lebih rapat */
+      line-height: 1em;
+      padding-left: 20px; /* ← ini tambahan baru */
+    }
+    .section-1 .temter {
+      font-family: 'Instrument Serif', serif; /* Font khusus untuk TEMTER */
+      font-style: italic;
+      font-weight: 400;
+    }
+    
+    .section-2 {
     padding: 24px 16px;
     width: 100%;
   }
@@ -101,15 +97,15 @@
     background-color: #222;
   }
 
-.video-container {
-  margin-top: 12px;
-  display: none;
-  padding-left: 16px;
-}
+  .video-container {
+    margin-top: 12px;
+    display: none; /* Disembunyikan dulu */
+  }
 
-</style>
+
+  </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
   <!-- Section 1: Nama & Branding -->
   <section class="section-1">
@@ -118,35 +114,33 @@
     </div>
   </section>
   
-  <!-- Section 2: Modul A -->
-  <section class="section-2">
-    <div class="modul">
-      <div class="modul-title">MODUL A</div>
-      
-<!-- Part 1 -->
-<div class="part" onclick="toggleVideo('video1')">
-  Part 1
-</div>
-<div class="video-container" id="video1" style="display: none;">
-  <video width="320" controls controlsList="nodownload" preload="none" oncontextmenu="return false">
-    <source src="https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.opus?alt=media&token=021cb0a4-3f18-47af-ad4a-dbb96c8ab627" type="video/mp4">
-    Browser kamu tidak mendukung video.
-  </video>
-</div>
+<!-- Section 2: Modul A -->
+<section class="section-2">
+  <div class="modul">
+    <div class="modul-title">MODUL A</div>
+    
+    <div class="part" onclick="toggleVideo('video1')">
+      Part 1
+      <div class="video-container" id="video1">
+        <video controls width="320">
+          <source src="https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.opus?alt=media&token=021cb0a4-3f18-47af-ad4a-dbb96c8ab627" type="video/mp4">
+          Browser kamu tidak mendukung video.
+        </video>
+      </div>
+    </div>
 
-<!-- Part 2 -->
-<div class="part" onclick="toggleVideo('video2')">
-  Part 2
-</div>
-<div class="video-container" id="video2" style="display: none;">
-  <video width="320" controls controlsList="nodownload" preload="none" oncontextmenu="return false">
-    <source src="https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.opus?alt=media&token=021cb0a4-3f18-47af-ad4a-dbb96c8ab627" type="video/mp4">
-    Browser kamu tidak mendukung video.
-  </video>
-</div>
+    <div class="part" onclick="toggleVideo('video2')">
+      Part 2
+      <div class="video-container" id="video2">
+        <video controls width="320">
+          <source src="video2.mp4" type="video/mp4">
+          Browser kamu tidak mendukung video.
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
 
-
-  </section>
-
+  
 </body>
 </html>
