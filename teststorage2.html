@@ -9,29 +9,30 @@
   // Blok klik kanan
   document.addEventListener('contextmenu', event => event.preventDefault());
 
-  function toggleVideo(id, videoSrc) {
+  function toggleVideo(showId) {
     const allContainers = document.querySelectorAll('.video-container');
 
-    // Tutup semua video
     allContainers.forEach(container => {
+      const video = container.querySelector('video');
+      
+      // Pause semua video
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+
+      // Sembunyikan semua container
       container.style.display = 'none';
-      container.innerHTML = '';
     });
 
-    const container = document.getElementById(id);
-
-    // Kalau sebelumnya kosong/tidak tampil, tampilkan video
-    if (container.style.display === 'none' || container.innerHTML === '') {
-      container.style.display = 'block';
-      container.innerHTML = `
-        <video width="320" controls controlsList="nodownload" oncontextmenu="return false">
-          <source src="${videoSrc}" type="video/mp4">
-          Browser kamu tidak mendukung video.
-        </video>
-      `;
+    // Tampilkan hanya yang dipilih
+    const selectedContainer = document.getElementById(showId);
+    if (selectedContainer) {
+      selectedContainer.style.display = 'block';
     }
   }
 </script>
+
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
@@ -123,16 +124,27 @@
       <div class="modul-title">MODUL A</div>
       
 <!-- Part 1 -->
-<div class="part" onclick="toggleVideo('video1', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/modulapart1.mp4?alt=media&token=2fa341a6-3e1e-49c0-bc10-f1703298708b')">
+<div class="part" onclick="toggleVideo('video1')">
   Part 1
 </div>
-<div class="video-container" id="video1"></div>
+<div class="video-container" id="video1" style="display: none;">
+  <video width="320" controls controlsList="nodownload" preload="none" oncontextmenu="return false">
+    <source src="https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/modulapart1.mp4?alt=media&token=2fa341a6-3e1e-49c0-bc10-f1703298708b" type="video/mp4">
+    Browser kamu tidak mendukung video.
+  </video>
+</div>
 
 <!-- Part 2 -->
-<div class="part" onclick="toggleVideo('video2', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.wav?alt=media&token=ac10ba1a-8243-4af6-83d1-16b6be4a394e')">
+<div class="part" onclick="toggleVideo('video2')">
   Part 2
 </div>
-<div class="video-container" id="video2"></div>
+<div class="video-container" id="video2" style="display: none;">
+  <video width="320" controls controlsList="nodownload" preload="none" oncontextmenu="return false">
+    <source src="https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.wav?alt=media&token=ac10ba1a-8243-4af6-83d1-16b6be4a394e" type="video/mp4">
+    Browser kamu tidak mendukung video.
+  </video>
+</div>
+
 
   </section>
 
