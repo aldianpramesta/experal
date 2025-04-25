@@ -21,7 +21,7 @@
     if (container.style.display === 'none' || container.innerHTML === '') {
       container.style.display = 'block';
       container.innerHTML = `
-        <video controls width="320">
+        <video controls controlsList="nodownload" width="320">
           <source src="${videoSrc}" type="video/mp4">
           Browser kamu tidak mendukung video.
         </video>
@@ -29,6 +29,7 @@
     }
   }
 </script>
+
 
   
   <style>
