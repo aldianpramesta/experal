@@ -4,33 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEMTER</title>
+  <script>
+    function toggleVideo(id, src) {
+      const container = document.getElementById(id);
 
-<script>
-  function toggleVideo(id, videoSrc) {
-    const allContainers = document.querySelectorAll('.video-container');
+      // Kalau belum ada video, buat elemen video
+      if (!container.hasChildNodes()) {
+        const video = document.createElement('video');
+        video.setAttribute('controls', true);
+        video.setAttribute('controlsList', 'nodownload'); // untuk hilangkan download
+        video.setAttribute('preload', 'none'); // tidak preload
+        video.setAttribute('width', '320');
 
-    // Tutup SEMUA video-container & hapus video-nya
-    allContainers.forEach(container => {
-      container.style.display = 'none';
-      container.innerHTML = '';
-    });
+        const source = document.createElement('source');
+        source.setAttribute('src', src);
+        source.setAttribute('type', 'video/mp4');
 
-    const container = document.getElementById(id);
+        video.appendChild(source);
+        container.appendChild(video);
+        container.style.display = 'block';
 
-    // Kalau container yang diklik sebelumnya sudah aktif, gak usah buka lagi
-    if (container.style.display === 'none' || container.innerHTML === '') {
-      container.style.display = 'block';
-      container.innerHTML = `
-        <video controls width="320">
-          <source src="${videoSrc}" type="video/mp4">
-          Browser kamu tidak mendukung video.
-        </video>
-      `;
+        video.play(); // langsung play setelah muncul
+      } else {
+        // Kalau udah ada video, toggle tampil/sembunyi
+        container.style.display = container.style.display === 'block' ? 'none' : 'block';
+      }
     }
-  }
-</script>
+  </script>
 
-  
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
 
@@ -54,6 +55,7 @@
       padding: 32px 16px;
       display: block;
     }
+
     .section-1 .judul {
       font-weight: bold;
       font-size: 16px;
@@ -61,12 +63,13 @@
       line-height: 1em;
       padding-left: 20px;
     }
+
     .section-1 .temter {
       font-family: 'Instrument Serif', serif;
       font-style: italic;
       font-weight: 400;
     }
-    
+
     .section-2 {
       padding: 24px 16px;
       width: 100%;
@@ -112,22 +115,21 @@
       ALDIAN PRAMESTA <span class="temter">TEMTER</span>
     </div>
   </section>
-  
+
   <!-- Section 2: Modul A -->
   <section class="section-2">
     <div class="modul">
       <div class="modul-title">MODUL A</div>
-      
-      <div class="part" onclick="toggleVideo('video1', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/modulapart1.mp4?alt=media&token=2fa341a6-3e1e-49c0-bc10-f1703298708b')">
+
+      <div class="part" onclick="toggleVideo('video1', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.opus?alt=media&token=021cb0a4-3f18-47af-ad4a-dbb96c8ab627')">
         Part 1
         <div class="video-container" id="video1"></div>
       </div>
 
-      <div class="part" onclick="toggleVideo('video2', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.wav?alt=media&token=ac10ba1a-8243-4af6-83d1-16b6be4a394e')">
+      <div class="part" onclick="toggleVideo('video2', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.opus?alt=media&token=021cb0a4-3f18-47af-ad4a-dbb96c8ab627')">
         Part 2
         <div class="video-container" id="video2"></div>
       </div>
-
     </div>
   </section>
 
