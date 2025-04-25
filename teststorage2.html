@@ -6,13 +6,13 @@
   <title>TEMTER</title>
 
 <script>
-  // Blok klik kanan di seluruh halaman
+  // Blok klik kanan
   document.addEventListener('contextmenu', event => event.preventDefault());
 
   function toggleVideo(id, videoSrc) {
     const allContainers = document.querySelectorAll('.video-container');
 
-    // Tutup SEMUA video-container & hapus video-nya
+    // Tutup semua video
     allContainers.forEach(container => {
       container.style.display = 'none';
       container.innerHTML = '';
@@ -20,7 +20,7 @@
 
     const container = document.getElementById(id);
 
-    // Kalau container yang diklik sebelumnya sudah aktif, gak usah buka lagi
+    // Kalau sebelumnya kosong/tidak tampil, tampilkan video
     if (container.style.display === 'none' || container.innerHTML === '') {
       container.style.display = 'block';
       container.innerHTML = `
@@ -100,10 +100,12 @@
     background-color: #222;
   }
 
-  .video-container {
-    margin-top: 12px;
-    display: none;
-  }
+.video-container {
+  margin-top: 12px;
+  display: none;
+  padding-left: 16px;
+}
+
 </style>
 </head>
 <body>
@@ -120,17 +122,18 @@
     <div class="modul">
       <div class="modul-title">MODUL A</div>
       
-      <div class="part" onclick="toggleVideo('video1', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/modulapart1.mp4?alt=media&token=2fa341a6-3e1e-49c0-bc10-f1703298708b')">
-        Part 1
-        <div class="video-container" id="video1"></div>
-      </div>
+<!-- Part 1 -->
+<div class="part" onclick="toggleVideo('video1', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/modulapart1.mp4?alt=media&token=2fa341a6-3e1e-49c0-bc10-f1703298708b')">
+  Part 1
+</div>
+<div class="video-container" id="video1"></div>
 
-      <div class="part" onclick="toggleVideo('video2', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.wav?alt=media&token=ac10ba1a-8243-4af6-83d1-16b6be4a394e')">
-        Part 2
-        <div class="video-container" id="video2"></div>
-      </div>
+<!-- Part 2 -->
+<div class="part" onclick="toggleVideo('video2', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.wav?alt=media&token=ac10ba1a-8243-4af6-83d1-16b6be4a394e')">
+  Part 2
+</div>
+<div class="video-container" id="video2"></div>
 
-    </div>
   </section>
 
 </body>
