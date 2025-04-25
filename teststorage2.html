@@ -5,51 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEMTER</title>
 
-<script>
-  function toggleVideo(id, videoSrc) {
-    const allContainers = document.querySelectorAll('.video-container');
-    
-    allContainers.forEach(container => {
-      container.style.display = 'none';
-      container.innerHTML = '';
-    });
-
-    const container = document.getElementById(id);
-
-    if (container.style.display === 'none' || container.innerHTML === '') {
-      container.style.display = 'block';
-      container.innerHTML = `
-        <div class="video-wrapper">
-          <video id="player-${id}" class="custom-video">
-            <source src="${videoSrc}" type="video/mp4">
-            Browser kamu tidak mendukung video.
-          </video>
-          <div class="controls">
-            <button onclick="document.getElementById('player-${id}').paused ? document.getElementById('player-${id}').play() : document.getElementById('player-${id}').pause()">
-              ▶️ / ⏸️
-            </button>
-            <input type="range" min="0" max="100" value="0" onchange="seekVideo(event, 'player-${id}')">
-          </div>
-        </div>
-      `;
-
-      const player = document.getElementById(`player-${id}`);
-      const range = container.querySelector('input[type="range"]');
-
-      player.addEventListener('timeupdate', () => {
-        range.value = (player.currentTime / player.duration) * 100 || 0;
-      });
-    }
-  }
-
-  function seekVideo(e, id) {
-    const video = document.getElementById(id);
-    const value = e.target.value;
-    video.currentTime = (value / 100) * video.duration;
-  }
-</script>
-
-  
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
 
@@ -73,6 +28,7 @@
       padding: 32px 16px;
       display: block;
     }
+
     .section-1 .judul {
       font-weight: bold;
       font-size: 16px;
@@ -80,55 +36,135 @@
       line-height: 1em;
       padding-left: 20px;
     }
+
     .section-1 .temter {
       font-family: 'Instrument Serif', serif;
       font-style: italic;
       font-weight: 400;
     }
-    
+
     .section-2 {
       padding: 24px 16px;
       width: 100%;
     }
 
-  .video-wrapper {
-    position: relative;
-    width: 320px;
-    background: #000;
-    border-radius: 10px;
-    overflow: hidden;
-  }
+    .modul {
+      width: 100%;
+      max-width: 500px;
+    }
 
-  .custom-video {
-    width: 100%;
-    display: block;
-  }
+    .modul-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      padding-left: 8px;
+    }
 
-  .controls {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px;
-  }
+    .part {
+      background-color: #111;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      position: relative;
+    }
 
-  .controls button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 14px;
-    cursor: pointer;
-  }
+    .part:hover {
+      background-color: #222;
+    }
 
-  .controls input[type="range"] {
-    flex-grow: 1;
-    margin: 0 10px;
-  }
+    .video-container {
+      margin-top: 12px;
+      display: none;
+    }
 
+    /* Custom player styling */
+    .custom-player {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      background: #000;
+    }
+
+    .custom-player video {
+      width: 100%;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      background: #111;
+      border-top: 1px solid #333;
+    }
+
+    .controls button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .controls input[type="range"] {
+      width: 80px;
+    }
   </style>
+
+  <script>
+    let currentVideo = null;
+
+    function toggleVideo(id, videoSrc) {
+      const allContainers = document.querySelectorAll('.video-container');
+      allContainers.forEach(c => {
+        c.style.display = 'none';
+        c.innerHTML = '';
+      });
+
+      const container = document.getElementById(id);
+      if (container.style.display === 'none' || container.innerHTML === '') {
+        container.style.display = 'block';
+        container.innerHTML = `
+          <div class="custom-player">
+            <video id="videoPlayer" src="${videoSrc}" preload="metadata"></video>
+            <div class="controls">
+              <button onclick="togglePlay()">▶️</button>
+              <button onclick="skip(-10)">⏪ 10s</button>
+              <button onclick="skip(10)">⏩ 10s</button>
+              <input type="range" min="0" max="1" step="0.01" onchange="setVolume(this.value)" value="1">
+              <button onclick="fullscreen()">⛶</button>
+            </div>
+          </div>
+        `;
+        currentVideo = container.querySelector('video');
+      }
+    }
+
+    function togglePlay() {
+      if (!currentVideo) return;
+      if (currentVideo.paused) currentVideo.play();
+      else currentVideo.pause();
+    }
+
+    function skip(seconds) {
+      if (currentVideo) currentVideo.currentTime += seconds;
+    }
+
+    function setVolume(val) {
+      if (currentVideo) currentVideo.volume = val;
+    }
+
+    function fullscreen() {
+      if (currentVideo) {
+        if (currentVideo.requestFullscreen) {
+          currentVideo.requestFullscreen();
+        }
+      }
+    }
+  </script>
+
 </head>
 <body>
 
@@ -138,12 +174,12 @@
       ALDIAN PRAMESTA <span class="temter">TEMTER</span>
     </div>
   </section>
-  
+
   <!-- Section 2: Modul A -->
   <section class="section-2">
     <div class="modul">
       <div class="modul-title">MODUL A</div>
-      
+
       <div class="part" onclick="toggleVideo('video1', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/modulapart1.mp4?alt=media&token=2fa341a6-3e1e-49c0-bc10-f1703298708b')">
         Part 1
         <div class="video-container" id="video1"></div>
