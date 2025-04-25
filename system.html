@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEMTER</title>
+
+    <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
+  <script type="module">
+    // Inisialisasi firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    // Konfigurasi firebase project kamu
+    const firebaseConfig = {
+      apiKey: "AIzaSyBUmWClLRONCLocqLMfbhjVNZAG0srp1sQ",
+      authDomain: "aldian-pramesta-temter.firebaseapp.com",
+      projectId: "aldian-pramesta-temter",
+      storageBucket: "aldian-pramesta-temter.firebasestorage.app",
+      messagingSenderId: "467001407990",
+      appId: "1:467001407990:web:706a8a91e27e971b562fd7",
+      measurementId: "G-RD75GDJX53"
+    };
+
+    const app = initializeApp(firebaseConfig); // Menyalakan firebase
+    const auth = getAuth(app); // Inisialisasi auth
+    const db = getFirestore(app); // Inisialisasi firestore
+    const provider = new GoogleAuthProvider(); // Login Google
+    provider.setCustomParameters({
+      prompt: 'select_account' // ← Ini memaksa pemilihan akun setiap login
+    });
+
+    // Fungsi umum untuk login ke modul manapun
+    window.loginModul = async function(namaModul) {
+      try {
+        const result = await signInWithPopup(auth, provider); // Popup login Google
+        const email = result.user.email; // Ambil email user
+        const userRef = doc(db, "users", email); // Referensi dokumen user di Firestore
+        const userSnap = await getDoc(userRef); // Ambil data user dari Firestore
+
+        // Kalau data gak ada di Firestore
+        if (!userSnap.exists()) {
+          alert("Email Anda belum terdaftar.");
+          await signOut(auth); // Logout user
+          return;
+        }
+
+        const userData = userSnap.data(); // Ambil semua data user
+        const modulData = userData[namaModul]; // Ambil data field modul yang diminta (modula, modulb, dll)
+
+        // Kalau user belum  atau belum beli modul
+        if (!modulData || !modulData.active) {
+          alert(`Anda tidak memiliki akses ke ${namaModul}.`);
+          await signOut(auth);
+          return;
+        }
+
+        const now = new Date(); // Waktu sekarang
+        const expiredDate = modulData.expired.toDate(); // Waktu kedaluwarsa dari firebase
+
+        // Kalau sudah lewat tanggal expired
+        if (now > expiredDate) {
+          alert(`Langganan Anda untuk ${namaModul} telah habis.`);
+          await signOut(auth);
+          return;
+        }
+
+        // Kalau semua aman, redirect ke halaman modul
+        const halamanTujuan = `${namaModul}.html`; // Nama file yang konsisten dengan field Firestore
+        alert(`Akses diberikan! Masuk ke ${namaModul}`);
+        window.location.href = halamanTujuan;
+
+      } catch (error) {
+        console.error("Login error", error); // Tangkap error login
+        alert("Terjadi kesalahan saat login.");
+      }
+    };
+  </script>
+
+<script src="https://raw.githubusercontent.com/aldianpramesta/temter/refs/heads/main/javascript/disable-inspect.js"></script>
+  
+  <style>
+    /* Mengimpor font dari Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
+
+    body {
+      margin: 0;
+      background-color: #000; /* Warna latar belakang hitam */
+      color: #ffffff; /* Warna teks default putih */
+      font-family: 'Instrument Sans', sans-serif; /* Font utama */
+    }
+
+    section {
+      width: 100%; /* Lebar penuh */
+      display: flex; /* Flexbox layout */
+      flex-direction: column; /* Susun elemen ke bawah */
+      justify-content: center;
+      align-items: center; /* Posisi tengah secara horizontal */
+    }
+
+    /* Section 1 - Judul Nama */
+    .section-1 {
+      height: auto; /* Otomatis mengikuti isi */
+      padding: 32px 16px; /* Spasi atas bawah 32px, samping 16px */
+      display: block; /* Supaya kontennya gak center (default block) */
+    }
+    .section-1 .judul {
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: -0.04em; /* Spasi antar huruf lebih rapat */
+      line-height: 1em;
+      padding-left: 20px; /* ← ini tambahan baru */
+    }
+    .section-1 .temter {
+      font-family: 'Instrument Serif', serif; /* Font khusus untuk TEMTER */
+      font-style: italic;
+      font-weight: 400;
+    }
+    
+/* Style untuk Section 2 */
+#section2 {
+  background-color: #f9f9f9;
+  padding: 40px 20px;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin: 40px auto;
+  max-width: 600px;
+}
+
+/* Judul section */
+#section2 h2 {
+  font-size: 24px;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+/* Container tombol */
+.modul-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Tombol login */
+.modul-buttons button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Efek hover tombol */
+.modul-buttons button:hover {
+  background-color: #357abd;
+  transform: scale(1.05);
+}
+
+    
+  </style>
+</head>
+<body>
+
+  <!-- Section 1: Nama & Branding -->
+  <section class="section-1">
+    <div class="judul">
+      ALDIAN PRAMESTA <span class="temter">TEMTER</span>
+    </div>
+  </section>
+
+  <!-- Section 2: Tombol Login ke Modul -->
+<section id="section2">
+  <h2>Login ke Modul</h2>
+  <div class="modul-buttons">
+    <button onclick="loginModul('modula')">Login Modul A</button>
+    <button onclick="loginModul('modulb')">Login Modul B</button>
+  </div>
+</section>
+
+</body>
+</html>
