@@ -11,19 +11,6 @@
     videoEl.style.display = videoEl.style.display === 'block' ? 'none' : 'block';
   }
 </script>
-
-<script>
-function playVideo(videoId, videoSource) {
-  const video = document.getElementById(videoId);
-  // pasang src pas user klik play
-  if (!video.src) {
-    video.src = videoSource;
-  }
-  video.play();
-}
-</script>
-
-
   
   <script>
   document.addEventListener('keydown', function (e) {
@@ -138,8 +125,9 @@ function playVideo(videoId, videoSource) {
       Part 1
       <div class="video-container" id="video1">
         <video controls width="320" controlsList="nodownload" preload="none">
+          <source src="https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.opus?alt=media&token=021cb0a4-3f18-47af-ad4a-dbb96c8ab627" type="video/mp4" autoplay muted>
+          Browser kamu tidak mendukung video.
         </video>
-        <button onclick="playVideo('https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.opus?alt=media&token=021cb0a4-3f18-47af-ad4a-dbb96c8ab627', 'audio_modul_a_part1.opus')">Play Video 1</button>
       </div>
     </div>
 
@@ -147,8 +135,8 @@ function playVideo(videoId, videoSource) {
       Part 2
       <div class="video-container" id="video2" >
         <video controls width="320" controlsList="nodownload" preload="none">
+          <source src="https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/modulapart1.mp4?alt=media&token=5fdf43cf-3554-49d5-b93b-0fd8c799b110" type="video/mp4" autoplay muted>
         </video>
-        <button onclick="playVideo('https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/modulapart1.mp4?alt=media&token=5fdf43cf-3554-49d5-b93b-0fd8c799b110', 'modulapart1.mp4')">Play Video 1</button>
       </div>
     </div>
   </div>
