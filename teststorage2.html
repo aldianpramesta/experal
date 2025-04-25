@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEMTER</title>
+  
 <script>
   function toggleVideo(id) {
     const videoEl = document.getElementById(id);
     videoEl.style.display = videoEl.style.display === 'block' ? 'none' : 'block';
   }
 </script>
+  
   <script>
   document.addEventListener('keydown', function (e) {
     if (
@@ -122,7 +124,7 @@
     <div class="part" onclick="toggleVideo('video1')">
       Part 1
       <div class="video-container" id="video1">
-        <video controls width="320">
+        <video controls width="320" controlsList="nodownload">
           <source src="https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.opus?alt=media&token=021cb0a4-3f18-47af-ad4a-dbb96c8ab627" type="video/mp4">
           Browser kamu tidak mendukung video.
         </video>
@@ -131,8 +133,8 @@
 
     <div class="part" onclick="toggleVideo('video2')">
       Part 2
-      <div class="video-container" id="video2">
-        <video controls width="320">
+      <div class="video-container" id="video2" >
+        <video controls width="320" controlsList="nodownload">
           <source src="video2.mp4" type="video/mp4">
           Browser kamu tidak mendukung video.
         </video>
