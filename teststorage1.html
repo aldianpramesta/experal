@@ -6,25 +6,19 @@
   <title>TEMTER</title>
 
 <script>
-  let activeVideoId = null; // Menyimpan ID video yang sedang aktif
-
   function toggleVideo(id, videoSrc) {
-    const container = document.getElementById(id);
+    const allContainers = document.querySelectorAll('.video-container');
 
-    // Kalau user klik video yang sama → toggle
-    if (activeVideoId === id) {
+    // Tutup SEMUA video-container & hapus video-nya
+    allContainers.forEach(container => {
       container.style.display = 'none';
       container.innerHTML = '';
-      activeVideoId = null;
-    } else {
-      // Tutup video sebelumnya (jika ada)
-      if (activeVideoId !== null) {
-        const prevContainer = document.getElementById(activeVideoId);
-        prevContainer.style.display = 'none';
-        prevContainer.innerHTML = '';
-      }
+    });
 
-      // Buka video baru
+    const container = document.getElementById(id);
+
+    // Kalau container yang diklik sebelumnya sudah aktif, gak usah buka lagi
+    if (container.style.display === 'none' || container.innerHTML === '') {
       container.style.display = 'block';
       container.innerHTML = `
         <video controls width="320">
@@ -32,7 +26,6 @@
           Browser kamu tidak mendukung video.
         </video>
       `;
-      activeVideoId = id;
     }
   }
 </script>
