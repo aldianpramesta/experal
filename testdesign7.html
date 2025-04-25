@@ -4,20 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEMTER</title>
-
 <script>
-  // Fungsi untuk munculin atau sembunyiin tombol "Play"
-  function toggleSub(partElement) {
-    const sub = partElement.querySelector('.sub');
-    sub.style.display = sub.style.display === 'none' ? 'block' : 'none';
-  }
-
-  // Fungsi buat mutar audio dan ilangin tombol play setelah diklik
-  function playAudio(buttonElement, audioUrl) {
-    const audio = document.getElementById('audioPlayer');
-    audio.src = audioUrl;
-    audio.play();
-    buttonElement.style.display = 'none'; // ilangin tombol play setelah dipijit
+  function toggleVideo(id) {
+    const videoEl = document.getElementById(id);
+    videoEl.style.display = videoEl.style.display === 'block' ? 'none' : 'block';
   }
 </script>
   
@@ -40,87 +30,80 @@
       align-items: center; /* Posisi tengah secara horizontal */
     }
 
-/* ========== Animasi Global, lagi diilangin dulu ga ada yang pas ========== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     /* Section 1 - Judul Nama */
     .section-1 {
-      height: auto; /* Otomatis mengikuti isi */
-      padding: 32px 16px; /* Spasi atas bawah 32px, samping 16px */
-      display: block; /* Supaya kontennya gak center (default block) */
+      height: auto;
+      padding: 32px 16px;
+      display: block;
     }
     .section-1 .judul {
       font-weight: bold;
       font-size: 16px;
-      letter-spacing: -0.04em; /* Spasi antar huruf lebih rapat */
+      letter-spacing: -0.04em;
       line-height: 1em;
-      padding-left: 20px; /* ← ini tambahan baru */
+      padding-left: 20px;
     }
     .section-1 .temter {
-      font-family: 'Instrument Serif', serif; /* Font khusus untuk TEMTER */
+      font-family: 'Instrument Serif', serif;
       font-style: italic;
       font-weight: 400;
     }
-    
-  .section-2 {
-    padding: 32px 16px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    color: #fff;
-  }
 
-  .judul-modul {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
+    .section-2 {
+      padding: 24px 16px;
+      width: 100%;
+    }
 
-  .part {
-    cursor: pointer;
-    margin-bottom: 12px;
-    padding-left: 16px;
-    font-size: 15px;
-  }
+    .modul {
+      width: 100%;
+      max-width: 500px;
+    }
 
-  .sub {
-    margin-top: 4px;
-    padding-left: 16px;
-  }
+    .modul-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      padding-left: 8px;
+    }
 
-  button {
-    background-color: #fff;
-    color: #000;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'Instrument Sans', sans-serif;
-  }
+    .part {
+      background-color: #111;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      transition: background 0.3s ease;
+      position: relative;
+    }
 
-  button:hover {
-    background-color: #ddd;
-  }
+    .part:hover {
+      background-color: #222;
+    }
 
-.part button {
-  margin-top: 8px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-family: inherit;
-}
+    .video-container {
+      margin-top: 12px;
+      display: none;
+    }
 
-.part button:hover {
-  background-color: #555;
-}
+    .part button {
+      margin-top: 8px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+    }
 
-    
+    .part button:hover {
+      background-color: #555;
+    }
+
   </style>
 </head>
 <body>
@@ -131,39 +114,36 @@
       ALDIAN PRAMESTA <span class="temter">TEMTER</span>
     </div>
   </section>
-
-<!-- Section 2: Modul & Audio -->
-<section class="section-2">
-  <div class="modul">
-    <!-- Judul Modul -->
-    <div class="judul-modul">Modul A</div>
-
-<div class="part">
-  Part 1
-  <button onclick="toggleVideo('video1')">Buka Video</button>
-  <div class="video-container" id="video1">
-    <video controls width="320">
-      <source src="modulapart1.mp4" type="video/mp4">
-      Browser kamu tidak mendukung video.
-    </video>
-  </div>
-</div>
-
-
-    <!-- Part 2 -->
-<div class="part">
-  Part 2
-  <button onclick="toggleVideo('video2')">Buka Video</button>
-  <div class="video-container" id="video1">
-    <video controls width="320">
-      <source src="modulapart1.mp4" type="video/mp4">
-      Browser kamu tidak mendukung video.
-    </video>
-  </div>
-</div>
-
-
-<audio id="audioPlayer" style="display:none;"></audio> <!-- Audio player tersembunyi -->
   
+  <!-- Section 2: Modul A -->
+  <section class="section-2">
+    <div class="modul">
+      <div class="modul-title">MODUL A</div>
+      
+      <div class="part">
+        Part 1
+        <button onclick="toggleVideo('video1')">Buka Video</button>
+        <div class="video-container" id="video1">
+          <video controls width="320">
+            <source src="modulapart1.mp4" type="video/mp4">
+            Browser kamu tidak mendukung video.
+          </video>
+        </div>
+      </div>
+
+      <div class="part">
+        Part 2
+        <button onclick="toggleVideo('video2')">Buka Video</button>
+        <div class="video-container" id="video2">
+          <video controls width="320">
+            <source src="video2.mp4" type="video/mp4">
+            Browser kamu tidak mendukung video.
+          </video>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
 </body>
 </html>
