@@ -12,9 +12,12 @@
       if (!container.hasChildNodes()) {
         const video = document.createElement('video');
         video.setAttribute('controls', true);
-        video.setAttribute('controlsList', 'nodownload'); // untuk hilangkan download
+        video.setAttribute('controlsList', 'nodownload'); // hilangkan tombol download
         video.setAttribute('preload', 'none'); // tidak preload
         video.setAttribute('width', '320');
+
+        // Blok klik kanan khusus video
+        video.oncontextmenu = (e) => e.preventDefault();
 
         const source = document.createElement('source');
         source.setAttribute('src', src);
@@ -23,12 +26,16 @@
         video.appendChild(source);
         container.appendChild(video);
         container.style.display = 'block';
-
       } else {
         // Kalau udah ada video, toggle tampil/sembunyi
         container.style.display = container.style.display === 'block' ? 'none' : 'block';
       }
     }
+
+    // Blok klik kanan untuk seluruh halaman
+    document.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+    });
   </script>
 
   <style>
