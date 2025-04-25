@@ -5,27 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEMTER</title>
 
-  <script>
-    // Fungsi untuk toggle video: load saat dibuka, hapus saat ditutup
-    function toggleVideo(id, videoSrc) {
-      const container = document.getElementById(id);
+<script>
+  let activeVideoId = null; // Menyimpan ID video yang sedang aktif
 
-      if (container.style.display === 'block') {
-        // Tutup dan hapus elemen video dari DOM
-        container.style.display = 'none';
-        container.innerHTML = '';
-      } else {
-        // Tampilkan dan masukkan elemen video ke DOM
-        container.style.display = 'block';
-        container.innerHTML = `
-          <video controls width="320">
-            <source src="${videoSrc}" type="video/mp4">
-            Browser kamu tidak mendukung video.
-          </video>
-        `;
+  function toggleVideo(id, videoSrc) {
+    const container = document.getElementById(id);
+
+    // Kalau user klik video yang sama → toggle
+    if (activeVideoId === id) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+      activeVideoId = null;
+    } else {
+      // Tutup video sebelumnya (jika ada)
+      if (activeVideoId !== null) {
+        const prevContainer = document.getElementById(activeVideoId);
+        prevContainer.style.display = 'none';
+        prevContainer.innerHTML = '';
       }
+
+      // Buka video baru
+      container.style.display = 'block';
+      container.innerHTML = `
+        <video controls width="320">
+          <source src="${videoSrc}" type="video/mp4">
+          Browser kamu tidak mendukung video.
+        </video>
+      `;
+      activeVideoId = id;
     }
-  </script>
+  }
+</script>
+
   
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
