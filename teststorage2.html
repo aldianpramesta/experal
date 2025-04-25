@@ -5,6 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEMTER</title>
 
+<script>
+  function toggleVideo(id, videoSrc) {
+    const allContainers = document.querySelectorAll('.video-container');
+
+    // Tutup SEMUA video-container & hapus video-nya
+    allContainers.forEach(container => {
+      container.style.display = 'none';
+      container.innerHTML = '';
+    });
+
+    const container = document.getElementById(id);
+
+    // Kalau container yang diklik sebelumnya sudah aktif, gak usah buka lagi
+    if (container.style.display === 'none' || container.innerHTML === '') {
+      container.style.display = 'block';
+      container.innerHTML = `
+        <video controls width="320">
+          <source src="${videoSrc}" type="video/mp4">
+          Browser kamu tidak mendukung video.
+        </video>
+      `;
+    }
+  }
+</script>
+
+  
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
 
@@ -28,7 +54,6 @@
       padding: 32px 16px;
       display: block;
     }
-
     .section-1 .judul {
       font-weight: bold;
       font-size: 16px;
@@ -36,13 +61,12 @@
       line-height: 1em;
       padding-left: 20px;
     }
-
     .section-1 .temter {
       font-family: 'Instrument Serif', serif;
       font-style: italic;
       font-weight: 400;
     }
-
+    
     .section-2 {
       padding: 24px 16px;
       width: 100%;
@@ -78,93 +102,7 @@
       margin-top: 12px;
       display: none;
     }
-
-    /* Custom player styling */
-    .custom-player {
-      position: relative;
-      width: 100%;
-      max-width: 500px;
-      background: #000;
-    }
-
-    .custom-player video {
-      width: 100%;
-    }
-
-    .controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px;
-      background: #111;
-      border-top: 1px solid #333;
-    }
-
-    .controls button {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .controls input[type="range"] {
-      width: 80px;
-    }
   </style>
-
-  <script>
-    let currentVideo = null;
-
-    function toggleVideo(id, videoSrc) {
-      const allContainers = document.querySelectorAll('.video-container');
-      allContainers.forEach(c => {
-        c.style.display = 'none';
-        c.innerHTML = '';
-      });
-
-      const container = document.getElementById(id);
-      if (container.style.display === 'none' || container.innerHTML === '') {
-        container.style.display = 'block';
-        container.innerHTML = `
-          <div class="custom-player">
-            <video id="videoPlayer" src="${videoSrc}" preload="metadata"></video>
-            <div class="controls">
-              <button onclick="togglePlay()">▶️</button>
-              <button onclick="skip(-10)">⏪ 10s</button>
-              <button onclick="skip(10)">⏩ 10s</button>
-              <input type="range" min="0" max="1" step="0.01" onchange="setVolume(this.value)" value="1">
-              <button onclick="fullscreen()">⛶</button>
-            </div>
-          </div>
-        `;
-        currentVideo = container.querySelector('video');
-      }
-    }
-
-    function togglePlay() {
-      if (!currentVideo) return;
-      if (currentVideo.paused) currentVideo.play();
-      else currentVideo.pause();
-    }
-
-    function skip(seconds) {
-      if (currentVideo) currentVideo.currentTime += seconds;
-    }
-
-    function setVolume(val) {
-      if (currentVideo) currentVideo.volume = val;
-    }
-
-    function fullscreen() {
-      if (currentVideo) {
-        if (currentVideo.requestFullscreen) {
-          currentVideo.requestFullscreen();
-        }
-      }
-    }
-  </script>
-
 </head>
 <body>
 
@@ -174,12 +112,12 @@
       ALDIAN PRAMESTA <span class="temter">TEMTER</span>
     </div>
   </section>
-
+  
   <!-- Section 2: Modul A -->
   <section class="section-2">
     <div class="modul">
       <div class="modul-title">MODUL A</div>
-
+      
       <div class="part" onclick="toggleVideo('video1', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/modulapart1.mp4?alt=media&token=2fa341a6-3e1e-49c0-bc10-f1703298708b')">
         Part 1
         <div class="video-container" id="video1"></div>
