@@ -4,116 +4,123 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEMTER</title>
+<script>
+  function toggleVideo(id) {
+    const videoEl = document.getElementById(id);
+    videoEl.style.display = videoEl.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
   <script>
-    function toggleVideo(id, src) {
-      const container = document.getElementById(id);
-
-      // Kalau belum ada video, buat elemen video
-      if (!container.hasChildNodes()) {
-        const video = document.createElement('video');
-        video.setAttribute('controls', true);
-        video.setAttribute('controlsList', 'nodownload'); // hilangkan tombol download
-        video.setAttribute('preload', 'none'); // tidak preload
-        video.setAttribute('width', '320');
-
-        // Blok klik kanan khusus video
-        video.oncontextmenu = (e) => e.preventDefault();
-
-        const source = document.createElement('source');
-        source.setAttribute('src', src);
-        source.setAttribute('type', 'video/mp4');
-
-        video.appendChild(source);
-        container.appendChild(video);
-        container.style.display = 'block';
-      } else {
-        // Kalau udah ada video, toggle tampil/sembunyi
-        container.style.display = container.style.display === 'block' ? 'none' : 'block';
-      }
-    }
-
-    // Blok klik kanan untuk seluruh halaman
-    document.addEventListener('contextmenu', function (e) {
+  document.addEventListener('keydown', function (e) {
+    if (
+      e.key === 'F12' ||
+      (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key)) ||
+      (e.ctrlKey && e.key === 'U')
+    ) {
       e.preventDefault();
-    });
-  </script>
+    }
+  });
+</script>
 
+<script>
+  setInterval(function () {
+    const devtools = /./;
+    devtools.toString = function () {
+      this.opened = true;
+      throw new Error("DevTools is open");
+    };
+    console.log('%c', devtools);
+    if (devtools.opened) {
+      window.location.href = "about:blank"; // bisa kamu ganti ke halaman lain
+    }
+  }, 1000);
+</script>
+
+  
   <style>
+    /* Mengimpor font dari Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
 
     body {
       margin: 0;
-      background-color: #000;
-      color: #ffffff;
-      font-family: 'Instrument Sans', sans-serif;
+      background-color: #000; /* Warna latar belakang hitam */
+      color: #ffffff; /* Warna teks default putih */
+      font-family: 'Instrument Sans', sans-serif; /* Font utama */
     }
 
     section {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
+      width: 100%; /* Lebar penuh */
+      display: flex; /* Flexbox layout */
+      flex-direction: column; /* Susun elemen ke bawah */
       justify-content: center;
-      align-items: center;
+      align-items: center; /* Posisi tengah secara horizontal */
     }
 
+/* ========== Animasi Global, lagi diilangin dulu ga ada yang pas ========== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+    /* Section 1 - Judul Nama */
     .section-1 {
-      height: auto;
-      padding: 32px 16px;
-      display: block;
+      height: auto; /* Otomatis mengikuti isi */
+      padding: 32px 16px; /* Spasi atas bawah 32px, samping 16px */
+      display: block; /* Supaya kontennya gak center (default block) */
     }
-
     .section-1 .judul {
       font-weight: bold;
       font-size: 16px;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.04em; /* Spasi antar huruf lebih rapat */
       line-height: 1em;
-      padding-left: 20px;
+      padding-left: 20px; /* ← ini tambahan baru */
     }
-
     .section-1 .temter {
-      font-family: 'Instrument Serif', serif;
+      font-family: 'Instrument Serif', serif; /* Font khusus untuk TEMTER */
       font-style: italic;
       font-weight: 400;
     }
-
+    
     .section-2 {
-      padding: 24px 16px;
-      width: 100%;
-    }
+    padding: 24px 16px;
+    width: 100%;
+  }
 
-    .modul {
-      width: 100%;
-      max-width: 500px;
-    }
+  .modul {
+    width: 100%;
+    max-width: 500px;
+  }
 
-    .modul-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 16px;
-      padding-left: 8px;
-    }
+  .modul-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-left: 8px;
+  }
 
-    .part {
-      background-color: #111;
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      position: relative;
-    }
+  .part {
+    background-color: #111;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    position: relative;
+  }
 
-    .part:hover {
-      background-color: #222;
-    }
+  .part:hover {
+    background-color: #222;
+  }
 
-    .video-container {
-      margin-top: 12px;
-      display: none;
-    }
+  .video-container {
+    margin-top: 12px;
+    display: none; /* Disembunyikan dulu */
+  }
+
+
   </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
   <!-- Section 1: Nama & Branding -->
   <section class="section-1">
@@ -121,23 +128,34 @@
       ALDIAN PRAMESTA <span class="temter">TEMTER</span>
     </div>
   </section>
-
-  <!-- Section 2: Modul A -->
-  <section class="section-2">
-    <div class="modul">
-      <div class="modul-title">MODUL A</div>
-
-      <div class="part" onclick="toggleVideo('video1', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.opus?alt=media&token=021cb0a4-3f18-47af-ad4a-dbb96c8ab627')">
-        Part 1
-        <div class="video-container" id="video1"></div>
-      </div>
-
-      <div class="part" onclick="toggleVideo('video2', 'https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.opus?alt=media&token=021cb0a4-3f18-47af-ad4a-dbb96c8ab627')">
-        Part 2
-        <div class="video-container" id="video2"></div>
+  
+<!-- Section 2: Modul A -->
+<section class="section-2">
+  <div class="modul">
+    <div class="modul-title">MODUL A</div>
+    
+    <div class="part" onclick="toggleVideo('video1')">
+      Part 1
+      <div class="video-container" id="video1">
+        <video controls width="320">
+          <source src="modulapart1.mp4" type="video/mp4">
+          Browser kamu tidak mendukung video.
+        </video>
       </div>
     </div>
-  </section>
 
+    <div class="part" onclick="toggleVideo('video2')">
+      Part 2
+      <div class="video-container" id="video2">
+        <video controls width="320">
+          <source src="video2.mp4" type="video/mp4">
+          Browser kamu tidak mendukung video.
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+  
 </body>
 </html>
