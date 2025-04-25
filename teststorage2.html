@@ -6,6 +6,9 @@
   <title>TEMTER</title>
 
 <script>
+  // Blok klik kanan di seluruh halaman
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
   function toggleVideo(id, videoSrc) {
     const allContainers = document.querySelectorAll('.video-container');
 
@@ -21,7 +24,7 @@
     if (container.style.display === 'none' || container.innerHTML === '') {
       container.style.display = 'block';
       container.innerHTML = `
-        <video controls controlsList="nodownload" width="320">
+        <video width="320" controls controlsList="nodownload" oncontextmenu="return false">
           <source src="${videoSrc}" type="video/mp4">
           Browser kamu tidak mendukung video.
         </video>
@@ -30,80 +33,78 @@
   }
 </script>
 
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
 
-  
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
+  body {
+    margin: 0;
+    background-color: #000;
+    color: #ffffff;
+    font-family: 'Instrument Sans', sans-serif;
+  }
 
-    body {
-      margin: 0;
-      background-color: #000;
-      color: #ffffff;
-      font-family: 'Instrument Sans', sans-serif;
-    }
+  section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
-    section {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+  .section-1 {
+    height: auto;
+    padding: 32px 16px;
+    display: block;
+  }
+  .section-1 .judul {
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: -0.04em;
+    line-height: 1em;
+    padding-left: 20px;
+  }
+  .section-1 .temter {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+  }
 
-    .section-1 {
-      height: auto;
-      padding: 32px 16px;
-      display: block;
-    }
-    .section-1 .judul {
-      font-weight: bold;
-      font-size: 16px;
-      letter-spacing: -0.04em;
-      line-height: 1em;
-      padding-left: 20px;
-    }
-    .section-1 .temter {
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
-      font-weight: 400;
-    }
-    
-    .section-2 {
-      padding: 24px 16px;
-      width: 100%;
-    }
+  .section-2 {
+    padding: 24px 16px;
+    width: 100%;
+  }
 
-    .modul {
-      width: 100%;
-      max-width: 500px;
-    }
+  .modul {
+    width: 100%;
+    max-width: 500px;
+  }
 
-    .modul-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 16px;
-      padding-left: 8px;
-    }
+  .modul-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-left: 8px;
+  }
 
-    .part {
-      background-color: #111;
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      position: relative;
-    }
+  .part {
+    background-color: #111;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    position: relative;
+  }
 
-    .part:hover {
-      background-color: #222;
-    }
+  .part:hover {
+    background-color: #222;
+  }
 
-    .video-container {
-      margin-top: 12px;
-      display: none;
-    }
-  </style>
+  .video-container {
+    margin-top: 12px;
+    display: none;
+  }
+</style>
 </head>
 <body>
 
