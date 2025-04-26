@@ -1,4 +1,4 @@
-// disable-inspect.js
+// inspect shortcut off
   document.addEventListener('keydown', function (e) {
     if (
       e.key === 'F12' ||
@@ -8,3 +8,9 @@
       e.preventDefault();
     }
   });
+
+// klik kanan off
+document.addEventListener('contextmenu', function(event) {
+  event.preventDefault();
+});
+
