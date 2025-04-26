@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Modul A - Audio Player</title>
+  <script type="module">
+    // 1. Import Firebase SDK modular
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+
+    // 2. Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBUmWClLRONCLocqLMfbhjVNZAG0srp1sQ",
+      authDomain: "aldian-pramesta-temter.firebaseapp.com",
+      projectId: "aldian-pramesta-temter",
+      storageBucket: "aldian-pramesta-temter.firebasestorage.app",
+      messagingSenderId: "467001407990",
+      appId: "1:467001407990:web:706a8a91e27e971b562fd7"
+    };
+
+    // 3. Inisialisasi Firebase
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
+    const auth = getAuth(app);
+
+    // 4. Pastikan user sudah login
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // 5. Ambil URL download file audio dari Storage
+        const audioRef = ref(storage, 'audio_modul_a_part1.opus'); // Ganti path sesuai lokasi file kamu
+
+        getDownloadURL(audioRef)
+          .then((url) => {
+            // 6. Set URL ke elemen audio
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = url;
+          })
+          .catch((error) => {
+            console.error('Gagal ambil audio:', error);
+          });
+      } else {
+        // 7. Kalau belum login, bisa redirect ke login page
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+</head>
+<body>
+  <h1>Selamat datang di Modul A</h1>
+  <audio id="audioPlayer" controls>
+    Browser kamu tidak mendukung audio.
+  </audio>
+</body>
+</html>
+
