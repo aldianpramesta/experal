@@ -72,5 +72,5 @@ window.loginModul = async function(namaModul) {
 };
 
 
-// --- wajib paling bawah ---
+// --- wajib paling bawah buat dikirim ke firebase modul ---
 export { auth, db };
