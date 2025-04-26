@@ -1,5 +1,5 @@
 // WAJIB PALING ATAS Import auth dan db dari firebase.js
-import { auth, db } from 'firebase.js'; // ← sesuaikan path kalau perlu (misal "../javascript/firebase.js")
+import { auth, db } from '/firebase.js'; // ← sesuaikan path kalau perlu (misal "../javascript/firebase.js")
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
