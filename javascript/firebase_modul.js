@@ -1,4 +1,9 @@
-    // ⚠️ Ganti ini sesuai field modul di Firestore, misalnya: "modula", "modulB", "modulZ"
+// WAJIB PALING ATAS Import auth dan db dari firebase.js
+import { auth, db } from './firebase.js'; // ← sesuaikan path kalau perlu (misal "../javascript/firebase.js")
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+// ⚠️ Ganti ini sesuai field modul di Firestore, misalnya: "modula", "modulB", "modulZ"
     const namaModul = "modula"; // ← GANTI INI SAJA untuk menyesuaikan dengan nama field di Firestore
 
     // 🔐 verified firebase subscription, kick jika belum login
