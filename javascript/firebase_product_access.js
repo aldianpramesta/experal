@@ -1,9 +1,12 @@
-   // Inisialisasi firebase
+    // html: "loginModul"
+
+// Inisialisasi firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-    // Konfigurasi firebase project kamu
+
+// Konfigurasi firebase project kamu
     const firebaseConfig = {
       apiKey: "AIzaSyBUmWClLRONCLocqLMfbhjVNZAG0srp1sQ",
       authDomain: "aldian-pramesta-temter.firebaseapp.com",
@@ -22,7 +25,7 @@
       prompt: 'select_account' // ← Ini memaksa pemilihan akun setiap login
     });
 
-    // Fungsi umum untuk login ke modul manapun
+    //  Fungsi umum untuk login ke modul manapun
     window.loginModul = async function(namaModul) {
       try {
         const result = await signInWithPopup(auth, provider); // Popup login Google
