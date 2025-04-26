@@ -70,3 +70,7 @@ window.loginModul = async function(namaModul) {
     alert("Terjadi kesalahan saat login.");
   }
 };
+
+
+// --- wajib paling bawah ---
+export { auth, db };
