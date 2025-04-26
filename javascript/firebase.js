@@ -10,7 +10,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyBUmWClLRONCLocqLMfbhjVNZAG0srp1sQ",
   authDomain: "aldian-pramesta-temter.firebaseapp.com",
   projectId: "aldian-pramesta-temter",
-  storageBucket: "aldian-pramesta-temter.firebasestorage.app",
+  storageBucket: "aldian-pramesta-temter.appspot.com",
   messagingSenderId: "467001407990",
   appId: "1:467001407990:web:706a8a91e27e971b562fd7",
   measurementId: "G-RD75GDJX53"
