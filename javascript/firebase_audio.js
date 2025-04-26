@@ -1,23 +1,28 @@
-import { storage } from './firebase.js'; // Mengambil modul storage dari Firebase
-    import { ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
+import { initializeApp, auth, db, getAuth, onAuthStateChanged } from './firebase.js'; // ← sesuaikan path kalau perlu (misal "../javascript/firebase.js")
+import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
 
-    async function loadAudio() {
-      try {
-        // Membuat referensi ke file audio di Firebase Storage
-        const audioRef1 = ref(storage, 'audio_modul_a_part1.opus');
-        const audioRef2 = ref(storage, 'audio/a/part2.mp3');
+    // 3. Inisialisasi Firebase
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
+    const auth = getAuth(app);
 
-        // Mengambil URL download untuk masing-masing file
-        const url1 = await getDownloadURL(audioRef1);
-        const url2 = await getDownloadURL(audioRef2);
+    // 4. Pastikan user sudah login
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // 5. Ambil URL download file audio dari Storage
+        const audioRef = ref(storage, 'audio_modul_a_part1.opus'); // Ganti path sesuai lokasi file kamu
 
-        // Men-set src dari elemen <audio> supaya bisa diputar
-        document.getElementById('audioAPart1').src = url1;
-        document.getElementById('audioAPart2').src = url2;
-        
-      } catch (error) {
-        console.error('Gagal memuat audio:', error);
+        getDownloadURL(audioRef)
+          .then((url) => {
+            // 6. Set URL ke elemen audio
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = url;
+          })
+          .catch((error) => {
+            console.error('Gagal ambil audio:', error);
+          });
+      } else {
+        // 7. Kalau belum login, bisa redirect ke login page
+        window.location.href = 'login.html';
       }
-    }
-
-    loadAudio(); // Memanggil fungsi untuk load audio saat halaman dibuka
+    });
