@@ -43,9 +43,4 @@
       // ✅ semua valid, tampilkan konten
       document.getElementById("judul").textContent = `Modul ${namaModul.toUpperCase()}`;
       document.getElementById("konten").style.display = "block";
-        
-// baru
-        document.body.style.display = "block"; // ✅ Tampilkan body setelah user valid
-
-        
     });
