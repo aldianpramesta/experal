@@ -7,8 +7,8 @@ const storage = getStorage(app);
 // List audio yang mau dimuat
 const audioList = [
   { filePath: "audio_modul_a_part1.opus", elementId: "audio-player-1" },
-  { filePath: "audio_modul_a_part2.opus", elementId: "audio-player-2" },
-  { filePath: "audio_modul_a_part3.opus", elementId: "audio-player-3" }
+  { filePath: "audio_modul_a_part1.opus", elementId: "audio-player-2" },
+  { filePath: "audio_modul_a_part1.opus", elementId: "audio-player-3" }
 ];
 
 // Fungsi untuk load satu audio
