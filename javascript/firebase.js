@@ -2,9 +2,8 @@
 
 // Inisialisasi Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
 
 // Konfigurasi proyek Firebase
 const firebaseConfig = {
@@ -20,7 +19,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig); // Menginisialisasi Firebase App
 const auth = getAuth(app); // Menginisialisasi modul autentikasi
 const db = getFirestore(app); // Menginisialisasi modul database Firestore
-const storage = getStorage(app);
 const provider = new GoogleAuthProvider(); // Menyiapkan metode login dengan Google
 
 provider.setCustomParameters({
