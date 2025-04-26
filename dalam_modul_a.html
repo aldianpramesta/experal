@@ -6,13 +6,12 @@
   <title>TEMTER</title>
   
 <script type="module" src="javascript/firebase.js"></script>
-<script type="module" src="javascript/firebase_audio.js"></script>
+<script type="module" src="javascript/firebase_modul.js"></script>
 <script src="javascript/interactive.js"></script>
 <script src="javascript/protection.js"></script>
 <link rel="stylesheet" href="css/global.css">
 <link rel="stylesheet" href="css/dalam_modul.css">
   
-
 
   <style>
 
@@ -38,33 +37,24 @@
       Part 1
     </div>
 
-<!-- Audio Part 1 -->
-<div class="video-container" id="audioPlayer">
-  <audio controls controlsList="nodownload" preload="none">
-    Browser kamu tidak mendukung audio.
-  </audio>
-</div>
+    <!-- Video Part 1 -->
+    <div class="video-container" id="audio1">
+      <audio controls controlsList="nodownload" preload="none">
+        <source src="https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/audio_modul_a_part1.opus?alt=media" type="audio/ogg">
+        Browser kamu tidak mendukung video.
+      </audio>
+    </div>
 
-    <div class="part" onclick="toggleVideo('audio2')">
+    <div class="part" onclick="toggleVideo('video2')">
       Part 2
     </div>
 
-<!-- Audio Part 2 -->
-<div class="video-container">
-  <audio controls controlsList="nodownload" preload="none">
-  </audio>
-</div>
-
-        <div class="part" onclick="toggleVideo('audio3')">
-      Part 3
+    <!-- Video Part 2 -->
+    <div class="video-container" id="video2" >
+      <video controls width="320" controlsList="nodownload" preload="none">
+        <source src="https://firebasestorage.googleapis.com/v0/b/aldian-pramesta-temter.firebasestorage.app/o/modulapart1.mp4?alt=media" type="video/mp4">
+      </video>
     </div>
-
-<!-- Audio Part 3 -->
-<div class="video-container">
-  <audio controls controlsList="nodownload" preload="none">
-  </audio>
-</div>
-    
   </div>
 </section>
 
