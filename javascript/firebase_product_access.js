@@ -1,5 +1,4 @@
-  <script type="module">
-    // Inisialisasi firebase
+   // Inisialisasi firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
@@ -68,4 +67,3 @@
         alert("Terjadi kesalahan saat login.");
       }
     };
-  </script>
