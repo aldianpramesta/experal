@@ -1,0 +1,285 @@
+    /* Section 2 - Judul Tengah */
+    .section-2 {
+      height: auto;
+      padding: 40px 16px; /* Spasi agar tidak nempel ke section lain */
+      text-align: center;
+    }
+    .section-2 h2 {
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 1.2em;
+      margin: 0; /* Hilangkan margin bawaan */
+    }
+
+    /* Section 3 - Info Utama */
+    .section-3 {
+      height: auto; /* Fleksibel berdasarkan isi */
+      padding: 40px 20px; /* Spasi atas bawah dan samping */
+      text-align: center;
+    }
+    .section-3 .info {
+      font-weight: 600;
+      font-size: 18px;
+      color: #B3B3B3; /* Abu-abu terang */
+      margin-bottom: 0px; /* Jarak ke elemen bawahnya */
+    }
+    .section-3 .village {
+      font-weight: bold;
+      font-size: 115px; /* Ukuran besar banget */
+      letter-spacing: -5px; /* Hurufnya saling rapat */
+      line-height: 110px;
+      color: #ffffff;
+      text-shadow: 0px 1px 2px rgba(0,0,0,0.5); /* Efek bayangan biar nendang */
+      margin-bottom: -16px;
+    }
+
+    .section-3 .quote {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.8em;
+      letter-spacing: 0em;
+      color: #ffffff;
+      white-space: pre-line; /* Supaya enter di teks quote tetap muncul */
+      margin: 0;
+    }
+
+    /* Section 4 - Modul Percintaan */
+.section-4 {
+  height: auto; /* auto agar menyesuaikan isi */
+  padding: 0px 16px; /* padding atas bawah besar, samping sedang */
+  text-align: center;
+}
+
+.section-4 .judul-modul {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 35px;
+  letter-spacing: -0.04em;
+  line-height: 1.8em;
+  margin-bottom: 0px;
+}
+
+.section-4 .video-wrapper {
+  margin-bottom: 0px;
+}
+
+.section-4 .deskripsi-modul {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 16px;
+  letter-spacing: -0.04em;
+  line-height: 1.8em;
+  margin: 0;
+}
+
+    .gate-button {
+      position: relative;
+      width: 200px;
+      height: 60px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: white;
+      overflow: hidden;
+      font-family: 'Instrument Sans', sans-serif;
+    }
+
+    .gate-button .gate {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      top: 0;
+      background: #38804B;
+      transition: transform 0.5s ease;
+      z-index: 1;
+    }
+
+    .gate-button .left {
+      left: 0;
+      border-right: 1px solid #333;
+    }
+
+    .gate-button .right {
+      right: 0;
+      border-left: 1px solid #333;
+    }
+
+    .gate-button .text {
+  position: relative;
+  z-index: 2;
+  color: #fff; /* ← ini bikin teks jadi merah */
+  transition: color 0.3s ease;
+      font-weight: bold;
+    }
+
+    .gate-button:hover .left {
+      transform: translateX(-100%);
+    }
+
+    .gate-button:hover .right {
+      transform: translateX(100%);
+    }
+
+    .gate-button:hover .text {
+      color: #966406;
+    }
+
+/* Section 5 - Pricing Cards */
+.section-5 {
+  height: 655px;
+  padding: 40px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-modul-title {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 35px;
+  letter-spacing: -0.04em;
+  line-height: 1.8em;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+    .info-modul-deskripsi {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 16px;
+  letter-spacing: -0.04em;
+  line-height: 1.8em;
+  margin: 0 0 40px 0;
+  text-align: center;
+}
+    
+.pricing-wrapper {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.pricing-card {
+  background-color: #111111;
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  max-width: 360px;
+  height: 562px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.harga-durasi {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  margin-bottom: 45px;
+}
+
+.harga-durasi .harga {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+.harga-durasi .durasi {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  line-height: 15px;
+  color: #808080;
+}
+
+.pricing-card .judul-modul {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  color: #ffffff;
+  margin-bottom: 45px;
+  text-align: left;
+}
+
+.pricing-card .deskripsi {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 23.4px;
+  color: #808080;
+  margin-bottom: 80px;
+  text-align: left;
+}
+
+.pricing-card .keuntungan {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+  margin-bottom: 12px;
+  text-align: left;
+  padding-left: 14px; /* ← ini bikin agak geser kanan */
+}
+
+.pricing-card .fitur {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-left: 14px; /* ← ini bikin agak geser kanan */
+}
+
+.pricing-card .fitur li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.pricing-card .check {
+  font-size: 13px;
+  color: #ffffff;
+}
+
+.pricing-card .text {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.8px;
+  line-height: 15px;
+  color: #808080;
+}
+
+    .pricing-card .harga-coret {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 15px;
+  color: #808080;
+  text-decoration: line-through;
+}
+
+.pricing-card .deskripsi-harga {
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.04em;
+  line-height: 1.8em;
+  color: #ffffff;
+  margin-top: -40px;
+  margin-bottom: 40px;
+  text-align: left;
+}
