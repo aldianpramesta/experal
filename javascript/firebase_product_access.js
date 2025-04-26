@@ -38,7 +38,7 @@
         }
 
         const userData = userSnap.data(); // Ambil semua data user
-        const Data = userData[namaModul]; // Ambil data field modul yang diminta (modula, modulb, dll)
+        const modulData = userData[namaModul]; // Ambil data field modul yang diminta (modula, modulb, dll)
 
         // Kalau user belum  atau belum beli modul
         if (!modulData || !modulData.active) {
