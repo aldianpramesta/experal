@@ -1,5 +1,5 @@
 import { storage } from './firebase.js'; // Mengambil modul storage dari Firebase
-    import { ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js";
+    import { ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
 
     async function loadAudio() {
       try {
