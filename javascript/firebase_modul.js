@@ -4,7 +4,7 @@ import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 // ⚠️ Ganti ini sesuai field modul di Firestore, misalnya: "modula", "modulB", "modulZ"
-    const namaModul = "modula"; // ← GANTI INI SAJA untuk menyesuaikan dengan nama field di Firestore
+    const namaModul = "dalam_modul_a.html"; // ← GANTI INI SAJA untuk menyesuaikan dengan nama field di Firestore
 
     // 🔐 verified firebase subscription, kick jika belum login
     onAuthStateChanged(auth, async (user) => {
