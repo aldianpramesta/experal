@@ -54,12 +54,14 @@ import { ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/f
 
     });
 
+// fungsi untuk load audio
 async function loadAudio(filename, audioElementId) {
-  const audioRef = ref(storage, filename); // Buat referensi ke file di storage
-  const audioUrl = await getDownloadURL(audioRef); // Ambil URL download dari storage
-
+  const audioRef = ref(storage, filename);
+  const audioUrl = await getDownloadURL(audioRef);
   const audioElement = document.getElementById(audioElementId);
-  audioElement.src = audioUrl; // Set sumber audio
+  if (audioElement) {
+    audioElement.src = audioUrl;
+  }
 }
 
 // Kalau kamu mau load beberapa file audio
