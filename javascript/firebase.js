@@ -76,5 +76,6 @@ window.loginModul = async function(namaModul) {
 
 // Export biar bisa dipakai di file lain
 export { auth };
+export { db };
 export { storage };
 
