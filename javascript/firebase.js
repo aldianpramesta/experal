@@ -73,8 +73,7 @@ window.loginModul = async function(namaModul) {
 };
 
 
-// --- wajib paling bawah buat dikirim ke firebase modul ---
-export { auth, db };
+
 // Export biar bisa dipakai file lain
 export const auth = getAuth(app);
 export const storage = getStorage(app);
