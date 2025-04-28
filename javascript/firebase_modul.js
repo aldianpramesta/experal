@@ -50,8 +50,7 @@ import { ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/f
       // ✅ semua valid, tampilkan konten
       document.getElementById("judul").textContent = `Modul ${namaModul.toUpperCase()}`;
       document.getElementById("konten").style.display = "block";
-        // 🔥 panggil loadAllAudios() setelah lolos verifikasi
-    loadAllAudios();
+
 
     });
 
@@ -70,3 +69,6 @@ export function loadAllAudios() {
   loadAudio('audio_modul_b_part1.opus', 'audio_modul_b_part1');
   loadAudio('audio_modul_b_part2.opus', 'audio_modul_b_part2');
 }
+
+        // 🔥 panggil loadAllAudios() setelah lolos verifikasi
+    loadAllAudios();
