@@ -50,6 +50,9 @@ import { ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/f
       // ✅ semua valid, tampilkan konten
       document.getElementById("judul").textContent = `Modul ${namaModul.toUpperCase()}`;
       document.getElementById("konten").style.display = "block";
+        // 🔥 panggil loadAllAudios() setelah lolos verifikasi
+    loadAllAudios();
+
     });
 
 async function loadAudio(filename, audioElementId) {
