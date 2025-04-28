@@ -19,13 +19,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig); // Menginisialisasi Firebase App
 // Export biar bisa dipakai file lain
-const auth = getAuth(app);
-export { auth };
-const storage = getStorage(app);
-export { storage };
 const auth = getAuth(app); // Menginisialisasi modul autentikasi
 const db = getFirestore(app); // Menginisialisasi modul database Firestore
 const provider = new GoogleAuthProvider(); // Menyiapkan metode login dengan Google
+const storage = getStorage(app);
 
 provider.setCustomParameters({
   prompt: 'select_account' // Memaksa pengguna memilih akun setiap login
@@ -77,6 +74,7 @@ window.loginModul = async function(namaModul) {
   }
 };
 
-
-
+// Export biar bisa dipakai di file lain
+export { auth };
+export { storage };
 
