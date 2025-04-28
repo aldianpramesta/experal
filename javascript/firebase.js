@@ -4,6 +4,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
 
 // Konfigurasi proyek Firebase
 const firebaseConfig = {
@@ -74,3 +75,6 @@ window.loginModul = async function(namaModul) {
 
 // --- wajib paling bawah buat dikirim ke firebase modul ---
 export { auth, db };
+// Export biar bisa dipakai file lain
+export const auth = getAuth(app);
+export const storage = getStorage(app);
